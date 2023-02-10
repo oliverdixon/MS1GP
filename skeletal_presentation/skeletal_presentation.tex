@@ -1,17 +1,29 @@
+% OWD, 2023.
+
 \documentclass{beamer}
+\usepackage{tikz-cd,adjustbox}
 
 \usetheme{CambridgeUS}
 
 \title[Elementary Category Theory]%
 {An Investigation of Elementary Category Theory}
 
-\subtitle{\fontfamily{lmr}\textsc{Skeleton Presentation}}
+\subtitle{\fontfamily{lmr}\textsc{Skeletal Presentation}}
 
-\author[Dixon, Drury, Brook]%
+\author[Dixon, Drury \& Brook]%
 {Oliver~Dixon \and Matthew~Drury \and Ben~Brook}
 
-\institute[]{Department of Mathematics, University of York}
+\institute[]{Department of Mathematics, University of York %
+        \and Department of Computer Science, University of York}
 \date{Spring Term, 2023}
+
+\titlegraphic{\adjustbox{scale=0.7}{%
+        \begin{tikzcd}[color=gray, ampersand replacement=\&]
+                A \arrow[r, "1_A"] \arrow[rd, "f\circ 1_A" swap] \&
+                        A \arrow[d, "f"] \arrow[rd, "1_B\circ f"] \\
+                \& B \arrow[r, "1_B" below] \& B
+        \end{tikzcd}}%
+}
 
 \AtBeginSection[]
 {
