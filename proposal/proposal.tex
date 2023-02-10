@@ -1,0 +1,163 @@
+% OWD, 2023.
+
+\documentclass{article}
+\usepackage[a4paper]{geometry}
+\usepackage{fancyhdr,lastpage,tikz-cd,adjustbox,listings,subcaption}
+\usepackage[
+	backend=biber,
+	sorting=none,
+	bibencoding=utf8,
+	style=alphabetic
+]{biblatex}
+
+\title{Mathematical Skills I: Group Project Proposal}
+\author{Oliver Dixon, Matthew Drury, and Ben Brook}
+\newcommand{\semleader}{Dr. Chris Wood}
+
+\renewcommand{\headrulewidth}{.5pt}
+\renewcommand{\footrulewidth}{.5pt}
+
+\fancypagestyle{titlepage}{%
+	\renewcommand{\headrulewidth}{0pt}
+	\fancyhf{}
+        \fancyfoot[R]{Page \thepage{} of~\pageref{LastPage}}
+}
+
+\makeatletter
+\fancypagestyle{genpage}{%
+	\fancyhf{}
+        \fancyhead[L]{\@title}
+        \fancyfoot[L]{\@date}
+        \fancyfoot[R]{Page \thepage{} of~\pageref{LastPage}}
+}
+\makeatother
+
+% TODO: Clean up this pseudo-TikZ language definition.
+
+\lstdefinelanguage{tikz-tmp}[LaTeX]{TeX}{%
+        morekeywords = {swap, arrow, below},%
+        morestring = [b]{"}
+}
+
+\lstset{language = tikz-tmp,
+        showstringspaces = false,%
+        columns = flexible,%
+        basicstyle = {\small\ttfamily},%
+        keywordstyle = \color{blue},%
+        stringstyle = \color{darkgray},%
+        emphstyle = {\color{darkgray}\bfseries},%
+        breaklines = true,%
+        breakatwhitespace = true,%
+        tabsize = 4,%
+        gobble = 24,%
+        otherkeywords = {\&, \\\\},
+        emph = {&, \\\\}
+}
+
+\lstset{language = tikz-tmp}
+\addbibresource{proposal.bib}
+\nocite{*}
+
+\begin{document}
+%
+\thispagestyle{titlepage}
+\pagestyle{genpage}
+\makeatletter
+\noindent\large\textbf{\@title}\\[0.8\baselineskip]
+\normalsize Students: \@author\\
+Seminar Leader: \semleader\\
+Compilation Date: \@date%
+\makeatother
+%
+\vspace{1.5\baselineskip}\hrule\vspace{\baselineskip}
+\textit{Working Title:} ``An Undergraduate Investigation into Elementary
+Category Theory, with applications in Pure Mathematics and Theoretical Computer
+Science.'' A brief index of likely reference works, and an example Ti\textit{k}Z
+commutative diagram, can be found overleaf.
+\vspace{\baselineskip}\hrule\vspace{\baselineskip}
+%
+\begin{itemize}
+        \item \textbf{Matthew Drury.} ``Axiomatic constructions of the general
+        category; an investigation of functors, duality, pullbacks, and
+        implications of the Yoneda lemma.''
+
+        \textit{MD} will investigate and explore the foundational concepts of
+        Category Theory, including a survey of its most basic axiomatic
+        constructions, a discovery of concepts exclusively describable in
+        category-theoretic language, such as the general isomorphism, and
+        provide a framework for the contributions of \textit{BB} and
+        \textit{OD}. Also comprising \textit{MD}'s contribution will be various
+        \TeX-typeset commutative diagrams to succinctly visualise the
+        relationships of objects and morphisms in simple categories. Although
+        the respective contributions of each group member is expected to be
+        reasonably distinct, \textit{MD}'s section will likely intersect, to
+        some degree, with the sections of \textit{BB} and \textit{OD}, due to
+        its fundamentalist nature. An investigation of Sheaf Theory was also
+        considered, in which a discussion of the role of sheaves, pre-sheaves,
+        and profunctors in a CT-context would take place, however this was
+        deemed overly ambitious.
+        %
+        \item \textbf{Ben Brook.} ``Some category-theoretic constructions of
+        familiar structures in Abstract Algebra, Topology, and Set Theory.''
+
+        As done in many introductory texts on Category Theory, \textit{BB} will
+        aim to take prominent structures from Abstract Algebra, Topology, and
+        Set Theory, and proceed to describe the core structures of their
+        constructions through category-theoretic language. Although there are a
+        plethora of examples in this direction---posets; based sets with
+        point-preserving maps; preorders; monoids---some more exotic cases will
+        also be covered, potentially on a type-theoretic stage. \textit{BB}'s
+        contribution will also, inevitably, involve extensive typesetting of
+        commutative diagrams and general \LaTeX\ documents, in both article
+        and Beamer contexts.
+        %
+        \item \textbf{Oliver Dixon.} ``Practical applications and examples of
+        isomorphic relations to generalised descriptions of functional
+        programming paradigms, with respect to $\lambda$-calculus.''
+
+        \textit{OD} will review the most direct and modern application of
+        Category Theory, with respect to formal systems of logic and functional
+        programming whilst drawing upon tangential results from Theoretical
+        Computer Science and, to a substantially lesser but still notable
+        degree, applied Analytic Philosophy. There exist deep connexions between
+        these fields and that of $\lambda$-calculus, and hence, the topics
+        discussed will defer to this universal model where appropriate. There
+        will be a slight intersection between the contributions of \textit{OD}
+        and \textit{BB}, given the inherent theme of applicability; in
+        particular, \textit{OD} will introduce various categories pertaining to
+        structures found in logical systems, such as the category of Deduction
+        under some fixed formal logic.
+\end{itemize}
+%
+\pagebreak % TODO: Fix the bibliography heading.
+\printbibliography[title={Supporting Works of Reference\\[-.5em]}]
+\section*{An Example Commutative Diagram}
+\begin{figure}[h!]
+        \centering
+        \begin{subfigure}{.31\linewidth}
+        \adjustbox{scale=1.25,center}{%
+                \begin{tikzcd}
+                        A \arrow[r, "1_A"] \arrow[rd, "f\circ 1_A" swap] &
+                                A \arrow[d, "f"] \arrow[rd, "1_B\circ f"] \\
+                        & B \arrow[r, "1_B" below] & B
+                \end{tikzcd}
+        }
+        \end{subfigure}\hfill%
+        \begin{subfigure}{.61\linewidth}
+                \begin{lstlisting}
+                        \begin{tikzcd}
+                            A \arrow[r, "1_A"] \arrow[rd, "f\circ 1_A" swap] &
+                                A \arrow[d, "f"] \arrow[rd, "1_B\circ f"] \\
+                            & B \arrow[r, "1_B" below] & B
+                        \end{tikzcd}
+                \end{lstlisting}
+        \end{subfigure}
+        \caption{A commutative diagram, showing objects $A,B$, and the morphism
+        $f:A\longrightarrow B$, with explicit identity morphisms. The
+        corresponding \LaTeX-Ti\textit{k}Z source is shown to the right. Such
+        diagrams will be abundant throughout the final dissertation and
+        presentation.}
+\end{figure}
+%
+\end{document}
+
