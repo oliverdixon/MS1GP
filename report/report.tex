@@ -1,0 +1,78 @@
+% OWD 2023
+
+\documentclass[10pt]{amsart}
+\usepackage[a4paper]{geometry}
+\usepackage[foot]{amsaddr}
+\usepackage{xcolor,lmodern}
+
+\usepackage[%
+	backend = biber,
+	sorting = none,
+	bibencoding = utf8,
+	style = alphabetic
+]{biblatex}
+
+\usepackage[%
+	colorlinks = true,
+	allcolors = blue,
+        linktoc = page
+]{hyperref}
+
+% -- START: COMMANDS FOR TESTING THE SKELETON REPORT -- %
+
+\usepackage{lipsum}
+\usepackage[%
+        text = Skeleton~Report,
+        color = lightgray,
+        angle = 0,
+        vanchor = t,
+        vpos = .88\paperheight,
+        fontsize = .1\paperwidth
+]{draftwatermark}
+
+\nocite{*}
+
+% -- END: COMMANDS FOR TESTING THE SKELETON REPORT -- %
+
+% \yorkemail: takes the username and outputs a clickable mailto link.
+\newcommand{\yorkemail}[1]{\href{mailto:#1@york.ac.uk}{#1@york.ac.uk}}
+
+\addbibresource{report.bib}
+
+\title[An Investigation of Elementary Category Theory]{An Investigation of %
+        Elementary Category Theory, with applications in Pure Mathematics and %
+        Theoretical Computer Science}
+
+\author{Oliver Dixon}  \email{\yorkemail{od641}}
+\author{Matthew Drury} \email{\yorkemail{md1499}}
+\author{Ben Brook}     \email{\yorkemail{bb1170}}
+
+\address{Department of Mathematics \\
+        University of York \\
+        United Kingdom}
+\date{Spring--Summer Term, 2023}
+
+\begin{document}
+%
+\begin{abstract}
+        \lipsum[1-1]
+\end{abstract}
+\maketitle
+\tableofcontents
+\section{Introduction: ``A Bird's-Eye View of Mathematics?''}
+\addtocontents{toc}{\protect\vspace{5pt}}
+\lipsum[2-8]
+\section{\for{toc}{\texorpdfstring{\textbf{[MD]~}}{}}Theoretical %
+        Underpinnings: Axiomatic Constructions}
+\lipsum[9-28]
+\section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
+        Interpretations of Familiar Structures}
+\lipsum[29-48]
+\section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
+        Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
+\lipsum[49-68]
+\addtocontents{toc}{\protect\vspace{5pt}}
+\printbibliography[title=Cited Works and Further Reading]
+%
+\end{document}
+
