@@ -1,4 +1,5 @@
 #!/bin/bash
+# OWD 2023
 
 # Syntax: ./gs_compress.sh file1, file2, ...
 #
