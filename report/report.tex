@@ -3,7 +3,6 @@
 \documentclass[10pt,a4paper]{amsart}
 \usepackage[foot]{amsaddr}
 \usepackage{xcolor,lmodern}
-\usepackage{mathtools}
 
 \usepackage[%
 	backend = biber,
@@ -59,28 +58,23 @@
 \end{abstract}
 \maketitle
 \tableofcontents
-\section{Introduction: ``A Bird's-Eye View of Mathematics?''}
-\addtocontents{toc}{\protect\vspace{5pt}}
-\lipsum[2-8]
+\par\vspace{-2em}\noindent\rule{\textwidth}{0.4pt}\vspace{1em}
 \section{\for{toc}{\texorpdfstring{\textbf{[MD]~}}{}}Theoretical %
         Underpinnings: Axiomatic Constructions}
-\lipsum[9-28]
+\lipsum[2-4]
+
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
-        Sets are a familiar structure that, with functions, fit nicely into category theory. This is easy to demonstrate.
-        
-        Let $A$ be a set and $f \colon A \to A$ be a function. We will denote $1_A \coloneqq f$.
-        Now let $f \colon A \to B$, $y \colon B \to C$, and $h \colon C \to D$ with $A$, $B$, $C$, and $D$ being sets. We have that
-        \[
-        \left( f \circ g \right) \circ h = f \circ \left( g \circ h \right) \textrm{.}
-        \]
-        Hence the category axioms are satisfied, and there is a category whose objects are all the sets and morphisms are all the functions between those sets. We'll denote this category Sets moving forwards.
+\lipsum[4-6]
 
 \section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
         Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
-\lipsum[49-68]
 \addtocontents{toc}{\protect\vspace{5pt}}
-\printbibliography[title=Cited Works and Further Reading]
+\lipsum[6-8]
+%
+\par\vspace{1.8em}\noindent\rule{\textwidth}{0.4pt}\vspace{1.5em}
+\printbibliography[title=Cited Works and Tangential Literature]
+\par\vspace{1.8em}\noindent\rule{\textwidth}{0.4pt}
 %
 \end{document}
 
