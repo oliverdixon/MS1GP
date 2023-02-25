@@ -1,9 +1,13 @@
 % OWD 2023
 %
-% NOTE: You will need to pass -shell-escape to latexmk (or any equivalent build
-% system) to compile this document.  This is a requirement of the 'minted'
+% NOTE #1: You will need to pass -shell-escape to latexmk (or any equivalent
+% build system) to compile this document.  This is a requirement of the 'minted'
 % package, which is used for source code formatting (syntax highlighting, line
 % numbering, et cetera).
+%
+% NOTE #2: The original source file should be typeset to 75 characters AT MOST,
+% otherwise 'minted' may be forced to introduce artificial line breaks in the
+% text, which is not equivalent to reflowing.
 
 \documentclass{article}
 \usepackage[a4paper]{geometry}
