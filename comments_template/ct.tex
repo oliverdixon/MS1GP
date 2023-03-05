@@ -38,8 +38,8 @@
 %
 %       Example: ./matthew.tex
 %
-\author{Print Name \textless\yorkemail{user}\textgreater}
-\newcommand{\originalauthor}{Print Name \textless\yorkemail{user}\textgreater}
+\author{Print Name \yorkemail{user}}
+\newcommand{\originalauthor}{Print Name \yorkemail{user}}
 \newcommand{\commithashlong}{commithash}
 \newcommand{\originaltexfile}{./file.tex}
 
@@ -97,7 +97,8 @@
 % Miscellaneous formatting commands.
 %
 \renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
-\newcommand{\yorkemail}[1]{\href{mailto:#1@york.ac.uk}{#1@york.ac.uk}}
+\newcommand{\yorkemail}[1]{\textless\href{mailto:#1@york.ac.uk}%
+        {#1@york.ac.uk}\textgreater}
 \newcommand{\commitref}[1]{\href{https://github.com/oliverdixon/MS1GP/%
         commit/\commithashlong}{\texttt{#1}}}
 \titleformat*{\section}{\centering \bfseries\LARGE}

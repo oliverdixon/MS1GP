@@ -3,12 +3,14 @@
 \documentclass{beamer}
 \usepackage{tikz-cd,adjustbox}
 
+\tikzcdset{outer sep=2pt}
+
 \usetheme{CambridgeUS}
 
 \title[Elementary Category Theory]%
 {An Investigation of Elementary Category Theory}
 
-\subtitle{\fontfamily{lmr}\textsc{Skeletal Presentation}}
+\subtitle{\fontfamily{lmr}\textsc{with Selected Applications in Mathematics and TCS}}
 
 \author[Dixon, Drury \& Brook]%
 {Oliver~Dixon \and Matthew~Drury \and Ben~Brook}
@@ -16,15 +18,7 @@
 \institute[]{Department of Mathematics, University of York}
 \date{Spring Term, 2023}
 
-\titlegraphic{\adjustbox{scale=0.7}{%
-        \begin{tikzcd}[color=gray, ampersand replacement=\&]
-                A \arrow[r, "1_A"] \arrow[rd, "f\circ 1_A" swap] \&
-                        A \arrow[d, "f"] \arrow[rd, "1_B\circ f"] \\
-                \& B \arrow[r, "1_B" below] \& B
-        \end{tikzcd}}%
-}
-
-\AtBeginSection[]
+\AtBeginSection
 {
         \begin{frame}
                 \frametitle{Presentation Overview}
@@ -33,11 +27,42 @@
 }
 
 \begin{document}
+
+\titlegraphic{\adjustbox{scale=0.7}{%
+        % This could be in the preamble, but most editors that pseudo-parse the
+        % TeX to provide syntax highlighting won't consider maths environments
+        % unless they're inside the document proper.
+        \begin{tikzcd}[sep=large, color=gray, ampersand replacement=\&]
+                A
+                        \arrow[r, "\alpha"]
+                        \arrow[d, "\mu" swap] \&
+                A^\prime
+                        \arrow[r, "\alpha^\prime"]
+                        \arrow[d, "\mu^\prime" swap] \&
+                A^{\prime\prime}
+                        \arrow[r, "\alpha^{\prime\prime}"]
+                        \arrow[d, "\mu^{\prime\prime}" swap] \& {} \\
+                B \arrow[r, "\beta" swap] \&
+                B^\prime \arrow[r, "\beta^\prime" swap] \&
+                B^{\prime\prime} \arrow[r, "\beta^{\prime\prime}" swap] \& {}
+        \end{tikzcd}
+        \textcolor{gray}{\Large\ldots}%
+        \begin{tikzcd}[sep=large, color=gray, ampersand replacement=\&]
+                {} \arrow[r, "\alpha^{(n-1)}"] \&
+                A^n \arrow[d, "\mu^n"] \\
+                {} \arrow[r, "\beta^{(n-1)}" swap] \& B^n
+        \end{tikzcd}}%
+}
+
 \frame{\titlepage}
-\section{Introduction: ``A Bird's-Eye View of Mathematics?''}
-\section{Theoretical Underpinnings: Axiomatic Constructions}
-\section{Category-Theoretic Interpretations of Familiar Structures}
-\section{Further Applications: Functional Programming and %
-        \texorpdfstring{$\lambda$}{Lambda}-Calculus}
+
+\section{Theoretical Underpinnings: Axiomatic Constructions [MD]}
+
+\section{Category-Theoretic Interpretations of Familiar Structures [BB]}
+
+\section[Further Applications: Func. Prog. \protect\& Lambda-Calculus {[OD]}]%
+        {Further Applications: Functional Programming and
+        \texorpdfstring{$\lambda$}{Lambda}-Calculus [OD]}
+
 \end{document}
 

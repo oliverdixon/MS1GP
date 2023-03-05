@@ -7,7 +7,7 @@
 
 GIT_ROOT="$(git rev-parse --show-toplevel)/"
 TRASH_DIR="$GIT_ROOT.tex_trash/"
-TRASH_FILES="$(git ls-files -io --full-name --exclude-standard | \
+TRASH_FILES="$(git ls-files -io --directory --full-name --exclude-standard | \
         grep -v '^\..*')" 
 
 # Create the required directory structure.
