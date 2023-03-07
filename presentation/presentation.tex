@@ -6,11 +6,18 @@
 \tikzcdset{outer sep=2pt}
 
 \usetheme{CambridgeUS}
+\setbeamertemplate{caption}[numbered]
+\numberwithin{figure}{section}
+
+\DeclareMathOperator{\catobj}{ob}
+\DeclareMathOperator{\catid}{id}
+\DeclareMathOperator{\cathom}{hom}
 
 \title[Elementary Category Theory]%
 {An Investigation of Elementary Category Theory}
 
-\subtitle{\fontfamily{lmr}\textsc{with Selected Applications in Mathematics and TCS}}
+\subtitle{\ldots\ \fontfamily{lmr}%
+        \textsc{with Selected Applications in PM and TCS.}}
 
 \author[Dixon, Drury \& Brook]%
 {Oliver~Dixon \and Matthew~Drury \and Ben~Brook}
@@ -63,6 +70,126 @@
 \section[Further Applications: Func. Prog. \protect\& Lambda-Calculus {[OD]}]%
         {Further Applications: Functional Programming and
         \texorpdfstring{$\lambda$}{Lambda}-Calculus [OD]}
+\begin{frame}
+        \frametitle{Monoidal Categories (1)}
+        To construct a monoidal category $\mathcal{C}$, we need to consider six
+        elements:
+        \begin{itemize}[<+->]
+                \item A base category $\mathcal{C}_0$
+                \item A bifunctor $\otimes:\mathcal{C}_0 \times \mathcal{C}_0
+                        \to \mathcal{C}_0$
+                \item An identity from our base category, $I \in \catobj
+                \mathcal{C}_0$
+                \item An associativity natural transformation:
+                        $\alpha_{A,B,C} : (A \otimes B) \otimes C \to A \otimes
+                        (B \otimes C)$
+                \item A left-identity natural transformation:
+                        $\lambda_A: I \otimes A \to A$
+                \item A right-identity natural transformation:
+                        $\rho_A: A \otimes I \to A$
+        \end{itemize}
+        \onslide<+->{Then, $\mathcal{C}=(\mathcal{C}_0, \otimes, I, \lambda,
+        \rho)$, or just $\mathcal{C}=(\mathcal{C}_0, \otimes, I)$.}
+\end{frame}
 
+\begin{frame}
+        \frametitle{Monoidal Categories (2)}
+        \begin{figure}
+                \adjustbox{scale=0.8, center}{%
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        \left[(A \otimes B) \otimes C \right] \otimes D
+                                \arrow[r, "\alpha"]
+                                \arrow[d, "\alpha \otimes \catid D" swap] \&
+                        (A \otimes B) \otimes (C \otimes D)
+                                \arrow[r, "\alpha"] \&
+                        A \otimes \left[ B \otimes (C \otimes D) \right] \\
+                        \left[ A \otimes (B \otimes C) \right] \otimes D
+                                \arrow[rr, "\alpha" swap] \& \&
+                        A \otimes \left[ (B \otimes C) \otimes D \right]
+                                \arrow[u, "\catid A \otimes \alpha" swap]
+                \end{tikzcd}}
+                \caption{Associativity induced by $\alpha$}
+        \end{figure}
+
+        \vfill
+        \pause
+        \begin{figure}
+                \adjustbox{scale=0.8, center}{%
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        (B \otimes I) \otimes C
+                                \arrow[rr, "\alpha"]
+                                \arrow[rd, "\rho \otimes \catid C" swap] \& \&
+                        B \otimes (I \otimes C)
+                                \arrow[ld, "\catid B \otimes \lambda"] \\
+                        \& B \otimes C \&
+                \end{tikzcd}}
+                \caption{Left- and right-identities induced by $\lambda$ and
+                $\rho$}
+        \end{figure}
+\end{frame}
+
+\begin{frame}
+        \frametitle{Monoids (1)}
+        A monoid $(M,\mu,\eta)$ is composed of:
+        \begin{itemize}[<+->]
+                \item Some object $M \in \catobj \mathcal{C}_0$
+                \item An associated ``multiplication'' bifunctor $\mu \in
+                        \cathom (M \otimes M, M)$
+                \item An associated ``unit'' identity $\eta \in \cathom (I, M)$.
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+        \frametitle{Monoids (2)}
+
+        ($\alpha$, $\lambda$, and $\rho$ refer to the natural isomorphic
+        transformations from the parent monoidal category.)
+
+        \begin{figure}
+                \adjustbox{scale=0.8, center}{%
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        (M \otimes M) \otimes M
+                                \arrow[r, "\alpha"]
+                                \arrow[d, "\mu\catid M" swap] \&
+                        M \otimes (M \otimes M)
+                                \arrow[r, "\catid M\otimes\mu"] \&
+                        M \otimes M
+                                \arrow[d, "\mu"] \\
+                        M \otimes M
+                                \arrow[rr, "\mu" swap] \& \& M
+                \end{tikzcd}}
+                \caption{Associativity of the monoid}
+        \end{figure}
+
+        \vfill
+        \pause
+        \begin{figure}
+                \adjustbox{scale=0.8, center}{%
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        I \otimes M
+                                \arrow[r, "\eta\otimes\catid M"]
+                                \arrow[rd, "\lambda" swap] \&
+                        M \otimes M
+                                \arrow[d, "\mu" swap] \&
+                        M \otimes I
+                                \arrow[l, "\catid M\otimes\eta" swap]
+                                \arrow[ld, "\rho"] \\
+                        \& M \&
+                \end{tikzcd}}
+                \caption{Left- and right-identities of the monoid}
+        \end{figure}
+\end{frame}
+
+\begin{frame}
+        \frametitle{An Especially Useful Monoidal Category}
+        The category of \textit{endofunctors}! We have already encountered
+        endofunctors in the first section.
+        \begin{itemize}[<+->]
+                \item The endofunctors form a \textit{strict} monoidal category.
+                \item The normal functor composition operation is the
+                        associated bifunctor.
+                \item The identity functor is the identity element.
+        \end{itemize}
+\end{frame}
 \end{document}
 
