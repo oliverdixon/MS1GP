@@ -1,7 +1,7 @@
 % OWD, 2023.
 
 \documentclass{beamer}
-\usepackage{tikz-cd,adjustbox}
+\usepackage{tikz-cd,adjustbox,listings,caption}
 
 \tikzcdset{outer sep=2pt}
 
@@ -19,6 +19,14 @@
 % particularly around parentheses.
 \DeclareMathOperator{\catendo}{\text{\textbf{Endo}}}
 \DeclareMathOperator{\cathask}{\text{\textbf{Hask}}}
+
+\lstset{language = Haskell,
+        showstringspaces = false,%
+        columns = flexible,%
+        basicstyle = {\small\ttfamily},%
+        keywordstyle = \color{blue},%
+        stringstyle = \color{darkgray}
+}
 
 \title[Elementary Category Theory]%
 {An Investigation of Elementary Category Theory}
@@ -95,8 +103,8 @@
                 \item A right-identity natural transformation:
                         $\rho_A: A \otimes I \to A$.
         \end{itemize}
-        \onslide<+->{Then, $\mathcal{C}=(\mathcal{C}_0, \otimes, I, \lambda,
-        \rho)$, or just $\mathcal{C}=(\mathcal{C}_0, \otimes, I)$.}
+        \onslide<+->{Then, $\mathcal{C}=(\mathcal{C}_0, \otimes, I, \alpha,
+        \lambda, \rho)$, or just $\mathcal{C}=(\mathcal{C}_0, \otimes, I)$.}
 \end{frame}
 
 \begin{frame}
@@ -250,15 +258,43 @@
 \end{frame}
 
 \begin{frame}
-        \frametitle{In Closing: Practical Notes and a Short Example}
+        \frametitle{In Closing: Practical Notes}
         We have established a tangential, perhaps contrived, link between
         Category Theory and functional programming, the latter of which is 
         based on the $\lambda$-calculus. Why is this interdisciplinary
         observation useful?
+        \pause
+        \begin{itemize}[<+->]
+                \item In practice, monads allow stateful calculation. Unlike
+                the mindless emulation of imperative languages, this is achieved
+                without breaking function purity. This can be seen intuitively
+                as \textit{threading state though a chain of functions}.
+                \item This is akin to ``following the arrows'' on a commutative
+                diagram of $\catendo{(\cathask)}$ using the category product
+                $\cathask \times \cathask$ to pass the desired parameter with
+                the current state, and returning the transformed state,
+                recalling that the endofunctors are morphisms in $\cathask$.
+        \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
         \frametitle{Any Questions?}
+
+        \begin{figure}
+                \adjustbox{scale=0.7, center}{%
+                \begin{lstlisting}[frame=single,linewidth=.76\textwidth,%
+                                gobble=23]
+                        main :: IO () -- IO is a standard monad!
+                        main = do
+                                putStrLn ( "What is your name?" )
+                                name <- getLine
+                                if name /= "QUIT" then do
+                                        putStrLn ( "Hello, " ++ i ++ "." )
+                                else
+                                        return ()
+                \end{lstlisting}}
+                \caption*{``A Haskell User-Greeting Machine''}
+        \end{figure}
 \end{frame}
 \end{document}
 
