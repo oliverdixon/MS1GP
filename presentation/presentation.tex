@@ -12,8 +12,13 @@
 \DeclareMathOperator{\catobj}{ob}
 \DeclareMathOperator{\catid}{id}
 \DeclareMathOperator{\cathom}{hom}
-\DeclareMathOperator{\catendo}{\mathbf{Endo}}
-\DeclareMathOperator{\cathask}{\mathbf{Hask}}
+
+% Portability note: \text{\textbf{...}} is more universally accepted than
+% \mathbf{...} when working with Latin fonts, especially in a Sans typeface as
+% with Beamer. I'm still using DeclareMathOperator to ensure correct spacing,
+% particularly around parentheses.
+\DeclareMathOperator{\catendo}{\text{\textbf{Endo}}}
+\DeclareMathOperator{\cathask}{\text{\textbf{Hask}}}
 
 \title[Elementary Category Theory]%
 {An Investigation of Elementary Category Theory}
@@ -240,13 +245,20 @@
                 \item Its objects are endofunctors on $\cathask$, and its
                         morphisms are natural transformations between these
                         functors.
-                \item Thus, endofunctors are monads.
+                \item Thus, endofunctors on $\cathask$ are monads.
         \end{itemize}
 \end{frame}
 
 \begin{frame}
-        \frametitle{In Closing: An Example}
-        TODO: Why do monads allow stateful computations?
+        \frametitle{In Closing: Practical Notes and a Short Example}
+        We have established a tangential, perhaps contrived, link between
+        Category Theory and functional programming, the latter of which is 
+        based on the $\lambda$-calculus. Why is this interdisciplinary
+        observation useful?
+\end{frame}
+
+\begin{frame}
+        \frametitle{Any Questions?}
 \end{frame}
 \end{document}
 
