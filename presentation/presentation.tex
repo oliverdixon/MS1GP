@@ -12,6 +12,8 @@
 \DeclareMathOperator{\catobj}{ob}
 \DeclareMathOperator{\catid}{id}
 \DeclareMathOperator{\cathom}{hom}
+\DeclareMathOperator{\catendo}{\mathbf{Endo}}
+\DeclareMathOperator{\cathask}{\mathbf{Hask}}
 
 \title[Elementary Category Theory]%
 {An Investigation of Elementary Category Theory}
@@ -86,7 +88,7 @@
                 \item A left-identity natural transformation:
                         $\lambda_A: I \otimes A \to A$
                 \item A right-identity natural transformation:
-                        $\rho_A: A \otimes I \to A$
+                        $\rho_A: A \otimes I \to A$.
         \end{itemize}
         \onslide<+->{Then, $\mathcal{C}=(\mathcal{C}_0, \otimes, I, \lambda,
         \rho)$, or just $\mathcal{C}=(\mathcal{C}_0, \otimes, I)$.}
@@ -99,14 +101,14 @@
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
                         \left[(A \otimes B) \otimes C \right] \otimes D
                                 \arrow[r, "\alpha"]
-                                \arrow[d, "\alpha \otimes \catid D" swap] \&
+                                \arrow[d, "\alpha\,\otimes\,\catid D" swap] \&
                         (A \otimes B) \otimes (C \otimes D)
                                 \arrow[r, "\alpha"] \&
                         A \otimes \left[ B \otimes (C \otimes D) \right] \\
                         \left[ A \otimes (B \otimes C) \right] \otimes D
                                 \arrow[rr, "\alpha" swap] \& \&
                         A \otimes \left[ (B \otimes C) \otimes D \right]
-                                \arrow[u, "\catid A \otimes \alpha" swap]
+                                \arrow[u, "\catid A\,\otimes\,\alpha" swap]
                 \end{tikzcd}}
                 \caption{Associativity induced by $\alpha$}
         \end{figure}
@@ -118,9 +120,9 @@
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
                         (B \otimes I) \otimes C
                                 \arrow[rr, "\alpha"]
-                                \arrow[rd, "\rho \otimes \catid C" swap] \& \&
+                                \arrow[rd, "\rho\,\otimes\,\catid C" swap] \& \&
                         B \otimes (I \otimes C)
-                                \arrow[ld, "\catid B \otimes \lambda"] \\
+                                \arrow[ld, "\catid B\,\otimes\,\lambda"] \\
                         \& B \otimes C \&
                 \end{tikzcd}}
                 \caption{Left- and right-identities induced by $\lambda$ and
@@ -150,9 +152,9 @@
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
                         (M \otimes M) \otimes M
                                 \arrow[r, "\alpha"]
-                                \arrow[d, "\mu\catid M" swap] \&
+                                \arrow[d, "\mu\,\otimes\,\catid M" swap] \&
                         M \otimes (M \otimes M)
-                                \arrow[r, "\catid M\otimes\mu"] \&
+                                \arrow[r, "\catid M\,\otimes\,\mu"] \&
                         M \otimes M
                                 \arrow[d, "\mu"] \\
                         M \otimes M
@@ -167,12 +169,12 @@
                 \adjustbox{scale=0.8, center}{%
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
                         I \otimes M
-                                \arrow[r, "\eta\otimes\catid M"]
+                                \arrow[r, "\eta\,\otimes\,\catid M"]
                                 \arrow[rd, "\lambda" swap] \&
                         M \otimes M
                                 \arrow[d, "\mu" swap] \&
                         M \otimes I
-                                \arrow[l, "\catid M\otimes\eta" swap]
+                                \arrow[l, "\catid M\,\otimes\,\eta" swap]
                                 \arrow[ld, "\rho"] \\
                         \& M \&
                 \end{tikzcd}}
@@ -181,15 +183,70 @@
 \end{frame}
 
 \begin{frame}
-        \frametitle{An Especially Useful Monoidal Category}
-        The category of \textit{endofunctors}! We have already encountered
-        endofunctors in the first section.
+        \frametitle{Functional Programming Languages}
         \begin{itemize}[<+->]
-                \item The endofunctors form a \textit{strict} monoidal category.
-                \item The normal functor composition operation is the
-                        associated bifunctor.
-                \item The identity functor is the identity element.
+                \item In \textit{purely} functional programming languages,
+                        functions must not cause side-effects: for some input,
+                        they must always return the same output, independent of
+                        the state of the wider environment.
+                \item There is no allowance for a shared mutable state. At first
+                        glance, this causes problems, since many common
+                        operations that are made easy in the imperative world,
+                        are in direct contravention with this safety principle.
+                \item How can monoids and monodial categories help us with
+                        printing ``Hello World''?
         \end{itemize}
+\end{frame}
+
+\begin{frame}
+        \frametitle{An Especially Useful Monoidal Category}
+        Let's consider an example: the category of \textit{endofunctors}! We
+        have already encountered endofunctors in the first section.
+        \begin{itemize}[<+->]
+                \item The endofunctors form a (strict) monoidal category.
+                \item The normal functor composition operation becomes the
+                        associated bifunctor $\otimes$.
+                \item The identity functor becomes the identity element $I$.
+                \item By our previous definitions, an endofunctor can be
+                        interpreted as a monoid.
+                \item A \textit{monad} is a monoid in this category.
+                \item We can specify the base category $\mathcal{C}_0$ with
+                        $\catendo{(\mathcal{C}_0)}$.
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+        % I can't use a math operator (\cathask or \catendo) in a title that may
+        % be written to a PDF string or index; some viewers will not like it!
+        \frametitle{Haskell, \textbf{Hask}, and \textbf{Endo}(\textbf{Hask})}
+        \begin{center}
+                \begin{minipage}{.2\textwidth}
+                        \includegraphics{hasklogo.pdf}
+                \end{minipage}
+                \begin{minipage}{.7\textwidth}
+                        The \textit{Haskell} language is a useful demonstration
+                        tool, however the type systems of most languages will be
+                        equally valid for these purposes. (Early versions of
+                        Haskell weren't capable of I/O!)
+                \end{minipage}
+        \end{center}
+        \pause
+        \begin{itemize}[<+->]
+                \item Consider the category $\cathask$: its objects are Haskell
+                        types, and its morphisms are functions between types.
+                        Haskell is a \textit{purely} functional language, so
+                        $\cathask$ is well-defined.
+                \item What about $\catendo(\cathask)$?
+                \item Its objects are endofunctors on $\cathask$, and its
+                        morphisms are natural transformations between these
+                        functors.
+                \item Thus, endofunctors are monads.
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+        \frametitle{In Closing: An Example}
+        TODO: Why do monads allow stateful computations?
 \end{frame}
 \end{document}
 
