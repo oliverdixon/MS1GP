@@ -8,6 +8,7 @@
 \usetheme{CambridgeUS}
 \setbeamertemplate{caption}[numbered]
 \numberwithin{figure}{section}
+\beamerdefaultoverlayspecification{<+->}
 
 \DeclareMathOperator{\catobj}{ob}
 \DeclareMathOperator{\catid}{id}
@@ -21,7 +22,10 @@
 \DeclareMathOperator{\cathask}{\text{\textbf{Hask}}}
 \DeclareMathOperator{\catset}{\text{\textbf{Set}}}
 \DeclareMathOperator{\catpos}{\text{\textbf{Pos}}}
-\DeclareMathOperator{\rvect}{\mathbb{R} \text{\textbf{-Vect}}}
+\DeclareMathOperator{\catvect}{\mathit{K}-\text{\textbf{Vect}}}
+\DeclareMathOperator{\catpre}{\text{\textbf{Ord}}}
+\DeclareMathOperator{\catpoint}{\text{\textbf{Based}}}
+\DeclareMathOperator{\catdeduce}{\text{\textbf{Deduce}}}
 
 \lstset{language = Haskell,
         showstringspaces = false,%
@@ -43,104 +47,193 @@
 \institute[]{Department of Mathematics, University of York}
 \date{Spring Term, 2023}
 
-\AtBeginSection
-{
+\AtBeginSection{%
         \begin{frame}
                 \frametitle{Presentation Overview}
                 \tableofcontents[currentsection]
         \end{frame}
 }
 
-\begin{document}
-
-\titlegraphic{\adjustbox{scale=0.7}{%
-        % This could be in the preamble, but most editors that pseudo-parse the
-        % TeX to provide syntax highlighting won't consider maths environments
-        % unless they're inside the document proper.
-        \begin{tikzcd}[sep=large, color=gray, ampersand replacement=\&]
+\newcommand{\infinitesnake}[1]{%
+        \adjustbox{scale=0.7}{%
+        \begin{tikzcd}[sep=large, color=#1, ampersand replacement=\&]
                 A
                         \arrow[r, "\alpha"]
                         \arrow[d, "\mu" swap] \&
                 A^\prime
-                        \arrow[r, "\alpha^\prime"]
-                        \arrow[d, "\mu^\prime" swap] \&
+                        \arrow[r, "\alpha^\prime"] \&
                 A^{\prime\prime}
                         \arrow[r, "\alpha^{\prime\prime}"]
                         \arrow[d, "\mu^{\prime\prime}" swap] \& {} \\
-                B \arrow[r, "\beta" swap] \&
-                B^\prime \arrow[r, "\beta^\prime" swap] \&
-                B^{\prime\prime} \arrow[r, "\beta^{\prime\prime}" swap] \& {}
+                B
+                        \arrow[r, "\beta" swap] \&
+                B^\prime
+                        \arrow[r, "\beta^\prime" swap]
+                        \arrow[u, "\mu^\prime" swap] \&
+                B^{\prime\prime}
+                        \arrow[r, "\beta^{\prime\prime}" swap] \& {}
         \end{tikzcd}
-        \textcolor{gray}{\Large\ldots}%
-        \begin{tikzcd}[sep=large, color=gray, ampersand replacement=\&]
+        \textcolor{#1}{\Large\ldots}%
+        \begin{tikzcd}[sep=large, color=#1, ampersand replacement=\&]
                 {} \arrow[r, "\alpha^{(n-1)}"] \&
-                A^n \arrow[d, "\mu^n"] \\
-                {} \arrow[r, "\beta^{(n-1)}" swap] \& B^n
+                A^n \\
+                {} \arrow[r, "\beta^{(n-1)}" swap] \&
+                B^n \arrow[u, "\mu^n" swap]
         \end{tikzcd}}%
 }
+
+\titlegraphic{\infinitesnake{gray}}
+
+\begin{document}
 
 \frame{\titlepage}
 
 \section{Theoretical Underpinnings: Axiomatic Constructions [MD]}
+
+\begin{frame}
+        \frametitle{What are Categories?}
+        \emph{MD: TODO!}
+
+        You need to cover: categories (objects and morphisms), the axioms of a
+        category, functors between categories (and a word on endofunctors), and
+        any other theory you feel like including. The more, the better, assuming
+        you can speak quickly to fit it in three minutes :)
+\end{frame}
+
 \begin{frame}
         
 \end{frame}
 \section{Category-Theoretic Interpretations of Familiar Structures [BB]}
-% category of sets
-% poset category
-% vector spaces category
-% category of proofs
 \begin{frame}
         \frametitle{Category of Sets}
-        Let $A$ be a set and $f \colon A \to A$ be a function. We will denote
-        $1_A \coloneqq f$.  Now let $f \colon A \to B$, $y \colon B \to C$, and
-        $h \colon C \to D$ with $A$, $B$, $C$, and $D$ being sets. We have that
-        \begin{equation*}
-                \left( f \circ g \right) \circ h = f \circ \left( g \circ h
-                \right) .
-        \end{equation*}
-        Hence the category axioms are satisfied, and there is a category whose
-        objects are all the sets and morphisms are all the functions between
-        those sets. We'll denote this category $\catset$ moving forwards.
+        \begin{itemize}
+                \item Let $A,B,C,D$ be sets, and let $f,g,h$ be (set-theoretic)
+                        functions such that $f \colon A \to B$, $g \colon B \to
+                        C$, and $h \colon C \to D$.
+                \item Immediately, we have that
+                        \begin{equation*}
+                                \left( f \circ g \right) \circ h = f \circ
+                                \left( g \circ h \right),
+                        \end{equation*}
+                        due to the normal associativity property of function
+                        composition. We also have the obvious identity morphism
+                        $i \in \cathom(A,A)$ for some object A, henceforth
+                        denoted as $1_A$.
+                \item Hence, the category axioms are satisfied, and there is a
+                        category whose objects are sets and morphisms are the
+                        functions between those sets. We'll denote this category
+                        $\catset$ moving forwards.
+        \end{itemize}
 \end{frame}
 
 \begin{frame}
-        \frametitle{Category of Posets}
-        A \emph{poset} is a set $A$ with a relation, $\sim _A$, that is
-        reflexive, transitive, and antisymmetric. A monotone function between
-        posets $A$ and $B$, $m \colon A \to B$, is such that
-        \begin{equation*}
-                \forall a_1, a_2 \in A, \, a_1 \sim _A a_2 \implies m(a_1) \sim
-                _B m(a_2).
-        \end{equation*}
-        We have a category $\catpos$ whose objects are posets and morphisms are
-        monotone functions between those posets.
+        \frametitle{Category of Partially Ordered Sets (``Posets'')}
+        \begin{itemize}
+                \item A \emph{poset} is a set $A$ with a relation, $\sim_A$,
+                        that is reflexive, transitive, and antisymmetric.
+                \item A monotone map $m \colon A \to B $ is an
+                        order-preserving function such that
+                        \begin{equation*}
+                                (\forall a, b\in A)\,(a \sim_A b)
+                                \implies m(a) \sim_B m(b).
+                        \end{equation*}
+                \item We have a category $\catpos$ whose objects are posets and
+                        morphisms are monotone maps between those posets. The
+                        identity morphism exists for all objects due to the
+                        reflexivity of $\sim_A$, and composition follows
+                        similarly due to transitivity.
+                \item Analogous connexions can be drawn for sets equipped with
+                        preording relations ($\catpre$), pointed sets
+                        ($\catpoint$), etc.
+        \end{itemize}
 \end{frame}
 
 \begin{frame}
         \frametitle{Category of Vector Spaces}
-        We have a category, $\rvect$, whose objects are \emph{vector spaces} over
-        $\mathbb{R}$ and morphisms are $\mathbb{R}$\emph{-linear maps} between
-        those vector spaces. We take a linear map to be a function, $f$, between
-        two vector spaces that preserves vector addition and scalar
-        multiplication. That is,
-        \[
-                f( \vec{u} + \vec{v} ) = f( \vec{u} ) + f( \vec{v} ) ,
-        \]
-        and,
-        \[
-                f( a \vec{u} ) = af( \vec{u} ) .
-        \]
+        \begin{itemize}
+                \item We have a category, $\catvect$, whose objects are
+                        \emph{vector spaces} over some field $K$ and morphisms
+                        are \emph{linear mappings} between those vector spaces.
+                \item We take a linear map to be a function, $f$, between two
+                        vector spaces, such that vector addition and scalar
+                        multiplication in $K$ is preserved. That is,
+                        \begin{alignat*}{2}
+                                f(\vec{u}+\vec{v}) &= f(\vec{u})+f(\vec{v});
+                                \qquad && \text{[\textbf{Additivity}]} \\
+                                f(\lambda\vec{u}) &= \lambda f(\vec{u}),
+                                \qquad && \text{[\textbf{Homogeinity}]}
+                        \end{alignat*}
+                        where $\vec{u},\vec{v}\in K^n \text{ and }\lambda\in K$.
+                \item This only applied to \emph{finite-dimensional} vector
+                        spaces. Banach spaces and Functional Analysis are out of
+                        the scope of this talk! ($n\in\mathbb{N}$)
+        \end{itemize}
 \end{frame}
 
-\section[Further Applications: Func. Prog. \protect\& Lambda-Calculus {[OD]}]%
+\begin{frame}
+        \frametitle{The Category of Deduction and Deducability}
+        \emph{BB: TODO!}
+
+        This is my favourite example, so do it well :)
+\end{frame}
+
+\begin{frame}
+        \frametitle{The True Isomorphism! (1)}
+        Although pervasive throughout Abstract Algebra and Set Theory, the
+        ``correct'' definition of a general isomorphism is expressed in purely
+        category-theoretic terms, demonstrating the existence of an \emph{undo}
+        morphism, such that we have elements in $\cathom(A,C)$ and
+        $\cathom(C,A)$.
+        \pause
+        \begin{figure}
+                \adjustbox{scale=0.8, center}{%
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        A \arrow[bend right=40, rr, "f" swap] \&
+                        B \arrow[l, "g" swap] \arrow[r, "h"] \&
+                        C \arrow[bend right=60, ll, "i" swap]
+                \end{tikzcd}}
+                \caption{$f$ and $i$ are \emph{isomorphisms}; $A$ and $C$ are
+                        \emph{isomorphic}.}
+        \end{figure}
+        \pause
+        Isomorphisms are easy to spot with well-drawn commutative diagrams!
+\end{frame}
+
+\begin{frame}
+        \frametitle{The True Isomorphism! (2)}
+        In certain categories, this isomorphic equivalence can be used to deduce
+        particular properties of objects in the corresponding category. Here we
+        consider the Category of Deducability, $\catdeduce$:
+        \pause
+        \begin{figure}
+                \adjustbox{scale=0.8, center}{%
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        \phi \arrow[r, "\alpha"] \&
+                        \psi \arrow[r, "\beta"] \&
+                        \theta \arrow[bend right=40, ll, "\gamma" swap]
+                \end{tikzcd}}
+                \caption{$\phi$ and $\theta$ are logically equivalent through
+                deductions $[\alpha,\beta]$ and $\gamma$.}
+        \end{figure}
+        \pause
+        Using deductive cancelling, $\alpha$ and $\beta$ can be forged into a
+        single morphism, with $\psi$ being embedded into the environmental
+        axioms of $\phi$.  Given our knowledge of the nature of $\catobj%
+        {(\catdeduce)}$, we know that
+        \begin{equation*}
+                (\phi \vdash \theta) \land (\theta \vdash \phi) \iff
+                        \phi \equiv \theta \iff \phi \cong \theta.
+        \end{equation*}
+\end{frame}
+
+\section[Further Applications: Functional Programming {[OD]}]%
         {Further Applications: Functional Programming and
         \texorpdfstring{$\lambda$}{Lambda}-Calculus [OD]}
 \begin{frame}
         \frametitle{Monoidal Categories (1)}
         To construct a monoidal category $\mathcal{C}$, we need to consider six
         elements:
-        \begin{itemize}[<+->]
+        \begin{itemize}
                 \item A base category $\mathcal{C}_0$
                 \item A bifunctor $\otimes:\mathcal{C}_0 \times \mathcal{C}_0
                         \to \mathcal{C}_0$
@@ -197,7 +290,7 @@
 \begin{frame}
         \frametitle{Monoids (1)}
         A monoid $(M,\mu,\eta)$ is composed of:
-        \begin{itemize}[<+->]
+        \begin{itemize}
                 \item Some object $M \in \catobj \mathcal{C}_0$
                 \item An associated ``multiplication'' bifunctor $\mu \in
                         \cathom (M \otimes M, M)$
@@ -248,7 +341,7 @@
 
 \begin{frame}
         \frametitle{Functional Programming Languages}
-        \begin{itemize}[<+->]
+        \begin{itemize}
                 \item In \textit{purely} functional programming languages,
                         functions must not cause side-effects: for some input,
                         they must always return the same output, independent of
@@ -266,7 +359,7 @@
         \frametitle{An Especially Useful Monoidal Category}
         Let's consider an example: the category of \textit{endofunctors}! We
         have already encountered endofunctors in the first section.
-        \begin{itemize}[<+->]
+        \begin{itemize}
                 \item The endofunctors form a (strict) monoidal category.
                 \item The normal functor composition operation becomes the
                         associated bifunctor $\otimes$.
@@ -295,7 +388,7 @@
                 \end{minipage}
         \end{center}
         \pause
-        \begin{itemize}[<+->]
+        \begin{itemize}
                 \item Consider the category $\cathask$: its objects are Haskell
                         types, and its morphisms are functions between types.
                         Haskell is a \textit{purely} functional language, so
@@ -315,7 +408,7 @@
         based on the $\lambda$-calculus. Why is this interdisciplinary
         observation useful?
         \pause
-        \begin{itemize}[<+->]
+        \begin{itemize}
                 \item In practice, monads allow stateful calculation. Unlike
                 the mindless emulation of imperative languages, this is achieved
                 without breaking function purity. This can be seen intuitively
@@ -330,21 +423,11 @@
 
 \begin{frame}[fragile]
         \frametitle{Any Questions?}
-
         \begin{figure}
-                \adjustbox{scale=0.7, center}{%
-                \begin{lstlisting}[frame=single,linewidth=.76\textwidth,%
-                                gobble=23]
-                        main :: IO () -- IO is a standard monad!
-                        main = do
-                                putStrLn ( "What is your name?" )
-                                name <- getLine
-                                if name /= "QUIT" then do
-                                        putStrLn ( "Hello, " ++ i ++ "." )
-                                else
-                                        return ()
-                \end{lstlisting}}
-                \caption*{``A Haskell User-Greeting Machine''}
+                \infinitesnake{black}
+                \vspace{.5em}
+                \caption*{``\textit{The Categorical Snake of Morphistic
+                        Infinitude}''}
         \end{figure}
 \end{frame}
 \end{document}
