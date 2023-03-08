@@ -98,10 +98,12 @@
 
 \begin{frame}
         \frametitle{The Intuition: What are Categories?}
+        TODO
 \end{frame}
 
 \begin{frame}
         \frametitle{The Definition: The Axioms of a Category}
+        TODO
 \end{frame}
 
 \begin{frame}
@@ -203,6 +205,7 @@
 
 \begin{frame}
         \frametitle{Natural Transformations}
+        TODO
 \end{frame}
 
 \section{Category-Theoretic Interpretations of Familiar Structures [BB]}
@@ -274,9 +277,24 @@
 
 \begin{frame}
         \frametitle{The Category of Deduction and Deducability}
-        \emph{BB: TODO!}
-
-        This is my favourite example, so do it well :)
+        All of these examples are taken, more or less directly, from constructs
+        expressable purely in non-categorical/algebraic terms. The power of
+        Category Theory lies in its ability to abstract arbitrarily, so what
+        type of non-algebraic structures might we want to represent?
+        \pause
+        \begin{itemize}
+                \item How about the Category of Deducability? Objects are
+                        mathematical statements embedded in some proof system,
+                        and morphisms represent \emph{the existence of a
+                        deduction}, in a fixed theory, between antecedents and
+                        consequents.
+                \item A richer category is the Category of Deduction,
+                        $\catdeduce$. For every pair of objects, a corresponding
+                        morphism in the homset represents a \emph{specific
+                        manner of deduction} between its domain and codomain.
+                        Deductive cancelling is equivalent to forging morphisms
+                        together!
+        \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -305,7 +323,7 @@
         \frametitle{The True Isomorphism! (2)}
         In certain categories, this isomorphic equivalence can be used to deduce
         particular properties of objects in the corresponding category. Here we
-        consider the Category of Deducability, $\catdeduce$:
+        consider the Category of Deduction, $\catdeduce$:
         \pause
         \begin{figure}
                 \adjustbox{scale=0.8, center}{%
