@@ -11,7 +11,7 @@
 \beamerdefaultoverlayspecification{<+->}
 
 % Style note: please typeset named categories (e.g. Hask) in boldface, as shown
-% below. For arbitrary categories (e.g. C or C_0), use \mathcal{...}.
+% below. For arbitrary categories (e.g. C or C_0), use \arbcat{...}.
 \DeclareMathOperator{\catobj}{ob}
 \DeclareMathOperator{\catid}{id}
 \DeclareMathOperator{\cathom}{hom}
@@ -32,6 +32,7 @@
 \DeclareMathOperator{\catpre}{\text{\textbf{Ord}}}
 \DeclareMathOperator{\catpoint}{\text{\textbf{Based}}}
 \DeclareMathOperator{\catdeduce}{\text{\textbf{Deduce}}}
+\DeclareMathOperator{\catfun}{\text{\textbf{Fun}}}
 
 \lstset{language = Haskell,
         showstringspaces = false,%
@@ -97,13 +98,73 @@
 \section{Theoretical Underpinnings: Axiomatic Constructions [MD]}
 
 \begin{frame}
-        \frametitle{The Intuition: What are Categories?}
-        TODO
+        \frametitle{The Intuition: What are Categories? (1)}
+        \begin{itemize}
+                \item Categories are a remarkably mathematical way of defining
+                        abstract objects, and ways to morph between those
+                        objects.
+                \item The power of categories, and the associated theories, lie
+                        in their generality: objects can be any mathematically
+                        definable structure, and morphisms may be any process or
+                        algorithm by which you move from one object to another.
+                \item At first glance, morphisms appear indistinguishable from
+                        functions. Whilst traditional sets and their functions
+                        certainly do form a category, as we will see later, the
+                        expanse of Category Theory extends far beyond naive Set
+                        Theory!
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+        \frametitle{The Intuition: What are Categories? (2)}
+        A useful feature in Category Theory arrives in the form of
+        \emph{commutative diagrams}. Objects are shown as labels, and morphisms
+        are shown, intuitively, as directed arrows between their domain (source
+        object) and codomain (destination object).
+        \pause
+        \begin{figure}
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        A
+                                \arrow[loop left, distance=3em, "1_A"]
+                                \arrow[r, "a"] \&
+                        B
+                                \arrow[loop right, distance=3em, "1_B"]
+                                \arrow[d, "b"] \\
+                        D
+                                \arrow[loop left, distance=3em, "1_D"]
+                                \arrow[u, "d"] \&
+                        C
+                                \arrow[loop right, distance=3em, "1_C"]
+                                \arrow[l, "c"]
+                \end{tikzcd}%
+                \caption{A commutative diagram for a simple, four-object
+                        category.}
+        \end{figure}
+        Identity morphisms are shown explicitly here, however they are usually
+        omitted to maintain brevity.
 \end{frame}
 
 \begin{frame}
         \frametitle{The Definition: The Axioms of a Category}
-        TODO
+        For any category $\arbcat{C}$, we need to consider two important sets:
+        \begin{itemize}
+                \item \emph{The obset}: The set of objects in $\arbcat{C}$,
+                        denoted $\catobj{C}$.
+                \item \emph{The homset}: The set of (homeo)morphisms in
+                        $\arbcat{C}$, denoted $\cathom{C}$. Morphisms are
+                        sometimes called ``arrows''.
+        \end{itemize}
+        \onslide<+->{In practice, the morphisms are the defining feature of any
+        given category. As with existing algebraic structures, we do need to
+        satisfy some laws to have a well-defined category:}
+        \begin{itemize}
+                \item Each object $A$ must have an identity morphism $1_A \colon
+                        A \to A$.
+                \item The composition of morphisms, where applicable, must be an
+                        associative operation.
+                \item The usual unit law must hold: $f \circ 1_A = f = 1_B \circ
+                        f$ for all $f \colon A \to B$.
+        \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -137,8 +198,6 @@
         role of a functor $F \colon \arbcat{C} \to \arbcat{D}$:
 
         \begin{figure}
-                \vspace{1em}
-                \adjustbox{scale=0.8}{%
                 $\underbrace{\begin{tikzcd}[sep=large, ampersand replacement=\&]
                         A \arrow[r, "f"] \arrow[rd, "g \circ f" swap]
                         \& B \arrow[d, "g"] \\
@@ -153,9 +212,7 @@
                         F(A) \arrow[l, "F(f)" swap] \arrow[dl, "F(g \circ f)"]
                         \\ F(C) \&
                 \end{tikzcd}}_{\substack{\\[.2em]\text{Codomain Category }%
-                        \arbcat{D}}}$}%
-
-                \vspace{1em}
+                        \arbcat{D}}}$%
                 \caption{A functor $F$ between simple categories $\arbcat{C}$
                         and $\arbcat{D}$}
         \end{figure}
@@ -205,7 +262,24 @@
 
 \begin{frame}
         \frametitle{Natural Transformations}
-        TODO
+        In the standard tune of categorical thinking, we can push the
+        abstraction further, and consider the \emph{category of functors}
+        between two fixed categories $\arbcat{C}$ and $\arbcat{D}$.
+        \pause
+        \begin{itemize}
+                \item Consider categories $\arbcat{C}$, $\arbcat{D}$, and
+                        functors $F, G \colon \arbcat{C} \to \arbcat{D}$. Then,
+                        consider the category formed with these functors as
+                        objects. Denote this with
+                        $\catfun{(\arbcat{C},\arbcat{D})}$.
+                \item The formal definition of natural transformations is
+                        slightly technical, however, for intuition, it suffices
+                        to think of natural transformations as morphisms between
+                        functors in $\catfun{(\arbcat{C},\arbcat{D})}$.
+                \item As usual, these morphisms meet certain coherence
+                        conditions; most of the time these are trivially
+                        satisfiable.
+        \end{itemize}
 \end{frame}
 
 \section{Category-Theoretic Interpretations of Familiar Structures [BB]}
@@ -306,12 +380,11 @@
         $\cathom(C,A)$.
         \pause
         \begin{figure}
-                \adjustbox{scale=0.8, center}{%
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
                         A \arrow[bend right=40, rr, "f" swap] \&
                         B \arrow[l, "g" swap] \arrow[r, "h"] \&
                         C \arrow[bend right=60, ll, "i" swap]
-                \end{tikzcd}}
+                \end{tikzcd}
                 \caption{$f$ and $i$ are \emph{isomorphisms}; $A$ and $C$ are
                         \emph{isomorphic}.}
         \end{figure}
@@ -326,12 +399,11 @@
         consider the Category of Deduction, $\catdeduce$:
         \pause
         \begin{figure}
-                \adjustbox{scale=0.8, center}{%
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
                         \phi \arrow[r, "\alpha"] \&
                         \psi \arrow[r, "\beta"] \&
                         \theta \arrow[bend right=40, ll, "\gamma" swap]
-                \end{tikzcd}}
+                \end{tikzcd}
                 \caption{$\phi$ and $\theta$ are logically equivalent through
                 deductions $[\alpha,\beta]$ and $\gamma$.}
         \end{figure}
@@ -374,8 +446,7 @@
 \begin{frame}
         \frametitle{Monoidal Categories (2)}
         \begin{figure}
-                \adjustbox{scale=0.8, center}{%
-                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                \adjustbox{scale=0.95}{\begin{tikzcd}[ampersand replacement=\&]
                         \left[(A \otimes B) \otimes C \right] \otimes D
                                 \arrow[r, "\alpha"]
                                 \arrow[d, "\alpha\,\otimes\,\catid D" swap] \&
@@ -386,14 +457,17 @@
                                 \arrow[rr, "\alpha" swap] \& \&
                         A \otimes \left[ (B \otimes C) \otimes D \right]
                                 \arrow[u, "\catid A\,\otimes\,\alpha" swap]
-                \end{tikzcd}}
+                \end{tikzcd}}%
                 \caption{Associativity induced by $\alpha$}
         \end{figure}
 
         \vfill
         \pause
         \begin{figure}
-                \adjustbox{scale=0.8, center}{%
+                % An adjustbox isn't necessary here, but I'm using it to scale
+                % the diagram to the same level as the other one on the same
+                % slide. It's immediately noticeable if they're different sizes.
+                \adjustbox{scale=0.95, center}{%
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
                         (B \otimes I) \otimes C
                                 \arrow[rr, "\alpha"]
@@ -420,12 +494,7 @@
 
 \begin{frame}
         \frametitle{Monoids (2)}
-
-        ($\alpha$, $\lambda$, and $\rho$ refer to the natural isomorphic
-        transformations from the parent monoidal category.)
-
         \begin{figure}
-                \adjustbox{scale=0.8, center}{%
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
                         (M \otimes M) \otimes M
                                 \arrow[r, "\alpha"]
@@ -436,14 +505,13 @@
                                 \arrow[d, "\mu"] \\
                         M \otimes M
                                 \arrow[rr, "\mu" swap] \& \& M
-                \end{tikzcd}}
+                \end{tikzcd}%
                 \caption{Associativity of the monoid}
         \end{figure}
 
         \vfill
         \pause
         \begin{figure}
-                \adjustbox{scale=0.8, center}{%
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
                         I \otimes M
                                 \arrow[r, "\eta\,\otimes\,\catid M"]
@@ -454,7 +522,7 @@
                                 \arrow[l, "\catid M\,\otimes\,\eta" swap]
                                 \arrow[ld, "\rho"] \\
                         \& M \&
-                \end{tikzcd}}
+                \end{tikzcd}%
                 \caption{Left- and right-identities of the monoid}
         \end{figure}
 \end{frame}
