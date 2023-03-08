@@ -10,9 +10,15 @@
 \numberwithin{figure}{section}
 \beamerdefaultoverlayspecification{<+->}
 
+% Style note: please typeset named categories (e.g. Hask) in boldface, as shown
+% below. For arbitrary categories (e.g. C or C_0), use \mathcal{...}.
 \DeclareMathOperator{\catobj}{ob}
 \DeclareMathOperator{\catid}{id}
 \DeclareMathOperator{\cathom}{hom}
+\newcommand{\arbcat}[1]{\ensuremath\mathcal{#1}}
+
+\tikzset{FUNCTOR/.style = {line width=#1},%
+         FUNCTOR/.default=1pt}
 
 % Portability note: \text{\textbf{...}} is more universally accepted than
 % \mathbf{...} when working with Latin fonts, especially in a Sans typeface as
@@ -91,18 +97,114 @@
 \section{Theoretical Underpinnings: Axiomatic Constructions [MD]}
 
 \begin{frame}
-        \frametitle{What are Categories?}
-        \emph{MD: TODO!}
-
-        You need to cover: categories (objects and morphisms), the axioms of a
-        category, functors between categories (and a word on endofunctors), and
-        any other theory you feel like including. The more, the better, assuming
-        you can speak quickly to fit it in three minutes :)
+        \frametitle{The Intuition: What are Categories?}
 \end{frame}
 
 \begin{frame}
-        
+        \frametitle{The Definition: The Axioms of a Category}
 \end{frame}
+
+\begin{frame}
+        \frametitle{Functors (1)}
+        Being able to define multiple categories, it would be useful to have a
+        method of going between them. Just as \emph{functions} serve as mappings
+        between sets, and \emph{linear maps} serve as mappings between vector
+        spaces, \emph{functors} can define relationships between categories.
+        \pause
+        \begin{itemize}
+                \item A functor $F \colon \arbcat{C} \to \arbcat{D}$ maps the
+                        objects and morphisms of $\arbcat{C}$ to corresponding
+                        entities in $\arbcat{D}$.
+                \item These mappings may be chosen arbitrarily, subject to three
+                        coherence conditions:
+                        \begin{enumerate}
+                                \item Preservation of domains and codomains:
+                                        $F(f \colon a \to b) = F(f) \colon F(A)
+                                        \to F(B)$
+                                \item Preservation of identity:
+                                        $F(1_A) = 1_F(A)$
+                                \item Preservation of composition:
+                                        $F(f \circ g) = F(f) \circ F(g)$
+                        \end{enumerate}
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+        \frametitle{Functors (2)}
+        A pair of connected commutative diagrams can pictorially demonstrate the
+        role of a functor $F \colon \arbcat{C} \to \arbcat{D}$:
+
+        \begin{figure}
+                \vspace{1em}
+                \adjustbox{scale=0.8}{%
+                $\underbrace{\begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        A \arrow[r, "f"] \arrow[rd, "g \circ f" swap]
+                        \& B \arrow[d, "g"] \\
+                        \& C
+                \end{tikzcd}}_{\substack{\\[.2em]\text{Domain Category }%
+                        \arbcat{C}}}$
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        {} \arrow[rr, FUNCTOR, "F"] \& \& {}
+                \end{tikzcd}
+                $\underbrace{\begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        F(B) \arrow[d, "F(g)" swap] \&
+                        F(A) \arrow[l, "F(f)" swap] \arrow[dl, "F(g \circ f)"]
+                        \\ F(C) \&
+                \end{tikzcd}}_{\substack{\\[.2em]\text{Codomain Category }%
+                        \arbcat{D}}}$}%
+
+                \vspace{1em}
+                \caption{A functor $F$ between simple categories $\arbcat{C}$
+                        and $\arbcat{D}$}
+        \end{figure}
+        \pause
+        \begin{itemize}
+                \item An \emph{endofunctor} is a functor whose domain and
+                codomain is the same. This concept is simple, but it will become
+                very important shortly!
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+        \frametitle{The Category Product}
+        It would be similarly useful to combine two categories and in some
+        meaningful way to produce a new category.
+        \pause
+        \begin{itemize}
+                \item Analogous to the Cartesian product, we have the
+                        \emph{category product}, denoted $\arbcat{C} \times
+                        \arbcat{D}$.
+                \item The objects of $\arbcat{C} \times \arbcat{D}$ have the
+                        form $(c,d)$ for $c \in \catobj \arbcat{C}$ and $d \in
+                        \catobj \arbcat{D}$. Morphisms have the form $(f,g)
+                        \colon (c,d) \to (c^\prime,d^\prime)$, where
+                        $f \colon c \to c^\prime \in \catobj \arbcat{C}$ and
+                        $g \colon d \to d^\prime \in \catobj \arbcat{D}$.
+                \item $\arbcat{C} \times \arbcat{D}$ can be easily shown to
+                        satisfy the category axioms; hence, $\times$ is capable
+                        of producing a new category.
+                \item We also have two obvious \emph{projection functors}
+                        $\pi_\arbcat{C}$ and $\pi_\arbcat{D}$ from the product
+                        to the original constituent categories:
+
+                        \vspace{1em}
+                        \begin{figure}
+                                \begin{tikzcd}[sep=large,
+                                                ampersand replacement=\&]
+                                        \arbcat{C} \&
+                                        \arbcat{C} \times \arbcat{D}
+                                                \arrow[l, "\pi_\arbcat{C}"]
+                                                \arrow[r, "\pi_\arbcat{D}" swap]
+                                        \& \arbcat{D}
+                                \end{tikzcd}
+                        \end{figure}
+        \end{itemize}
+\end{frame}
+
+\begin{frame}
+        \frametitle{Natural Transformations}
+\end{frame}
+
 \section{Category-Theoretic Interpretations of Familiar Structures [BB]}
 \begin{frame}
         \frametitle{Category of Sets}
@@ -231,14 +333,14 @@
         \texorpdfstring{$\lambda$}{Lambda}-Calculus [OD]}
 \begin{frame}
         \frametitle{Monoidal Categories (1)}
-        To construct a monoidal category $\mathcal{C}$, we need to consider six
+        To construct a monoidal category $\arbcat{C}$, we need to consider six
         elements:
         \begin{itemize}
-                \item A base category $\mathcal{C}_0$
-                \item A bifunctor $\otimes:\mathcal{C}_0 \times \mathcal{C}_0
-                        \to \mathcal{C}_0$
+                \item A base category $\arbcat{C}_0$
+                \item A bifunctor $\otimes:\arbcat{C}_0 \times \arbcat{C}_0
+                        \to \arbcat{C}_0$
                 \item An identity from our base category, $I \in \catobj
-                \mathcal{C}_0$
+                \arbcat{C}_0$
                 \item An associativity natural transformation:
                         $\alpha_{A,B,C} : (A \otimes B) \otimes C \to A \otimes
                         (B \otimes C)$
@@ -247,8 +349,8 @@
                 \item A right-identity natural transformation:
                         $\rho_A: A \otimes I \to A$.
         \end{itemize}
-        \onslide<+->{Then, $\mathcal{C}=(\mathcal{C}_0, \otimes, I, \alpha,
-        \lambda, \rho)$, or just $\mathcal{C}=(\mathcal{C}_0, \otimes, I)$.}
+        \onslide<+->{Then, $\arbcat{C}=(\arbcat{C}_0, \otimes, I, \alpha,
+        \lambda, \rho)$, or just $\arbcat{C}=(\arbcat{C}_0, \otimes, I)$.}
 \end{frame}
 
 \begin{frame}
@@ -291,7 +393,7 @@
         \frametitle{Monoids (1)}
         A monoid $(M,\mu,\eta)$ is composed of:
         \begin{itemize}
-                \item Some object $M \in \catobj \mathcal{C}_0$
+                \item Some object $M \in \catobj \arbcat{C}_0$
                 \item An associated ``multiplication'' bifunctor $\mu \in
                         \cathom (M \otimes M, M)$
                 \item An associated ``unit'' identity $\eta \in \cathom (I, M)$.
@@ -367,8 +469,8 @@
                 \item By our previous definitions, an endofunctor can be
                         interpreted as a monoid.
                 \item A \textit{monad} is a monoid in this category.
-                \item We can specify the base category $\mathcal{C}_0$ with
-                        $\catendo{(\mathcal{C}_0)}$.
+                \item We can specify the base category $\arbcat{C}_0$ with
+                        $\catendo{(\arbcat{C}_0)}$.
         \end{itemize}
 \end{frame}
 
