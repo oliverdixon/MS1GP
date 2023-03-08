@@ -1,13 +1,17 @@
-A cateogory is a mathematical structure that links a collection of objects
-with non-symetric connections called morphisms.  Categories are an
-extremely versatile tool to abstract situations.  The objects and morphisms
-can represent any data one can concieve of and fulfill any role.  Either or
-neither objects and morphisms could form a notion of structure.  They could
-be numbers, operations, relations, people, places.
-
-//some commutative diagrams as examples of elementary/real world categories
-like families
-
+\documentclass{article}
+\usepackage{tikz-cd}
+\begin{document}
+\subsection{The idea of a Category}
+A category is a mathematical structure that links a collection of objects with non-symmetric relationships called morphisms.
+They are used to create abstract models of mathematical concepts and structures.
+The objects and morphisms are extremely versatile in what they can represent as shown in the commutative diagrams below:
+\begin{equation}
+    \begin{tikzcd} 
+        A \ar[r,"Father"]
+            & B \ar[d,"Brother"] \\
+            & C
+    \end{tikzcd}
+\end{equation}
 It is useful to see categories as just items with arrows between them like
 above but it should be noted that for each object, there is an identity
 morphism that points to itself.  Every time morphisms can be combined, such
@@ -28,3 +32,7 @@ can also lead to new lines of thought as it is taking away all of the
 context and presenting it in a new way.  Abstracting to motivate reasoning
 is an essential part of mathematics for instance how algebra has helped us
 think about numbers and arithmetic.
+\subsection{Axioms and notation}
+\subsection{Size of categories}
+\subsection{Isomorphisms}
+\end{document}
