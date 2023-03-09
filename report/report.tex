@@ -17,22 +17,6 @@
         linktoc = page
 ]{hyperref}
 
-% -- START: COMMANDS FOR TESTING THE SKELETON REPORT -- %
-
-\usepackage{lipsum}
-\usepackage[%
-        color = gray,
-        angle = 90,
-        anchor = lm,
-        hpos = 4em,
-        fontsize = .06\paperwidth
-]{draftwatermark}
-
-\DraftwatermarkOptions{text=\textbf{Skeleton Report}}
-\nocite{*}
-
-% -- END: COMMANDS FOR TESTING THE SKELETON REPORT -- %
-
 % \yorkemail: takes the username and outputs a clickable mailto link.
 \newcommand{\yorkemail}[1]{\href{mailto:#1@york.ac.uk}{#1@york.ac.uk}}
 
@@ -52,29 +36,24 @@
 \date{Spring--Summer Term, 2023}
 
 \begin{document}
-%
 \begin{abstract}
-        \lipsum[1-1]
+        TODO
 \end{abstract}
 \maketitle
 \tableofcontents
-\par\vspace{-2em}\noindent\rule{\textwidth}{0.4pt}\vspace{1em}
 \section{\for{toc}{\texorpdfstring{\textbf{[MD]~}}{}}Theoretical %
         Underpinnings: Axiomatic Constructions}
-\lipsum[2-4]
+MD: TODO
 
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
-\lipsum[4-6]
+MD: TODO
 
 \section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
         Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
+OD: TODO
+
 \addtocontents{toc}{\protect\vspace{5pt}}
-\lipsum[6-8]
-%
-\par\vspace{1.8em}\noindent\rule{\textwidth}{0.4pt}\vspace{1.5em}
-\printbibliography[title=Cited Works and Tangential Literature]
-\par\vspace{1.8em}\noindent\rule{\textwidth}{0.4pt}
-%
+\printbibliography[title=Cited Works]
 \end{document}
 
