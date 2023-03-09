@@ -47,11 +47,27 @@ MD: TODO
 
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
-MD: TODO
+BB: TODO
 
 \section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
         Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
-OD: TODO
+\subsection{Functional Programming: The Problem} In purely functional languages,
+there is no allowance for context, or mutable variables of any kind. Each
+function must accept some data, perform some strict transformation upon the
+data---as defined by the algorithm---and return the result. Whilst this robust
+paradigm does open a wide range of mathematical avenues involving proof, safety,
+and reproducibility, the prohibition of stateful computation renders many common
+tasks, such as system I/O or communication over a network socket, largely
+impossible, as these imperatively defined operations inherently contravene the
+purity principles of functional programming.
+
+Haskell is a commonly used purely functional programming language, and
+suffers, as do all languages in the same class, from this blaring issue.
+Indeed, early versions of Haskell did not support the chaining of stateful
+computation in any sense, due to the obligatory absence of a fixed execution
+order in functional paradigms; programmers were forced to resort to breaking the
+purity of the language through aesthetically unpleasant techniques, ultimately
+obviating the mathematical essence of the Haskell formal type system.
 
 \addtocontents{toc}{\protect\vspace{5pt}}
 \printbibliography[title=Cited Works]

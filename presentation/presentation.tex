@@ -1,7 +1,7 @@
 % OWD, 2023.
 
 \documentclass{beamer}
-\usepackage{tikz-cd,adjustbox,listings,caption,mathtools}
+\usepackage{tikz-cd,adjustbox,caption,mathtools}
 
 \tikzcdset{outer sep=2pt}
 
@@ -33,14 +33,6 @@
 \DeclareMathOperator{\catpoint}{\text{\textbf{Based}}}
 \DeclareMathOperator{\catdeduce}{\text{\textbf{Deduce}}}
 \DeclareMathOperator{\catfun}{\text{\textbf{Fun}}}
-
-\lstset{language = Haskell,
-        showstringspaces = false,%
-        columns = flexible,%
-        basicstyle = {\small\ttfamily},%
-        keywordstyle = \color{blue},%
-        stringstyle = \color{darkgray}
-}
 
 \title[Elementary Category Theory]%
 {An Investigation of Elementary Category Theory}
@@ -343,7 +335,7 @@
                                 \qquad && \text{[\textbf{Homogeinity}]}
                         \end{alignat*}
                         where $\vec{u},\vec{v}\in K^n \text{ and }\lambda\in K$.
-                \item This only applied to \emph{finite-dimensional} vector
+                \item This only applies to \emph{finite-dimensional} vector
                         spaces. Banach spaces and Functional Analysis are out of
                         the scope of this talk! ($n\in\mathbb{N}$)
         \end{itemize}
