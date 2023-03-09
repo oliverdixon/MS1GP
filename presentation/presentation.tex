@@ -400,8 +400,8 @@
         \pause
         \begin{figure}
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
-                        \phi \arrow[r, "\alpha"] \&
-                        \psi \arrow[r, "\beta"] \&
+                        \phi \arrow[r, "\alpha" swap] \&
+                        \psi \arrow[r, "\beta" swap] \&
                         \theta \arrow[bend right=40, ll, "\gamma" swap]
                 \end{tikzcd}
                 \caption{$\phi$ and $\theta$ are logically equivalent through
@@ -485,7 +485,7 @@
         \frametitle{Monoids (1)}
         A monoid $(M,\mu,\eta)$ is composed of:
         \begin{itemize}
-                \item Some object $M \in \catobj \arbcat{C}_0$
+                \item Some object $M \in \catobj \arbcat{C}$
                 \item An associated ``multiplication'' bifunctor $\mu \in
                         \cathom (M \otimes M, M)$
                 \item An associated ``unit'' identity $\eta \in \cathom (I, M)$.
