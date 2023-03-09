@@ -1,0 +1,36 @@
+% OWD, 2023.
+
+% DO NOT COMPILE THIS FILE IN ISOLATION! It is designed to be included by other
+% TeX files, and will not produce anything on its own.
+%
+% Whenever you need a macro involving categories, or load a package for the
+% typesetting thereof, add it here, since it's likely that most macros will be
+% mutually required between the report and presentation.
+
+\usepackage{amsmath}
+\usepackage{tikz-cd} % Drawing commutative diagrams with TikZ.
+\usepackage{adjustbox} % Scaling tikz-cd commutative diagrams.
+
+\tikzcdset{outer sep=2pt}
+
+% Style note: please typeset named categories (e.g. Hask) in boldface, as shown
+% below. For arbitrary categories (e.g. C or C_0), use \arbcat{...}.
+\DeclareMathOperator{\catobj}{ob}
+\DeclareMathOperator{\catid}{id}
+\DeclareMathOperator{\cathom}{hom}
+
+\newcommand{\arbcat}[1]{\ensuremath\mathcal{#1}}
+% Portability note: \text{\textbf{...}} is more universally accepted than
+% \mathbf{...} when working with Latin fonts, especially in a Sans typeface as
+% with Beamer. I'm still using DeclareMathOperator to ensure correct spacing,
+% particularly around parentheses.
+\DeclareMathOperator{\catendo}{\text{\textbf{Endo}}}
+\DeclareMathOperator{\cathask}{\text{\textbf{Hask}}}
+\DeclareMathOperator{\catset}{\text{\textbf{Set}}}
+\DeclareMathOperator{\catpos}{\text{\textbf{Pos}}}
+\DeclareMathOperator{\catvect}{\mathit{K}-\text{\textbf{Vect}}}
+\DeclareMathOperator{\catpre}{\text{\textbf{Ord}}}
+\DeclareMathOperator{\catpoint}{\text{\textbf{Based}}}
+\DeclareMathOperator{\catdeduce}{\text{\textbf{Deduce}}}
+\DeclareMathOperator{\catfun}{\text{\textbf{Fun}}}
+

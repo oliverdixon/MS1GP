@@ -2,8 +2,8 @@
 # OWD 2023
 
 # Copy newer PDFs, as defined by EXPORT_FILES, to the web instance. The
-# complicated network of permissions on the York networks make symlinks
-# outside of ~/web intractable, so we just copy the entire file.
+# complicated network of permissions on the York network makes symlinks outside
+# of ~/web intractable, so we just copy the entire file.
 
 DEST_DIR="${HOME}/web/ms1_export/"
 GIT_ROOT="$(git rev-parse --show-toplevel)/"

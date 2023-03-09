@@ -11,6 +11,8 @@
 	style = alphabetic
 ]{biblatex}
 
+\input{../catmacros.tex}
+
 \usepackage[%
 	colorlinks = true,
 	allcolors = blue,
@@ -20,6 +22,7 @@
 % \yorkemail: takes the username and outputs a clickable mailto link.
 \newcommand{\yorkemail}[1]{\href{mailto:#1@york.ac.uk}{#1@york.ac.uk}}
 
+\setcounter{tocdepth}{1} % Only show major sections in the Table of Contents.
 \addbibresource{report.bib}
 
 \title[An Investigation of Elementary Category Theory]{An Investigation of %
@@ -68,6 +71,15 @@ computation in any sense, due to the obligatory absence of a fixed execution
 order in functional paradigms; programmers were forced to resort to breaking the
 purity of the language through aesthetically unpleasant techniques, ultimately
 obviating the mathematical essence of the Haskell formal type system.
+
+Category Theory can assist in the solution to this problem, in the form of
+monads, which are \emph{monoids in the category of endofunctors}. To unpack this
+definition, some more theory needs developing.
+
+\subsection{Monoidal Categories}
+\subsection{Monoids}
+\subsection{The Category of Endofunctors and Monads}
+\subsection{The $\cathask$ Category}
 
 \addtocontents{toc}{\protect\vspace{5pt}}
 \printbibliography[title=Cited Works]
