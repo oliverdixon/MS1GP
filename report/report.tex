@@ -86,6 +86,7 @@ These go from an object to itself and are equivalent to not doing a morphism at 
 as when they are composed with another morphism $f$, the resulting composite morphism is equal to $f$.
 The morphism has done nothing, like how multiplying by 1(The multiplicative identity) does not change it's value.
 It is similar to stating that something is equal to itself which is a trivial fact but an important feature of the structure of categories.
+It should be noted that it may not be the only morphism from one object to itself.
 
 The point of categories is to get more subtle notions of similarity or "sameness".
 By creating categories we abstract things to their roles and by comparing categories or spotting patterns and structures within them,
@@ -93,6 +94,27 @@ we can see properties shared by things that would initially seem very different.
 Lines of thought in one context can be more easily translated into another by seeing equivalent structural features.
 Mathematicians can then try new methods to solve problems and prove new facts or describe multiple problems as one that is more general.
 \subsection{Axioms and notation}
+We will now formally define a category. The following axioms are necessary for a structure to be considered a category.
+\paragraph{Axiom 1: Objects}
+In a category $C$ there is $ob(C)$, which is a collection of all objects associated with $C$.
+\paragraph{Axiom 2: Morphisms}
+For each pair ordered pair of objects $(A,B)$ in a category $C$ we have $hom(A,B)$, also written as $C(A,B)$.
+This is the collection of all morphisms from A to B, short for "homomorphism set".
+Homomorphisms are those that preserve the structure of objects and for many useful categories they are the only morphisms.
+However, this property does not need to hold to use this notation.
+A morphism $f$ is notated to map $A$ to $B$ by $f: A\to B$.
+\paragraph{Axiom 3: Composition}
+For objects $A,B,C\in ob(C)$ if there exists morphisms $(f: A\to B)\in hom(A,B)$ and $(g: B\to C)\in hom(B,C)$, then there exists $(g\circ f: A\to C)\in hom(A,C)$
+\paragraph{Axiom 4: Identities}
+Every object $A$ in a category $C$ has an identity morphism which maps from $A$ to itself.
+It is notated $1_A: A\to A$ for $A\in ob(C), 1_A\in hom(A,A)$
+For $f\in hom(A,_), g\in hom(_,A)$ the identity has the property that $f\circ 1_A = f, 1_A\circ g = g$
+
+Each identity is unique to it's object. If there was 2 identities $I_1,I_2\in A$ then $f\circ I_1 = f = f\circ I_2 \implies I_1=I_2$
+\paragraph{Axiom 5: Asscociativity}
+A morphism $h\circ(g\circ f) = (h\circ g)\circ f$. 
+This means that two morphisms are equal if they are composed from the same morphisms in the same order
+regardless of the order in which we compute the compositions.
 \subsection{Size of categories}
 
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
