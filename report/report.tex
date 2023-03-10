@@ -51,22 +51,20 @@ A category is a mathematical structure that links a collection of objects with n
 Each morphism can be said to traverse from one object to another.
 They are used to create abstract models of mathematical concepts and structures based on the role each object plays.
 The objects and morphisms are extremely versatile in what they can represent as shown in the commutative diagrams below:
+
 \begin{equation}
-        \begin{tikzcd} 
-                A \ar[r,"Father"]
-                        & B \ar[d,"Brother"] \ar{drr,"Sibling", bend left=10}\\
-                        & C \ar[l,"Husband] \\
-                D
-        \end{tikzcd}
-        %
-        \begin{tikzcd}
-
-        \end{tikzcd}
-        %
-        \begin{tikzcd}
-
-        \end{tikzcd}
-
+\begin{tikzcd} 
+        A \ar[r,"Father"] & B \ar[d,"Brother"]\\
+        D & C \ar[l,"Husband"]
+\end{tikzcd}
+%
+\begin{tikzcd}
+A
+\end{tikzcd}
+%
+\begin{tikzcd}
+A
+\end{tikzcd}
 \end{equation}
 These diagrams are usually used to give a sample of a category to demonstrate it's properties.
 Mathematicians like to generalize with categories and consider cases with infinite objects and morphisms.
@@ -79,7 +77,7 @@ It means to do one morphism and then another, given that the target object of th
 Above we can see that "person A" has father "person B", who has brother "person C".
 We can compose these two together to have a morphism from A to C which we can call "uncle".
 These composite morphisms are implied to exist by the diagram and such are usually redundant to show.
-This can be done as many time as one wants, so if there is a path to traverse from any object to another, there is a composite morphism between the two.
+This can be done as many times as one wants, so if there is a path to traverse from any object to another, there is a composite morphism between the two.
 
 There are also identity morphisms.
 These go from an object to itself and are equivalent to not doing a morphism at all,
@@ -126,7 +124,8 @@ It states that if you have a set S that contains every set which doesn't contain
 then suppose that S does not contain S, 
 it would imply that S is in fact in S as it does not contain itself and vice versa.
 Formally, $S = {x \text{is a set} | x\notin x}, (S\in S) \iff (S\notin S)$.
-There were many examples of these paradoxes(which would require set theory knowledge)
+
+There were many examples of these paradoxes
 that were uncovered in the early 20th century.
 Mathematicians are too rigorous to allow such a thing,
 so to solve the issue they devised axiomatic systems to limit the comprehension of sets to those that would not cause paradoxes.
