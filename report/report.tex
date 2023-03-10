@@ -47,6 +47,7 @@
 \section{\for{toc}{\texorpdfstring{\textbf{[MD]~}}{}}Theoretical %
         Underpinnings: Axiomatic Constructions}
 \subsection{The idea of a Category}
+\begin{flushleft}
 A category is a mathematical structure that links a collection of objects with non-symmetric relationships called morphisms.
 Each morphism can be said to traverse from one object to another.
 They are used to create abstract models of mathematical concepts and structures based on the role each object plays.
@@ -74,15 +75,16 @@ It makes all non-trivial quadratics easier to solve and uncovers a method to det
 
 Morphisms are combined together in a process called composition.
 It means to do one morphism and then another, given that the target object of the first morphism is the same as the source of the second morphism.
-Above we can see that "person A" has father "person B", who has brother "person C".
-We can compose these two together to have a morphism from A to C which we can call "uncle".
+Above we can see that person $A$ has father person $B$, who has brother person $C$.
+We can compose these two together to have a morphism from $A$ to $C$ which we can could "uncle".
 These composite morphisms are implied to exist by the diagram and such are usually redundant to show.
 This can be done as many times as one wants, so if there is a path to traverse from any object to another, there is a composite morphism between the two.
+Hence there is a morphism from $A$ to $D$ which we could call "uncle in-law".
 
 There are also identity morphisms.
 These go from an object to itself and are equivalent to not doing a morphism at all,
 as when they are composed with another morphism $f$, the resulting composite morphism is equal to $f$.
-The morphism has done nothing, like how multiplying by 1(The multiplicative identity) does not change it's value.
+The morphism has done nothing, like how multiplying a number by 1(The multiplicative identity) does not change it's value.
 It is similar to stating that something is equal to itself which is a trivial fact but an important feature of the structure of categories.
 It should be noted that it may not be the only morphism from one object to itself.
 
@@ -91,60 +93,78 @@ By creating categories we abstract things to their roles and by comparing catego
 we can see properties shared by things that would initially seem very different.
 Lines of thought in one context can be more easily translated into another by seeing equivalent structural features.
 Mathematicians can then try new methods to solve problems and prove new facts or describe multiple problems as one that is more general.
+\end{flushleft}
 \subsection{Axioms and notation}
-We will now formally define a category. The following axioms are necessary for a structure to be considered a category.
-\paragraph{Axiom 1: Objects}
-In a category $C$ there is $ob(C)$, which is a collection of all objects associated with $C$.
-\paragraph{Axiom 2: Morphisms}
+\begin{flushleft}
+We will now formally define a category. The following axioms are necessary for a structure to be considered a category.\\\;\\
+
+\begin{center}\textbf{Axiom 1: Objects}\end{center}
+
+In a category $C$ there is $ob(C)$, which is a collection of all the objects of $C$.\\\;\\
+\begin{center}\textbf{Axiom 2: Morphisms}\end{center}
+
 For each pair ordered pair of objects $(A,B)$ in a category $C$ we have $hom(A,B)$, also written as $C(A,B)$.
 This is the collection of all morphisms from A to B, short for "homomorphism set".
 Homomorphisms are those that preserve the structure of objects and for many useful categories they are necessary for the axioms to hold.
 However, this property does not need to hold to use this notation.
-A morphism $f$ is notated to map $A$ to $B$ by $f: A\to B$.
-\paragraph{Axiom 3: Composition}
-For objects $A,B,C\in ob(C)$ if there exists morphisms $(f: A\to B)\in hom(A,B)$ and $(g: B\to C)\in hom(B,C)$, then there exists $(g\circ f: A\to C)\in hom(A,C)$
-\paragraph{Axiom 4: Identities}
-Every object $A$ in a category $C$ has an identity morphism which maps from $A$ to itself.
-It is notated $1_A: A\to A$ for $A\in ob(C), 1_A\in hom(A,A)$
-For $f\in hom(A,_), g\in hom(_,A)$ the identity has the property that $f\circ 1_A = f, 1_A\circ g = g$
+A morphism $f$ is notated to map $A$ to $B$ by $f: A\to B$.\\\;\\
 
-Each identity is unique to it's object. If there was 2 identities $I_1,I_2\in A$ then $f\circ I_1 = f = f\circ I_2 \implies I_1=I_2$
-\paragraph{Axiom 5: Asscociativity}
+\begin{center}\textbf{Axiom 3: Composition}\end{center}
+
+For objects $A,B,C\in ob(C)$ if there exists morphisms $(f: A\to B)\in hom(A,B)$ and $(g: B\to C)\in hom(B,C)$, then there exists $(g\circ f: A\to C)\in hom(A,C)$\\\;\\
+
+\begin{center}\textbf{Axiom 4: Identities}\end{center}
+
+Every object $A$ in a category $C$ has an identity morphism which maps from $A$ to itself.
+It is notated $1_A: A\to A$ for $A\in ob(C), 1_A\in hom(A,A)$.
+For $f\in hom(A,B), g\in hom(B,A)$ the identity has the property that $f\circ 1_A = f, 1_A\circ g = g$
+Each identity is unique to it's object. If there was 2 identities $I_1,I_2\in A$ then $(f\circ I_1 = f = f\circ I_2) \implies I_1=I_2$\\\;\\
+
+
+\begin{center}\textbf{Axiom 5: Associativity}\end{center}
+
+
 A morphism $h\circ(g\circ f) = (h\circ g)\circ f$. 
 This means that two morphisms are equal if they are composed from the same morphisms in the same order
 regardless of the order in which we compute the individual composite pairs.
+\end{flushleft}
 \subsection{Size of categories}
-$ob(C)$ and the collections $hom(A,B)$ do not have to be finite.
+\begin{flushleft}
+The collection $ob(C)$ and the collections $hom(A,B)$ do not have to be finite.
 The idea of category size means to place categories in a hierarchy of containment.
-This is to accommodate how $ob()$ and $hom()$ do not have to be sets either.
+This is to accommodate how $ob(C)$ and $hom(A,B)$ do not have to be sets either.
 
 When defining an infinite collection of objects by their properties, it can create contradictions.
 Famously in set theory there is Russel's paradox.
 It states that if you have a set S that contains every set which doesn't contain itself,
 then suppose that S does not contain S, 
 it would imply that S is in fact in S as it does not contain itself and vice versa.
-Formally, $S = {x \text{is a set} | x\notin x}, (S\in S) \iff (S\notin S)$.
+
+Formally, $S = \{x\;\text{is a set}\:|\:x\notin x\}, (S\in S) \iff (S\notin S)$.
 
 There were many examples of these paradoxes
 that were uncovered in the early 20th century.
 Mathematicians are too rigorous to allow such a thing,
-so to solve the issue they devised axiomatic systems to limit the comprehension of sets to those that would not cause paradoxes.
-
+so to solve the issue they devised axiomatic systems to limit the properties that members of sets can be said to follow.
+This makes some sets very convoluted to define and means there are well defined collections of objects that cannot be put into a set.
 Categories address this issue in a more elegant way.
 Firstly, categories do not claim to contain elements; the core concept is instead relationships.
 Secondly, categories have a hierarchy of containment such that they only contain categories "smaller" than themselves.
-It follows then that categories are not defined in a self referential manner like in Russel's paradox.
-\paragraph{Definitions}
-A small category is where $ob(c)$ and each $hom()$ can be described as a set.
+It follows then that categories are not defined in a self referential manner like in Russel's paradox.\\\;\\
 
-A locally small category is where neither $ob(c)$ or $hom()$ form a set. 
+\begin{center}\textbf{Definitions:}
 
-A large category is a totality of a small category, meaning it has a set of small categories as it's objects.
+A small category is where $ob(C)$ and each $hom(A,B)$ can be described as a set.\\\;\\
+
+A locally small category is where $ob(C)$ does not form a set but each $hom(A,B)$ does.\\\;\\
+
+A large category is where nether $ob(C)$ nor $hom(A,B)$ are a set.\\\;\\\end{center}
 The hierarchy means that if you wanted a category where small categories are objects,
 it would have to be a large category.
 Then, if you wanted a category of large categories, you would need a super-large category and so on.
 This can be used to formally think about multiple layers of generalization and abstraction.
 %Commutative diagram thingy showing a hierarchy from individual numbers up to types of numbers up to further layers.
+\end{flushleft}
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
 BB: TODO
