@@ -46,7 +46,54 @@
 \tableofcontents
 \section{\for{toc}{\texorpdfstring{\textbf{[MD]~}}{}}Theoretical %
         Underpinnings: Axiomatic Constructions}
-MD: TODO
+\subsection{The idea of a Category}
+A category is a mathematical structure that links a collection of objects with non-symmetric relationships called morphisms.
+Each morphism can be said to traverse from one object to another.
+They are used to create abstract models of mathematical concepts and structures based on the role each object plays.
+The objects and morphisms are extremely versatile in what they can represent as shown in the commutative diagrams below:
+\begin{equation}
+        \begin{tikzcd} 
+                A \ar[r,"Father"]
+                        & B \ar[d,"Brother"] \ar{drr,"Sibling", bend left=10}\\
+                        & C \ar[l,"Husband] \\
+                D
+        \end{tikzcd}
+        %
+        \begin{tikzcd}
+
+        \end{tikzcd}
+        %
+        \begin{tikzcd}
+
+        \end{tikzcd}
+
+\end{equation}
+These diagrams are usually used to give a sample of a category to demonstrate it's properties.
+Mathematicians like to generalize with categories and consider cases with infinite objects and morphisms.
+The most valuable mathematical facts tend to be those that apply to the most situations possible.
+For instance, uncovering the quadratic formula being more important than solving a particularly difficult quadratic.
+It makes all non-trivial quadratics easier to solve and uncovers a method to determine whether the solutions are real or complex using the "$b^2-4ac$" term.
+
+Morphisms are combined together in a process called composition.
+It means to do one morphism and then another, given that the target object of the first morphism is the same as the source of the second morphism.
+Above we can see that "person A" has father "person B", who has brother "person C".
+We can compose these two together to have a morphism from A to C which we can call "uncle".
+These composite morphisms are implied to exist by the diagram and such are usually redundant to show.
+This can be done as many time as one wants, so if there is a path to traverse from any object to another, there is a composite morphism between the two.
+
+There are also identity morphisms.
+These go from an object to itself and are equivalent to not doing a morphism at all,
+as when they are composed with another morphism $f$, the resulting composite morphism is equal to $f$.
+The morphism has done nothing, like how multiplying by 1(The multiplicative identity) does not change it's value.
+It is similar to stating that something is equal to itself which is a trivial fact but an important feature of the structure of categories.
+
+The point of categories is to get more subtle notions of similarity or "sameness".
+By creating categories we abstract things to their roles and by comparing categories or spotting patterns and structures within them,
+we can see properties shared by things that would initially seem very different.
+Lines of thought in one context can be more easily translated into another by seeing equivalent structural features.
+Mathematicians can then try new methods to solve problems and prove new facts or describe multiple problems as one that is more general.
+\subsection{Axioms and notation}
+\subsection{Size of categories}
 
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
