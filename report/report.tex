@@ -100,7 +100,7 @@ In a category $C$ there is $ob(C)$, which is a collection of all objects associa
 \paragraph{Axiom 2: Morphisms}
 For each pair ordered pair of objects $(A,B)$ in a category $C$ we have $hom(A,B)$, also written as $C(A,B)$.
 This is the collection of all morphisms from A to B, short for "homomorphism set".
-Homomorphisms are those that preserve the structure of objects and for many useful categories they are the only morphisms.
+Homomorphisms are those that preserve the structure of objects and for many useful categories they are necessary for the axioms to hold.
 However, this property does not need to hold to use this notation.
 A morphism $f$ is notated to map $A$ to $B$ by $f: A\to B$.
 \paragraph{Axiom 3: Composition}
@@ -114,9 +114,38 @@ Each identity is unique to it's object. If there was 2 identities $I_1,I_2\in A$
 \paragraph{Axiom 5: Asscociativity}
 A morphism $h\circ(g\circ f) = (h\circ g)\circ f$. 
 This means that two morphisms are equal if they are composed from the same morphisms in the same order
-regardless of the order in which we compute the compositions.
+regardless of the order in which we compute the individual composite pairs.
 \subsection{Size of categories}
+$ob(C)$ and the collections $hom(A,B)$ do not have to be finite.
+The idea of category size means to place categories in a hierarchy of containment.
+This is to accommodate how $ob()$ and $hom()$ do not have to be sets either.
 
+When defining an infinite collection of objects by their properties, it can create contradictions.
+Famously in set theory there is Russel's paradox.
+It states that if you have a set S that contains every set which doesn't contain itself,
+then suppose that S does not contain S, 
+it would imply that S is in fact in S as it does not contain itself and vice versa.
+Formally, $S = {x \text{is a set} | x\notin x}, (S\in S) \iff (S\notin S)$.
+There were many examples of these paradoxes(which would require set theory knowledge)
+that were uncovered in the early 20th century.
+Mathematicians are too rigorous to allow such a thing,
+so to solve the issue they devised axiomatic systems to limit the comprehension of sets to those that would not cause paradoxes.
+
+Categories address this issue in a more elegant way.
+Firstly, categories do not claim to contain elements; the core concept is instead relationships.
+Secondly, categories have a hierarchy of containment such that they only contain structures(which could be categories themselves) "smaller" than themselves.
+It follows then that categories are not defined in a self referential manner like in Russel's paradox.
+\paragraph{Definitions}
+A small category is where $ob(c)$ and each $hom()$ can be described as a set.
+
+A locally small category is where neither $ob(c)$ or $hom()$ form a set. 
+
+A large category is a totality of a small category, meaning it has a set of small categories as it's objects.
+The hierarchy means that if you wanted a category where small categories are objects,
+it would have to be a large category.
+Then, if you wanted a category of large categories, you would need a super-large category and so on.
+This can be used to formally think about multiple layers of generalization and abstraction.
+%Commutative diagram thingy showing a hierarchy from individual numbers up to types of numbers up to further layers.
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
 BB: TODO
