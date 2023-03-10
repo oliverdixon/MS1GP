@@ -1,4 +1,4 @@
-% OWD, 2023.
+% OWD 2023
 
 \documentclass{beamer}
 \usepackage{caption,mathtools}
@@ -120,7 +120,7 @@
         For any category $\arbcat{C}$, we need to consider two important sets:
         \begin{itemize}
                 \item \emph{The obset}: The set of objects in $\arbcat{C}$,
-                        denoted $\catobj{C}$.
+                        denoted $\catobj{\arbcat{C}}$.
                 \item \emph{The homset}: The set of (homeo)morphisms in
                         $\arbcat{C}$, denoted $\cathom{\arbcat{C}}$. Morphisms
                         are sometimes called ``arrows''.
@@ -337,8 +337,8 @@
                         $\catdeduce$. For every pair of objects, a corresponding
                         morphism in the homset represents a \emph{specific
                         manner of deduction} between its domain and codomain.
-                        Deductive cancelling is equivalent to forging morphisms
-                        together!
+                        Deductive cancelling is equivalent to morphism
+                        composition!
         \end{itemize}
 \end{frame}
 
@@ -568,15 +568,15 @@
         observation useful?
         \pause
         \begin{itemize}
+                \item Akin to ``following the arrows'' on a commutative
+                diagram of $\catendo{(\cathask)}$, using the category product
+                $\cathask \times \cathask$ to pass the desired parameter with
+                the current state, and returning the transformed state,
+                recalling that the endofunctors are morphisms in $\cathask$.
                 \item In practice, monads allow stateful calculation. Unlike
                 the mindless emulation of imperative languages, this is achieved
                 without breaking function purity. This can be seen intuitively
                 as \textit{threading state though a chain of functions}.
-                \item This is akin to ``following the arrows'' on a commutative
-                diagram of $\catendo{(\cathask)}$ using the category product
-                $\cathask \times \cathask$ to pass the desired parameter with
-                the current state, and returning the transformed state,
-                recalling that the endofunctors are morphisms in $\cathask$.
         \end{itemize}
 \end{frame}
 
