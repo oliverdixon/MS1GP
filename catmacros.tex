@@ -1,7 +1,8 @@
 % OWD 2023
 
 % DO NOT COMPILE THIS FILE IN ISOLATION! It is designed to be included by other
-% TeX files, and will not produce anything on its own.
+% TeX files, and will not produce anything on its own (other than a swathe of
+% meaningless temporary files and an incomprehensible error message).
 %
 % Whenever you need a macro involving categories, or load a package for the
 % typesetting thereof, add it here, since it's likely that most macros will be
@@ -11,13 +12,18 @@
 \usepackage{tikz-cd} % Drawing commutative diagrams with TikZ.
 \usepackage{adjustbox} % Scaling tikz-cd commutative diagrams.
 
-\tikzcdset{outer sep=2pt}
+\tikzcdset{outer sep=2pt} % Apply some padding to arrows in comm. diagrams.
+
+% Provide a thicker arrow style (1pt) for functor morphisms in pseudo-CDs.
+\tikzset{FUNCTOR/.style = {line width=#1},%
+         FUNCTOR/.default=1pt}
 
 % Style note: please typeset named categories (e.g. Hask) in boldface, as shown
-% below. For arbitrary categories (e.g. C or C_0), use \arbcat{...}.
+% below. For arbitrary categories (e.g. C or C_0), use \arbcat. For the homset,
+% use the built-in \hom macro (\cathom is superfluous).
+
 \DeclareMathOperator{\catobj}{ob}
 \DeclareMathOperator{\catid}{id}
-\DeclareMathOperator{\cathom}{hom}
 
 \newcommand{\arbcat}[1]{\ensuremath\mathcal{#1}}
 \DeclareMathOperator{\catendo}{\mathbf{Endo}}

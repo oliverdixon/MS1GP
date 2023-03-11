@@ -4,7 +4,7 @@
 \usepackage{xcolor}
 \usepackage[foot]{amsaddr} % Move authorship information to the front page
 \usepackage{caption, subcaption, float, etoolbox} % Enhanced float environments
-\usepackage{minted, realboxes} % Source code (Haskell) formatting
+\usepackage{minted, realboxes, listings} % Source code (Haskell) formatting
 
 \usepackage[%
 	backend = biber,
@@ -21,24 +21,49 @@
 
 \input{../catmacros.tex} % Common category-theoretic macros
 
-% -- Begin Minted listing options for Haskell
+% -- Begin listing options for Haskell
 
-\definecolor{codebgcol}{rgb}{0.85,0.85,0.85}
-\newcommand{\inlinehask}[1]{\mintinline[bgcolor=codebgcol]{haskell}{#1}}
-\newcommand{\barehask}[1]{\Colorbox{codebgcol}{#1}}
+\newcommand{\inlinehask}[1]{\mintinline{haskell}{#1}}
+\newcommand{\barehask}[1]{\Colorbox{codebg}{\lstinline[style = inlineHask]{#1}}}
+\newcommand{\haskmath}[2]{%
+        \ensuremath\text{\Colorbox{codebg}{%
+                \lstinline[style = inlineHask, basicstyle = #2]{#1}%
+        }}%
+}
 \AtBeginEnvironment{listing}{\setlength{\abovecaptionskip}{.2em}}
 \newcommand{\listingautorefname}{Listing}
 
-\setminted[haskell]{%
+\renewcommand{\ttdefault}{pcr} % Use Courier instead of CM for fixed-width text.
+\newcommand{\haskMorphStyle}{\normalsize\ttfamily\color{haskkeyword}}
+\newcommand{\haskObjStyle}{\normalsize\ttfamily\color{black}}
+\newcommand{\haskFuncStyle}{\normalsize\ttfamily\color{haskkeyword}\bfseries}
+
+\definecolor{codebg}{RGB}{220,220,220}
+\definecolor{haskkeyword}{RGB}{173,46,252}
+
+% I am using the Listings package for printing inline Haskell, and Minted for
+% printing verbatim blocks. In general, Minted is far superior, but Listings is
+% more crudely customisable for pseudo-code inline blocks that require very
+% literal pattern-matching for given tokens.
+
+\setminted{%
         frame = lines,
         framesep = 2mm,
         baselinestretch = 1.2,
-        bgcolor = codebgcol,
+        bgcolor = codebg,
         fontsize = \footnotesize,
         linenos
 }
 
-% -- End Minted listing options for Haskell
+\lstdefinestyle{inlineHask}{%
+        language = Haskell,
+        alsoletter = {->, ::},
+        morekeywords = {->, ::},
+        keywordstyle = \color{haskkeyword},
+        basicstyle = \footnotesize\ttfamily
+}
+
+% -- End listing options for Haskell
 
 % \yorkemail: takes the username and outputs a clickable mailto link.
 \newcommand{\yorkemail}[1]{\href{mailto:#1@york.ac.uk}{#1@york.ac.uk}}
@@ -81,7 +106,7 @@
 \section{\for{toc}{\texorpdfstring{\textbf{[MD]~}}{}}Theoretical %
         Underpinnings: Axiomatic Constructions}
 \begin{flushright}
-        \textbf{(Written by Matthew Drury.)}
+        \textbf{[Written by Matthew Drury]}
 \end{flushright}
 
 \subsection{The idea of a Category}
@@ -211,7 +236,7 @@ think about multiple layers of generalisation and abstraction.
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
 \begin{flushright}
-        \textbf{(Written by Ben Brook.)}
+        \textbf{[Written by Ben Brook]}
 \end{flushright}
 
 \noindent BB: TODO.
@@ -219,196 +244,11 @@ think about multiple layers of generalisation and abstraction.
 \section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
         Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
 \begin{flushright}
-        \textbf{(Written by Oliver Dixon.)}
+        \textbf{[Written by Oliver Dixon]}
 \end{flushright}
 
-\subsection{Functional Programming and Haskell}
+\noindent Temporarily moved to \texttt{owd\_report.tex}.
 
-In purely functional languages, there is no allowance for context, or mutable
-variables of any kind. Each function must accept some data, perform some strict
-transformation upon the data---as defined by the algorithm---and return the
-result. Whilst this robust paradigm does open a wide range of mathematical
-avenues involving proof, safety, and reproducibility, the prohibition of
-stateful computation renders many common tasks, such as system I/O or
-communication over a network socket, largely impossible, as these imperatively
-defined operations inherently contravene the purity principles of functional
-programming.
-
-Haskell is a commonly used purely functional programming language, and
-suffers, as do all languages in the same class, from this blaring issue.
-Indeed, early versions of Haskell did not support the chaining of stateful
-computation in any sense, due to the obligatory absence of a fixed execution
-order in functional paradigms; programmers were forced to resort to breaking the
-purity of the language through aesthetically unpleasant techniques, ultimately
-obviating the mathematical essence of the Haskell formal type system.
-
-Due to the strength of the Haskell type system and function interface, we may
-define a corresponding category, $\cathask$, within which the objects are
-Haskell types, and the morphisms are functions\footnotemark.
-%
-\footnotetext{Due to the $\lambda$-Calculus concept of \emph{currying}, named
-after Haskell Curry, functions taking multiple arguments may be decomposed into
-a chain of function compositions, in which each function strictly accepts and
-returns a single argument. This is made explicit in Haskell, where the type
-signature of a function \inlinehask{f} may be defined as \inlinehask{f :: a -> b
--> c}, invoked as \inlinehask{f a b}, and expected to return a value of type
-\barehask{c}. This function signature is trivially equivalent to the
-\emph{uncurried} form of \inlinehask{f}, defined as \inlinehask{f :: (a -> b) ->
-c}.}%
-
-\subsection{Monoidal Categories and Monoids}
-
-Before fully exploiting the structure of $\cathask$, we must develop the theory
-of \emph{monoidal categories} and their corresponding \emph{monoids}. Monoidal
-categories can be regarded as a six-tuple $(\arbcat{C}_0, \otimes, I, \alpha,
-\lambda, \rho)$, containing various components \autocite{Kelly:1982}:
-\begin{itemize}
-        \item A base category, $\arbcat{C}_0$;
-
-        \item A bifunctor $\otimes \colon \arbcat{C}_0 \times \arbcat{C}_0 \to
-        \arbcat{C}_0$;
-
-        \item An identity object $I \in \catobj \arbcat{C}_0$;
-
-        \item An associativity natural transformation $\alpha_{A,B,C} \colon (A
-        \otimes B) \otimes C \to A \otimes (B \otimes C)$;
-
-        \item A left-identity natural transformation $\lambda_A \colon I \otimes
-        A \to A$;
-
-        \item A right-identity natural transformation $\rho_A \colon A \otimes I
-        \to A$.
-\end{itemize}
-
-To maintain brevity, the natural transformations are often omitted from the
-tuple-descriptions of monoidal categories: $(\arbcat{C}_0, \otimes, I)$. In this
-context, the natural transformations $\alpha$, $\lambda$, and $\rho$ are used to
-induce certain properties on $\otimes$, which it may not possess natively; this
-can be illustrated with a pair of commutative diagrams as in
-\autoref{fig:monoidal-cat-commute}.
-Then, monoids can be considered as three-tuples, consisting of an object in a
-monoidal category $(\arbcat{C}, \otimes, I)$, and coupled with two lifting
-morphisms:
-\begin{itemize}
-        \item A base object $M \in \catobj \arbcat{C}$;
-        \item A \emph{multiplication} morphism $\mu \in \cathom_\arbcat{C} (M
-        \otimes M, M)$;
-        \item A \emph{unit} morphism $\eta \in \cathom_\arbcat{C} (I, M)$.
-\end{itemize}
-Once more, the natural transformations from the parent monoidal category
-$\arbcat{C}$ can be used to induce properties on $\mu$, as in
-\autoref{fig:monoid-commute}.
-
-\subsection{The Category of Endofunctors}
-
-For the purposes of functional programming, and the wider formal treatment of
-functional type systems, a particularly useful monoidal category concerns the
-\emph{category of endofunctors} over some fixed base category $\arbcat{C}_0$.
-Denoted as $\catendo{(\arbcat{C}_0)}$, this forms a monoidal category with the
-associated bifunctor being the standard operation of endofunctor composition.
-
-% \subsection{Functors in Haskell}
-%
-% An important construct in Haskell are \emph{functors}. Over $\cathask$,
-% Haskell functors allow the mapping of types from $\cathask$ to $\cathask$, by
-% some arbitrary Haskell function; morphisms are transposed similarly (see
-% \autoref{lst:hask-functor}). Clearly, all functors over $\cathask$ are
-% endofunctors.
-%
-% \begin{listing}
-%         \inputminted{haskell}{haskell/Functor.hs}
-%         \caption{The Haskell \texttt{Functor} type signature.}
-%         \label{lst:hask-functor}
-% \end{listing}
-
-% -- Begin figure appendices.
-%
-% This is probably a temporary measure while the exact positioning of things is
-% being calculated. Once the content is complete and the box sizes are known,
-% these figures should probably be embedded into the prose rather than being
-% pushed to the endmatter like this.
-
-\clearpage
-\subsection{Appendix of Monoidal Commutative Diagrams}
-~
-\begin{figure}[h!]
-        \begin{subfigure}{\textwidth}
-                \centering
-                \begin{tikzcd}[ampersand replacement=\&]
-                        \left[(A \otimes B) \otimes C \right] \otimes D
-                                \arrow[r, "\alpha"]
-                                \arrow[d, "\alpha\,\otimes\,\catid D" swap] \&
-                        (A \otimes B) \otimes (C \otimes D)
-                                \arrow[r, "\alpha"] \&
-                        A \otimes \left[ B \otimes (C \otimes D) \right] \\
-                        \left[ A \otimes (B \otimes C) \right] \otimes D
-                                \arrow[rr, "\alpha" swap] \& \&
-                        A \otimes \left[ (B \otimes C) \otimes D \right]
-                                \arrow[u, "\catid A\,\otimes\,\alpha" swap]
-                \end{tikzcd}%
-                \caption{Associativity induced by $\alpha$}
-        \end{subfigure}
-
-        \begin{subfigure}{\textwidth}
-                \centering
-                \begin{tikzcd}[sep=large, ampersand replacement=\&]
-                        (B \otimes I) \otimes C
-                                \arrow[rr, "\alpha"]
-                                \arrow[rd, "\rho\,\otimes\,\catid C" swap] \& \&
-                        B \otimes (I \otimes C)
-                                \arrow[ld, "\catid B\,\otimes\,\lambda"] \\
-                        \& B \otimes C \&
-                \end{tikzcd}%
-                \caption{Left- and right-identities induced by $\lambda$ and
-                        $\rho$}
-        \end{subfigure}%
-        \caption{The natural transformations invoke commutativity on the
-        bifunctor $\otimes$ applied to objects $A$, $B$, $C$, $D$, and $I$.}
-        \vspace{1.5em}
-        \label{fig:monoidal-cat-commute}
-\end{figure}
-
-\begin{figure}[h!]
-        \begin{subfigure}{\textwidth}
-                \centering
-                \begin{tikzcd}[sep=large, ampersand replacement=\&]
-                        (M \otimes M) \otimes M
-                                \arrow[r, "\alpha"]
-                                \arrow[d, "\mu\,\otimes\,\catid M" swap] \&
-                        M \otimes (M \otimes M)
-                                \arrow[r, "\catid M\,\otimes\,\mu"] \&
-                        M \otimes M
-                                \arrow[d, "\mu"] \\
-                        M \otimes M
-                                \arrow[rr, "\mu" swap] \& \& M
-                \end{tikzcd}%
-                \caption{Associativity on $\mu$ induced by $\alpha$}
-        \end{subfigure}
-
-        \begin{subfigure}{\textwidth}
-                \centering
-                \begin{tikzcd}[sep=large, ampersand replacement=\&]
-                        I \otimes M
-                                \arrow[r, "\eta\,\otimes\,\catid M"]
-                                \arrow[rd, "\lambda" swap] \&
-                        M \otimes M
-                                \arrow[d, "\mu" swap] \&
-                        M \otimes I
-                                \arrow[l, "\catid M\,\otimes\,\eta" swap]
-                                \arrow[ld, "\rho"] \\
-                        \& M \&
-                \end{tikzcd}%
-                \caption{Left- and right-identities of $M$ induced by $\lambda$
-                        and $\rho$}
-        \end{subfigure}%
-        \caption{The natural transformations also apply within the monoid.}
-        \vspace{1.5em}
-        \label{fig:monoid-commute}
-\end{figure}
-
-% -- End figure appendices.
-
-\clearpage
 \addtocontents{toc}{\protect\vspace{5pt}}
 \printbibliography[title=Cited Works]
 \end{document}
