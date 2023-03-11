@@ -27,10 +27,11 @@
 \newcommand{\barehask}[1]{\Colorbox{codebg}{\lstinline[style = inlineHask]{#1}}}
 \newcommand{\haskmath}[2]{%
         \ensuremath\text{\Colorbox{codebg}{%
+                \vphantom{\lstinline[basicstyle = \haskMorphStyle]{fg}}%
                 \lstinline[style = inlineHask, basicstyle = #2]{#1}%
         }}%
 }
-\AtBeginEnvironment{listing}{\setlength{\abovecaptionskip}{.2em}}
+\AtBeginEnvironment{listing}{\setlength{\abovecaptionskip}{.8em}}
 \newcommand{\listingautorefname}{Listing}
 
 \renewcommand{\ttdefault}{pcr} % Use Courier instead of CM for fixed-width text.
@@ -58,8 +59,8 @@
 \lstdefinestyle{inlineHask}{%
         language = Haskell,
         alsoletter = {->, ::},
-        morekeywords = {->, ::},
-        keywordstyle = \color{haskkeyword},
+        morekeywords = {->, ::, fmap},
+        keywordstyle = \color{haskkeyword}\bfseries,
         basicstyle = \footnotesize\ttfamily
 }
 
@@ -96,7 +97,6 @@
 \date{Spring--Summer Term, 2023}
 
 % -- End document metadata setup
-
 \begin{document}
 \begin{abstract}
         TODO
