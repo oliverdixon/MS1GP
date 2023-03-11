@@ -2,7 +2,7 @@
 
 \documentclass[10pt,a4paper,reqno]{amsart}
 \usepackage[foot]{amsaddr}
-\usepackage{xcolor,lmodern}
+\usepackage{xcolor,lmodern,minted,realboxes}
 
 \usepackage[%
 	backend = biber,
@@ -18,6 +18,9 @@
 	allcolors = blue,
         linktoc = page
 ]{hyperref}
+
+\newcommand{\inlinehask}[1]{\mintinline[bgcolor=lightgray]{haskell}{#1}}
+\newcommand{\barehask}[1]{\Colorbox{lightgray}{#1}}
 
 % \yorkemail: takes the username and outputs a clickable mailto link.
 \newcommand{\yorkemail}[1]{\href{mailto:#1@york.ac.uk}{#1@york.ac.uk}}
@@ -46,7 +49,10 @@
 \tableofcontents
 \section{\for{toc}{\texorpdfstring{\textbf{[MD]~}}{}}Theoretical %
         Underpinnings: Axiomatic Constructions}
-\noindent \textbf{(Written by Matthew Drury.)}
+\begin{flushright}
+        \textbf{(Written by Matthew Drury.)}
+\end{flushright}
+
 \subsection{The idea of a Category}
 A category is a mathematical structure that links a collection of objects with
 non-symmetric relationships called morphisms.  Each morphism can be said to
@@ -173,12 +179,19 @@ you would need a super-large category and so on. This can be used to formally
 think about multiple layers of generalisation and abstraction.
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
-\noindent \textbf{(Written by Ben Brook.)} BB: TODO
+\begin{flushright}
+        \textbf{(Written by Ben Brook.)}
+\end{flushright}
+
+\noindent BB: TODO.
 
 \section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
         Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
-\noindent \textbf{(Written by Oliver Dixon.)}
-\subsection{Functional Programming: The Problem} In purely functional languages,
+\begin{flushright}
+        \textbf{(Written by Oliver Dixon.)}
+\end{flushright}
+
+\subsection{Functional Programming and Haskell} In purely functional languages,
 there is no allowance for context, or mutable variables of any kind. Each
 function must accept some data, perform some strict transformation upon the
 data---as defined by the algorithm---and return the result. Whilst this robust
@@ -196,14 +209,21 @@ order in functional paradigms; programmers were forced to resort to breaking the
 purity of the language through aesthetically unpleasant techniques, ultimately
 obviating the mathematical essence of the Haskell formal type system.
 
-Category Theory can assist in the solution to this problem, in the form of
-monads, which are \emph{monoids in the category of endofunctors}. To unpack this
-definition, some more theory needs developing.
+Due to the strength of the Haskell type system and function interface, we may
+define a corresponding category, $\cathask$, within which the objects are
+Haskell types, and the morphisms are functions\footnotemark.
+%
+\footnotetext{Due to the $\lambda$-Calculus concept of \emph{currying}, named
+after Haskell Curry, functions taking multiple arguments may be decomposed into
+a chain of function compositions, in which each function strictly accepts and
+returns a single argument. This is made explicit in Haskell, where the type
+signature of a function \inlinehask{f} may be defined as \inlinehask{f :: a -> b
+-> c}, invoked as \inlinehask{f a b}, and expected to return a value of type
+\barehask{c}. This function signature is trivially equivalent to the
+\emph{uncurried} form of \inlinehask{f}, defined as \inlinehask{f :: (a -> b) ->
+c}.}%
 
-\subsection{Monoidal Categories}
-\subsection{Monoids}
-\subsection{The Category of Endofunctors and Monads}
-\subsection{The $\cathask$ Category}
+\subsection{Functors in Haskell}
 
 \addtocontents{toc}{\protect\vspace{5pt}}
 \printbibliography[title=Cited Works]

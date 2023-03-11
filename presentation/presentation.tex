@@ -197,7 +197,7 @@
 
 \begin{frame}
         \frametitle{The Category Product}
-        It would be similarly useful to combine two categories and in some
+        It would be similarly useful to combine two categories in some
         meaningful way to produce a new category.
         \pause
         \begin{itemize}
@@ -456,10 +456,11 @@
         \frametitle{Monoids (1)}
         A monoid $(M,\mu,\eta)$ is composed of:
         \begin{itemize}
-                \item Some object $M \in \catobj \arbcat{C}_0$
+                \item Some object $M \in \catobj \arbcat{C}$
                 \item An associated ``multiplication'' bifunctor $\mu \in
-                        \cathom (M \otimes M, M)$
-                \item An associated ``unit'' identity $\eta \in \cathom (I, M)$.
+                        \cathom_\arbcat{C} (M \otimes M, M)$
+                \item An associated ``unit'' identity
+                        $\eta \in \cathom_\arbcat{C} (I, M)$.
         \end{itemize}
 \end{frame}
 
