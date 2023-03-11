@@ -13,6 +13,7 @@ EXPORT_FILES=(
         ${GIT_ROOT}presentation/presentation.pdf
         ${GIT_ROOT}presentation/speaker_notes/notes.pdf
         ${GIT_ROOT}report/report.pdf
+        ${GIT_ROOT}report/owd_report.pdf
         ${GIT_ROOT}proposal/proposal.pdf
 )
 
