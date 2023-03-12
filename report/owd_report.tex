@@ -8,7 +8,6 @@
 % (ITEMS BELOW ARE RELIANT ON MD AND BB)
 %
 % TODO: WORD COUNTS ALL
-% TODO: OD FLOAT PLACEMENT
 % TODO: COMBINE REPORT DOCUMENTS' PROSE
 % TODO: REMOVE ARBITRARY CLEARPAGE CALLS
 %
@@ -18,7 +17,8 @@
 % TODO: COMPRESS AND SUBMIT
 
 \documentclass[10pt,a4paper,reqno]{amsart}
-\usepackage{xcolor, fancyhdr, lastpage}
+\usepackage{xcolor, fancyhdr, lastpage, mathtools}
+\usepackage[en-GB]{datetime2}
 \usepackage[foot]{amsaddr} % Move authorship information to the front page
 \usepackage{caption, subcaption, float, etoolbox} % Enhanced float environments
 \usepackage{minted, realboxes, listings} % Source code (Haskell) formatting
@@ -37,8 +37,8 @@
         % Add interactive hyperlinks to page numbers in the ToC.
         linktoc = page,
         %
-        % Build the PDF page index to a greater depth than the ToC.
-        bookmarksdepth = subsection
+        % Build the PDF page index across the entire section hierarchy.
+        bookmarksdepth = subsubsection
 ]{hyperref}
 
 \input{../catmacros.tex} % Common category-theoretic macros
@@ -53,7 +53,8 @@
 	\fancyhf{}
         \renewcommand{\headrulewidth}{\footrulewidth}
         \fancyhead[C]{\footnotesize\textsc{\plainshorttitle}\vspace{.3em}}
-        \fancyfoot[R]{{\footnotesize Page \thepage{} of~\pageref{LastPage}}}
+        \fancyfoot[R]{\footnotesize Page \thepage{} of~\pageref{LastPage}}
+        \fancyfoot[L]{\footnotesize Compilation Date: \today}
 }
 \fancypagestyle{firstpage}{%
         \fancyhead{}
@@ -72,6 +73,7 @@
 }
 \AtBeginEnvironment{listing}{\setlength{\abovecaptionskip}{.8em}}
 \newcommand{\listingautorefname}{Listing}
+\renewcommand{\subsectionautorefname}{Section}
 
 % Use Courier instead of CM for fixed-width text. This is an aesthetic choice
 % that also affects hyperref, but we need Courier for supporting the boldface
@@ -114,6 +116,7 @@
 
 % Make bullet points slightly smaller (they look overwhelming in a 10pt font).
 \renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\numberwithin{equation}{section}
 
 % Add appropriately padded frames around numbered figures and sub-figures.
 \numberwithin{figure}{section}
@@ -136,9 +139,9 @@
                 \textbf{[Written by #2]}
 
                 \vspace{5pt}
-                \textit{Prose:} #4 pages
+                \textit{Prose, Excluding Floats:} #4 pages
 
-                \textit{Word Count:} #5 words
+                \textit{Word Count of Prose:} #5 words
         \end{flushright}
 }
 
@@ -177,11 +180,11 @@
         {TODO}{TODO}
 \noindent \textit{Section omitted.}
 
-\clearpage % TODO Remove
+\clearpage
 \startcontribution{OD}{Oliver Dixon}%
         {Further Applications: Functional Programming and %
                 \texorpdfstring{$\lambda$}{Lambda}-Calculus}%
-        {TODO}{TODO}
+        {3--1/2}{TODO} % 3.5 pages, TODO words
 \subsection{Functional Programming and Haskell}
 
 In purely functional languages, there is no allowance for context, or mutable
@@ -221,7 +224,8 @@ purely functional paradigms; these connexions will eventually reveal the
 powerful concept of \emph{monads}, allowing stateful computation, control flow,
 and error-handling.
 
-\subsection{Monoidal Categories and Monoids}
+\subsection{Monoidal Categories and Monoids}%
+\label{sec:monoidal-categories}
 
 Before fully exploiting the structure of $\cathask$, we must develop the theory
 of \emph{monoidal categories} and their corresponding \emph{monoids}. Monoidal
@@ -302,6 +306,7 @@ $\arbcat{C}$ can be used to induce properties on $\mu$, as in
         \label{fig:monoidal-cat-commute}
 \end{figure}
 
+\vspace{-2em}
 \begin{figure}[ht]
         \begin{subfigure}{\textwidth}
                 \centering
@@ -345,16 +350,27 @@ It is important that the domain of the $\mu$
 transformation is a \emph{product combination} of the monoidal object; this will
 allow the imperative-like threading of state in functional paradigms.
 
-\subsubsection{Examples of Monoidal Categories}
+\subsubsection{Examples of Monoidal Categories: Set Theory}
 
 The canonical example of a monoidal category whose bifunctor/tensor product is
 not associative is $\catset$, with the cross product; this is not
 \emph{naturally associative}, but can be made associative up to isomorphism with
 a suitable choice of the natural transformation $\alpha$. The details are
-established in \autocite{Fong:2018}. In Haskell, the simplest practical
-implementation of a monoidal category is outlined in \autoref{lst:hask-tuple},
-where the base category is $\cathask$, the identity is the empty tuple, and the
-bifunctor is the tuple-building native function.
+established in \autocite{Fong:2018}, using an associativity transform as
+described in \autoref{eqn:assoc-transform-example}, providing a monoidal
+category of the form $(\catset, \times, I)$, where $I$ represents some fixed
+singleton.
+\begin{equation}
+        \alpha_{A,B,C} \colon (A \times B) \times C \to A \times (B \times C)%
+        \label{eqn:assoc-transform-example}
+\end{equation}
+
+\subsubsection{Examples of Monoidal Categories: Haskell}
+
+In Haskell, the simplest practical implementation of a monoidal category is
+outlined in \autoref{lst:hask-tuple}, where the base category is $\cathask$, the
+identity is the empty tuple, and the bifunctor is the tuple-building native
+function.
 \begin{listing}[ht]
         \inputminted{haskell}{haskell/Cross.hs}%
         \caption{A binary Haskell function \protect\inlinehask{cross} that
@@ -380,38 +396,21 @@ category of endofunctors are sometimes called monads. Thus, endofunctors over
 $\arbcat{C}_0$ with appropriately selected morphisms $\mu$ and $\eta$ are
 henceforth termed as monads \autocite{MacLane:1998}.
 
-\subsection{Functors in Haskell}
-
-This interdisciplinary review of Category Theory and Functional Programming
-becomes useful when considering the category of endofunctors over the $\cathask$
-category, $\catendo{(\cathask)}$, thus forming a monoidal category with monads
-as endofunctors over $\cathask$ \autocite{Milewski:2019}. In Haskell, these are
-simply typed as \inlinehask{Functor}, defined as a typeclass providing
-appropriate mappings from $\cathask$ to $\cathask$ for types and functions, as
-shown in \autoref{lst:hask-functor}. The Haskell function \inlinehask{fmap} is
-used to lift a function \barehask{a -> b}, embedded in $\cathask$ as the domain
-category, to the functorial context \barehask{f a -> f b}, embedded in
-$\cathask$ as the codomain category.
-
+\subsubsection{Monads in Haskell} An abbreivated definition of a Haskell
+\inlinehask{Monad} is given in \autoref{lst:haskell-monad-definition}; here we
+see the semi-curried form of the \emph{bind operator}. The importance of
+\inlinehask{>>=} is reflected by its inclusion in the Haskell logo!
+\vspace{-.5em} % Can I get away with this? :)
 \begin{listing}
-        \inputminted{haskell}{haskell/Functor.hs}%
-        \caption{The Haskell \texttt{Functor} type signature, of which the list
-                type constructor \inlinehask{[]} is an instance.}
-        \label{lst:hask-functor}
+        \inputminted{haskell}{haskell/Monad.hs}%
+        \caption{The Haskell \protect\inlinehask{>>=} and
+                \protect\inlinehask{return} functions allow programmers to
+                interact with the \protect\inlinehask{Monad} class in the
+                categorical sense.}
+        \label{lst:haskell-monad-definition}
 \end{listing}
 
-Haskell Functors can be solidified with the most trivial example: the \emph{list
-constructor}, which takes types $A,B,C \in \catobj \cathask$ and lifts them into
-the list structure with the \inlinehask{fmap} endofunctor\footnotemark. This
-process is illustrated in case of lists in \autoref{fig:functor-list-map}, and
-in the general case in \autoref{fig:functor-general-fmap}.
-%
-\footnotetext{In the Haskell \inlinehask{[]} instantiation of
-\inlinehask{Functor}, the \inlinehask{fmap} field is set to the stricter
-\inlinehask{map} function; this is an unimportant implementation detail in this
-case.}
-
-\begin{figure}
+\begin{figure}[ht]
         \centering
         \vspace{1.5em}
         \begin{tikzcd}[outer sep=5pt, ampersand replacement=\&]
@@ -443,7 +442,7 @@ case.}
         \label{fig:functor-list-map}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[ht]
         \centering
         \vspace{1.5em}
         \begin{tikzcd}[outer sep=5pt, ampersand replacement=\&]
@@ -475,7 +474,63 @@ case.}
         \label{fig:functor-general-fmap}
 \end{figure}
 
-\clearpage
+\subsection{Functors in Haskell}
+
+This interdisciplinary review of Category Theory and Functional Programming
+becomes useful when considering the category of endofunctors over the $\cathask$
+category, $\catendo{(\cathask)}$, thus forming a monoidal category with monads
+as endofunctors over $\cathask$ \autocite{Milewski:2019}. In Haskell, these are
+simply typed as \inlinehask{Functor}, defined as a typeclass providing
+appropriate mappings from $\cathask$ to $\cathask$ for types and functions, as
+shown in \autoref{lst:hask-functor}. The Haskell function \inlinehask{fmap} is
+used to lift a function \barehask{a -> b}, embedded in $\cathask$ as the domain
+category, to the functorial context \barehask{f a -> f b}, embedded in
+$\cathask$ as the codomain category.
+\begin{listing}[ht]
+        \inputminted{haskell}{haskell/Functor.hs}%
+        \caption{The Haskell \texttt{Functor} type signature, of which the list
+                type constructor \inlinehask{[]} is an instance.}
+        \label{lst:hask-functor}
+\end{listing}
+
+Haskell Functors can be solidified with the most trivial example: the \emph{list
+constructor}, which takes types $A,B,C \in \catobj \cathask$ and lifts them into
+the list structure with the \inlinehask{fmap} endofunctor\footnotemark. This
+process is illustrated in case of lists in \autoref{fig:functor-list-map}, and
+in the general case in \autoref{fig:functor-general-fmap}.
+%
+\footnotetext{In the Haskell \inlinehask{[]} instantiation of
+\inlinehask{Functor}, the \inlinehask{fmap} field is set to the stricter
+\inlinehask{map} function; this is an unimportant implementation detail in this
+case.}
+
+\subsection{Controlling State with Haskell Monads}
+
+To address our original problem of stateless computation, how might a
+\emph{specific} usage of \inlinehask{Monad} allow the threading of state through
+pseudo-imperative function calls? By recalling the domain of the
+\emph{multiplication} transformation on the monoid, as defined in
+\autoref{sec:monoidal-categories}, we have an immensely useful functor
+transformation $\catendo{(\cathask)}$, such that $\otimes \colon \cathask \times
+\cathask \to \cathask$\footnotemark. This can be implemented as a Haskell
+function which allows the merging of two $\cathask$ instances into a single
+\emph{combined instance}.
+%
+\footnotetext{Recall that $\catendo{(\arbcat{C}_0)}$ is a monoidal category for
+some arbitrary base category $\arbcat{C}_0$. By setting $\arbcat{C}_0 \coloneqq
+\cathask$, we consider the monoidal category that is the range of endofunctors
+over the $\cathask$ category. Thus, $\otimes$ is scoped correctly as a Haskell
+functor over the categorical product of types.}
+%
+By exploiting the lazy evaluation of Haskell, such that functions are only
+executed when directly invoked, programmers can enforce an execution order by
+chaining evaluations of some functor $\otimes$. Context is achieved by
+\emph{applying} a $\cathask$, as the standard function parameter, to a given
+context; the function must then return the transformed context according to the
+prescribed algorithm or process.
+
+\vspace{1.5em}
+\par\noindent\rule{\textwidth}{\headrulewidth}
 \addtocontents{toc}{\protect\vspace{5pt}}
 \printbibliography[title=Cited Works]
 \end{document}
