@@ -1,0 +1,219 @@
+% OWD 2023
+%
+% MATTHEW'S REPORT
+% REMOVED MINTED AND LISTINGS
+
+\documentclass[10pt,a4paper,reqno]{amsart}
+\usepackage{xcolor}
+\usepackage[foot]{amsaddr} % Move authorship information to the front page
+\usepackage{caption, subcaption, float, etoolbox} % Enhanced float environments
+
+\usepackage[%
+	backend = biber,
+	sorting = none,
+	bibencoding = utf8,
+	style = alphabetic
+]{biblatex}
+
+\usepackage[%
+	colorlinks = true,
+	allcolors = blue,
+        linktoc = page
+]{hyperref}
+
+\input{../../catmacros.tex} % Common category-theoretic macros
+
+% \yorkemail: takes the username and outputs a clickable mailto link.
+\newcommand{\yorkemail}[1]{\href{mailto:#1@york.ac.uk}{#1@york.ac.uk}}
+
+% Make bullet points slightly smaller (they look overwhelming in a 10pt font).
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+% Add appropriately padded frames around numbered figures and sub-figures.
+\numberwithin{figure}{section}
+\AtBeginEnvironment{subfigure}{\vspace{2em}}
+\floatstyle{boxed}
+\restylefloat*{figure}
+
+\setcounter{tocdepth}{1} % Only show major sections in the Table of Contents
+\addbibresource{report.bib} % Use a universal sources file for BibLaTeX
+
+% -- Begin document metadata setup
+
+\title[An Investigation of Elementary Category Theory]{An Investigation of %
+        Elementary Category Theory, with applications in Pure Mathematics and %
+        Theoretical Computer Science}
+
+\author{Matthew Drury} \email{\yorkemail{md1499}}
+\author{Ben Brook}     \email{\yorkemail{bb1170}}
+\author{Oliver Dixon}  \email{\yorkemail{od641}}
+
+\address{Department of Mathematics \\
+        University of York \\
+        United Kingdom}
+\date{Spring--Summer Term, 2023}
+
+% -- End document metadata setup
+\begin{document}
+\begin{abstract}
+        TODO
+\end{abstract}
+\maketitle
+\tableofcontents
+\section{\for{toc}{\texorpdfstring{\textbf{[MD]~}}{}}Theoretical %
+        Underpinnings: Axiomatic Constructions}
+\begin{flushright}
+        \textbf{[Written by Matthew Drury]}
+\end{flushright}
+
+
+\subsection{The idea of a Category}
+A category is a mathematical structure that links a collection of objects with
+non-symmetric relationships called morphisms.  Each morphism can be said to
+traverse from one object to another.  They are used to create abstract models of
+mathematical theories based on the role each object plays.  Categories have the
+versatility to talk about different areas of mathematics in the same language,
+which is why it is sometimes said to be the mathematics of mathematics.   The
+objects and morphisms have little restriction as to what they can represent
+which can be seen in the commutative diagrams below:
+
+\begin{equation}
+        \begin{tikzcd}[ampersand replacement=\&]
+                A
+                        \ar[r,"\text{Father}"] \&
+                B
+                        \ar[d,"\text{Brother}"] \\
+                D \&
+                C \ar[l,"\text{Husband}"]
+        \end{tikzcd}
+        % TODO: I removed an incorrect tikzcd diagram here.
+        \begin{tikzcd}
+        A
+        \end{tikzcd}
+\end{equation}
+These diagrams are usually used to give a sample of a category to demonstrate
+it's properties.  Mathematicians like to generalize with categories and consider
+infinite objects and morphisms, meaning we want categories to link all of a type
+of object we can define.   The most valuable mathematical facts tend to be those
+that apply to the most situations possible.  For instance, uncovering the
+quadratic formula being more important than solving a particularly difficult
+quadratic.  It makes all non-trivial quadratics easier to solve and uncovers a
+method to determine whether the solutions are real or complex using the
+``$b^2-4ac$'' term.   By doing this we have found a relationship between all
+quadratics and their solutions.   From there we could generalize even further
+and think about how this is significant for higher order polynomials.
+
+Morphisms are combined together in a process called composition.  It means to do
+one morphism and then another, given that the target object of the first
+morphism is the same as the source of the second morphism.  Above we can see
+that person $A$ has father person $B$, who has brother person $C$.  We can
+compose these two together to have a morphism from $A$ to $C$ which we could
+call ``uncle''.  These composite morphisms are implied to exist by the diagram
+and such are usually redundant to show.  This can be done as many times as one
+wants, so if there is a path to traverse from any object to another, there is a
+composite morphism between the two.  Hence there is a morphism from $A$ to $D$
+which we could call ``uncle in-law''.
+
+There are also identity morphisms.  These go from an object to itself and are
+equivalent to not doing a morphism at all, as when they are composed with
+another morphism $f$, the resulting composite morphism is equal to $f$.  The
+morphism has done nothing, like how multiplying a number by 1(The multiplicative
+identity) does not change it's value.  It is similar to stating that something
+is equal to itself which is a trivial fact but an important feature of the
+structure of categories.  It should be noted that it may not be the only
+morphism from one object to itself.
+
+The point of categories is to get more subtle notions of similarity or
+``sameness''. By creating categories we abstract things to their roles and by
+comparing categories or spotting patterns and structures within them, we can see
+properties shared by things that would initially seem very different.  Lines of
+thought in one context can be more easily translated into another by seeing
+equivalent structural features.  Mathematicians can then try new methods to
+solve problems and prove new facts or describe multiple problems as one that is
+more general.
+\subsection{Axioms and notation}
+We will now formally define a category. The following axioms are necessary for a
+structure to be considered a category.
+\begin{enumerate}
+        \item \textbf{Objects:} In a category $\arbcat{C}$ there is
+        $\catobj(\arbcat{C})$, which is a collection of all the objects of $C$.
+
+        \item \textbf{Morphisms:} For each pair ordered pair of objects $(A,B)$
+        in a category $\arbcat{C}$ we have $\hom(A,B)$, also written as
+        $\arbcat{C}(A,B)$.  This is the collection of all morphisms from A to B,
+        short for ``homomorphism set''.  Homomorphisms are those that preserve
+        the structure of objects and for many useful categories they are
+        necessary for the axioms to hold.  However, this property does not need
+        to hold to use this notation.  A morphism $f$ is notated to map $A$ to
+        $B$ by $f: A\to B$.
+
+        \item \textbf{Composition:} For objects $A,B,C\in \catobj(\arbcat{C})$
+        if there exists morphisms $(f: A\to B)\in \hom(A,B)$ and $(g: B\to C)\in
+        \hom(B,C)$, then there exists $(g\circ f: A\to C)\in \hom(A,C)$
+
+        \item \textbf{Identities:} Every object $A$ in a category $\arbcat{C}$
+        has an identity morphism which maps from $A$ to itself.  It is notated
+        $1_A: A\to A$ for $A\in ob(\arbcat{C}C), 1_A\in \hom(A,A)$.  For $f\in
+        \hom(A,B), g\in \hom(B,A)$ the identity has the property that $f\circ
+        1_A = f, 1_A\circ g = g$ Each identity is unique to it's object. If
+        there was 2 identities $I_1,I_2\in A$ then $(f\circ I_1 = f = f\circ
+        I_2) \implies I_1=I_2$
+
+        \item \textbf{Associativity:} A morphism $h\circ(g\circ f) = (h\circ
+        g)\circ f$.  This means that two morphisms are equal if they are
+        composed from the same morphisms in the same order regardless of the
+        order in which we compute the individual composite pairs.
+\end{enumerate}
+
+\subsection{Size of categories}
+The collection $\catobj(\arbcat{C})$ and the collections $\hom(A,B)$ do not have
+to be finite.  The idea of category size means to place categories in a
+hierarchy of containment. This is to accommodate how $\catobj(\arbcat{C})$ and
+$\hom(A,B)$ do not have to be sets either.
+
+When defining an infinite collection of objects by their properties, it can
+create contradictions. Famously in set theory there is Russel's paradox.  It
+states that if you have a set S that contains every set which doesn't contain
+itself, then suppose that S does not contain S, it would imply that S is in fact
+in S as it does not contain itself and vice versa.  Formally, $S = \{x\;\text{is
+a set}\:|\:x\notin x\}, (S\in S) \iff (S\notin S)$.
+
+There were many examples of these paradoxes that were uncovered in the early
+20th century. Mathematicians are too rigorous to allow such a thing, so to solve
+the issue they devised axiomatic systems to limit the properties that members of
+sets can be said to follow.  This makes some sets very convoluted to define and
+means there are well defined collections of objects that cannot be put into a
+set. Categories address this issue in a more elegant way.  Firstly, categories
+do not claim to contain elements; the core concept is instead relationships.
+Secondly, categories have a hierarchy of containment such that they only contain
+categories ``smaller'' than themselves.  It follows then that categories are not
+defined in a self referential manner like in Russel's paradox.
+
+A small category is where $\catobj(\arbcat{C})$ and each $\hom(A,B)$ can be
+described as a set.  A locally small category is where $\catobj(\arbcat{C})$
+does not form a set but each $\hom(A,B)$ does.  A large category is where nether
+$\catobj(\arbcat{C})$ nor $\hom(A,B)$ are a set. The hierarchy means that if you
+wanted a category where small categories are objects, it would have to be a
+large category. Then, if you wanted a category of large categories, you would
+need a super-large category and so on. This can be used to formally think about
+multiple layers of generalization and abstraction.
+
+\subsection{Functors}
+
+\section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
+        Interpretations of Familiar Structures}
+\begin{flushright}
+        \textbf{[Written by Ben Brook]}
+\end{flushright}
+
+\noindent Temporarily moved to \texttt{bb\_tmp/report.tex}.
+
+\section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
+        Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
+\begin{flushright}
+        \textbf{[Written by Oliver Dixon]}
+\end{flushright}
+
+\noindent Temporarily moved to \texttt{owd\_report.tex}.
+\end{document}
+

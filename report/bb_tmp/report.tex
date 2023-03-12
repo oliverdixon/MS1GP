@@ -1,4 +1,6 @@
 % OWD 2023
+%
+% BEN'S REPORT
 
 \documentclass[10pt,a4paper,reqno]{amsart}
 \usepackage{xcolor}
@@ -19,7 +21,7 @@
         linktoc = page
 ]{hyperref}
 
-\input{../catmacros.tex} % Common category-theoretic macros
+\input{../../catmacros.tex} % Common category-theoretic macros
 
 % -- Begin listing options for Haskell
 
@@ -117,7 +119,52 @@
         \textbf{[Written by Ben Brook]}
 \end{flushright}
 
-\noindent Temporarily moved to \texttt{bb\_tmp/report.tex}.
+\subsection{Introductory examples}
+Before proceeding to explore applications of category in functional programming,
+it will be helpful to cover categories of structures that most mathematicians
+are familiar with. In this section, we will have objects being everything from
+sets to proofs.
+
+\subsection{The category of sets}
+An easy to digest category is the category of sets, whose objects are sets and
+morphisms are functions between sets. These are the set-theoretic functions we
+are familiar with. We will follow the common denotation [REF] for this category:
+$\catset$.
+
+It is not hard to verify that this concept indeed meets the category axioms seen
+in \autoref{sec:axioms}. Let $A,B,C,D \in \mathrm{ob} ( \catset )$ be distinct,
+$f \in \mathrm{hom} (A, B)$, $g \in \mathrm{hom} (B, C)$, and $h \in
+\mathrm{hom} (C, D)$. Immediately, we have that
+\begin{equation*}
+        ( f \circ g ) \circ h = f \circ ( g \circ h ),
+\end{equation*}
+due to the normal associativity property of function composition. We also have
+the obvious identity morphism for some object $A$, $1_A \in \mathrm{ob}
+( \catset )$. Hence, with the rest being true by definition, the category axioms
+are satisfied.
+
+\subsection{The category of partially ordered sets}
+Moving forwards, we will consider a category of sets with additional structure:
+in this case, a partially ordered set, or \emph{poset}. We must first establish
+some definitions:
+\begin{itemize}
+        \item A poset is a set, $A$, with a relation, $\sim_A$, that is
+        reflexive, transitive, and antisymmetric. We covered these properties in
+        the Autumn Term.
+        \item Let $A$ and $B$ be sets. A monotone map, $m \colon A \to B$, is an
+        order-preserving function such that
+        \begin{equation*}
+                ( \forall a, b \in A. \  a \sim_A b )
+                \implies ( m(a) \sim_B m(b) ).
+        \end{equation*}
+\end{itemize}
+We have a category $\catpos$ whose objects are posets and morphisms are monotone
+maps betwen those posets. The identity morphism exists for all objects due to
+the reflexivity of $\sim_A$, and composition follows similarly due to
+transitivity.
+
+\subsection{The category of vector spaces}
+Another category that is easy to understand
 
 \section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
         Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
@@ -126,8 +173,5 @@
 \end{flushright}
 
 \noindent Temporarily moved to \texttt{owd\_report.tex}.
-
-\addtocontents{toc}{\protect\vspace{5pt}}
-\printbibliography[title=Cited Works]
 \end{document}
 
