@@ -116,47 +116,76 @@
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
 \begin{flushright}
-        \textbf{[Written by Ben Brook]}
+        \textbf{[Written by Ben Brook]} 
 \end{flushright}
 
 \subsection{Introductory examples}
-Before proceeding to explore applications of category in functional programming,
-it will be helpful to cover categories of structures that most mathematicians
-are familiar with. In this section, we will have objects being everything from
-sets to proofs.
+Now that we have established an axiomatic definition of the category, the
+natural next step is the exploration of some simple examples of category theory
+in action. In this section, we will cover multiple categories with objects and
+morphisms that are already familiar to us and not too daunting. This will make
+us more comfortable with the more fleshed out examples coming later in this
+report.
+
+For the first three of these examples, the objects of our categories will be
+nothing but sets and morphisms nothing but functions (both with some additional
+restrictions). However, it's important to remember that categories need not
+contain functions nor sets. In fact, we will see this in our final introductory
+example, where we do away with both entirely!
+
+All of the examplary categories that we are going to touch on will be infinite.
+This means that we won't be using any diagrams for this section of the report.
 
 \subsection{The category of sets}
-An easy to digest category is the category of sets, whose objects are sets and
+An easy to digest example to start is the category of sets, whose objects are sets and
 morphisms are functions between sets. These are the set-theoretic functions we
-are familiar with. We will follow the common denotation [REF] for this category:
-$\catset$.
+are familiar with and have been using throughout the Autumn Term. We will follow
+the common denotation [REF] for this category: $\catset$.
 
-It is not hard to verify that this concept indeed meets the category axioms seen
-in \autoref{sec:axioms}. Let $A,B,C,D \in \mathrm{ob} ( \catset )$ be distinct,
-$f \in \mathrm{hom} (A, B)$, $g \in \mathrm{hom} (B, C)$, and $h \in
-\mathrm{hom} (C, D)$. Immediately, we have that
-\begin{equation*}
-        ( f \circ g ) \circ h = f \circ ( g \circ h ),
-\end{equation*}
-due to the normal associativity property of function composition. We also have
-the obvious identity morphism for some object $A$, $1_A \in \mathrm{ob}
-( \catset )$. Hence, with the rest being true by definition, the category axioms
-are satisfied.
+We can easily verify that this category indeed satisfies the category axioms
+seen in [AXIOMSREF].
+\begin{itemize}
+        \item There are objects, which are sets.
+        \item There are morphisms between those objects, which are functions.
+                Remember, however: morphisms are not necessarily functions! In fact,
+                in most applications of category theory, it is rare that we see
+                functions as morphisms. (REF)
+        \item The composition of two functions is also a function, with its
+                domain and codomain coming from the functions involved in the
+                composition operation. Hence the axiom of composition is
+                satisfied.
+        \item Let $A \in \mathrm{ob} ( \catset )$. We have that the identity
+                morphism for $A$ is $(1_A \colon A \to A) \in \mathrm{ob} ( \catset )$.
+        \item The morphisms of $\catset$ are associative because functions are
+                associative. Let $A,B,C,D \in \mathrm{ob} ( \catset )$ be distinct. Also, let
+                $f \in \mathrm{hom} (A, B)$, $g \in \mathrm{hom} (B, C)$, and $h \in
+                \mathrm{hom} (C, D)$. By function associativity, we have that
+                \begin{equation*}
+                        ( f \circ g ) \circ h = f \circ ( g \circ h ).
+                \end{equation*}
+\end{itemize}
+Going forwards, we won't be so pedantic by stating facts that are trivially
+true.
 
 \subsection{The category of partially ordered sets}
-Moving forwards, we will consider a category of sets with additional structure:
-in this case, a partially ordered set, or \emph{poset}. We must first establish
+A nice path to advance down is the exploration of a category whose objects are
+sets that satisfy certain properties. In other words, these are sets that have
+additional structure imposed upon them. We will also assign functions that
+preserve this structure to be the morphisms of our category.
+
+In this case, let's think about partially ordered sets, or \emph{posets}. We
+must first establish
 some definitions:
 \begin{itemize}
         \item A poset is a set, $A$, with a relation, $\sim_A$, that is
-        reflexive, transitive, and antisymmetric. We covered these properties in
-        the Autumn Term.
+                reflexive, transitive, and antisymmetric. We covered these properties in
+                the Autumn Term.
         \item Let $A$ and $B$ be sets. A monotone map, $m \colon A \to B$, is an
-        order-preserving function such that
-        \begin{equation*}
-                ( \forall a, b \in A. \  a \sim_A b )
-                \implies ( m(a) \sim_B m(b) ).
-        \end{equation*}
+                order-preserving function such that
+                \begin{equation*}
+                        ( \forall a, b \in A. \  a \sim_A b )
+                        \implies ( m(a) \sim_B m(b) ).
+                \end{equation*}
 \end{itemize}
 We have a category $\catpos$ whose objects are posets and morphisms are monotone
 maps betwen those posets. The identity morphism exists for all objects due to
@@ -164,7 +193,27 @@ the reflexivity of $\sim_A$, and composition follows similarly due to
 transitivity.
 
 \subsection{The category of vector spaces}
-Another category that is easy to understand
+We can look to linear algebra to provide another simple infinite category. The
+category of finite-dimensional $\mathbb{R}$\emph{-vector spaces} is denoted
+$\catfinvect$. Let's establish a couple more definitions:
+\begin{itemize}
+        \item A finite-dimensional $\mathbb{R}$-vector space is an element of
+$               \{ \mathbb{R} ^n \, | \, n \in \mathbb{N} \}$.
+        \item A linear map is a function, $f$, between two vector spaces, such
+                such that vector addition and scalar multiplication is
+                preserved. That is,
+                \begin{alignat*}{2}
+                        f(\vec{u}+\vec{v}) &= f(\vec{u})+f(\vec{v});
+                        \qquad && \text{[\textbf{Additivity}]} \\
+                        f(\lambda\vec{u}) &= \lambda f(\vec{u}),
+                        \qquad && \text{[\textbf{Homogeinity}]}
+                \end{alignat*}
+                with $\exists n \in \mathbb{N}. \  \vec{u},\vec{v}\in \mathbb{R} ^n
+                \text{ and } \lambda \in \mathbb{R}$.
+\end{itemize}
+
+\subsection{The category of deduction and deducability}
+
 
 \section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
         Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
