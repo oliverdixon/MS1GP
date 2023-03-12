@@ -81,7 +81,7 @@
 \restylefloat*{figure}
 
 \setcounter{tocdepth}{1} % Only show major sections in the Table of Contents
-\addbibresource{report.bib} % Use a universal sources file for BibLaTeX
+\addbibresource{../report.bib} % Use a universal sources file for BibLaTeX
 
 % -- Begin document metadata setup
 
@@ -124,20 +124,19 @@ Now that we have established an axiomatic definition of the category, the
 natural next step is the exploration of some simple examples of category theory
 in action. In this section, we will cover multiple categories with objects and
 morphisms that are already familiar to us and not too daunting. This will make
-us more comfortable with the more fleshed out examples coming later in this
-report.
+us more comfortable with the fleshed out examples coming later in the report.
 
-For the first three of these examples, the objects of our categories will be
+For the first three of these examples, our objects will be
 nothing but sets and morphisms nothing but functions (both with some additional
 restrictions). However, it's important to remember that categories need not
 contain functions nor sets. In fact, we will see this in our final introductory
 example, where we do away with both entirely!
 
-All of the examplary categories that we are going to touch on will be infinite.
+All the exemplary categories that we are going to touch on will be infinite.
 This means that we won't be using any diagrams for this section of the report.
 
 \subsection{The category of sets}
-An easy to digest example to start is the category of sets, whose objects are sets and
+An easy to digest example to start with is the category of sets, whose objects are sets and
 morphisms are functions between sets. These are the set-theoretic functions we
 are familiar with and have been using throughout the Autumn Term. We will follow
 the common denotation [REF] for this category: $\catset$.
@@ -152,67 +151,121 @@ seen in [AXIOMSREF].
                 functions as morphisms. (REF)
         \item The composition of two functions is also a function, with its
                 domain and codomain coming from the functions involved in the
-                composition operation. Hence the axiom of composition is
+                composition operation. Hence, the axiom of composition is
                 satisfied.
-        \item Let $A \in \mathrm{ob} ( \catset )$. We have that the identity
-                morphism for $A$ is $(1_A \colon A \to A) \in \mathrm{ob} ( \catset )$.
+        \item Let $A \in \catobj ( \catset )$. We have that the identity
+                morphism for $A$ is $(1_A \colon A \to A) \in \hom (A, A)$.
         \item The morphisms of $\catset$ are associative because functions are
-                associative. Let $A,B,C,D \in \mathrm{ob} ( \catset )$ be distinct. Also, let
-                $f \in \mathrm{hom} (A, B)$, $g \in \mathrm{hom} (B, C)$, and $h \in
-                \mathrm{hom} (C, D)$. By function associativity, we have that
-                \begin{equation*}
+                associative. Let $A, B, C, D \in \catobj ( \catset )$ be distinct. Also, let
+                $f \in \hom (A, B)$, $g \in \hom (B, C)$, and $h \in
+                \hom (C, D)$. By function associativity, we have that
+                \[
                         ( f \circ g ) \circ h = f \circ ( g \circ h ).
-                \end{equation*}
+                \]
 \end{itemize}
-Going forwards, we won't be so pedantic by stating facts that are trivially
-true.
+Hence, all the category axioms are satisfied. Going forwards, we will avoid the
+pedantry of stating facts that are trivially true.
 
 \subsection{The category of partially ordered sets}
 A nice path to advance down is the exploration of a category whose objects are
-sets that satisfy certain properties. In other words, these are sets that have
+sets that satisfy certain properties. In other words, the objects are sets that have
 additional structure imposed upon them. We will also assign functions that
-preserve this structure to be the morphisms of our category.
+preserve this structure to be the morphisms of our category. In this case,
+let's think about partially ordered sets, or \emph{posets}.
 
-In this case, let's think about partially ordered sets, or \emph{posets}. We
-must first establish
-some definitions:
+We must first establish some definitions:
 \begin{itemize}
         \item A poset is a set, $A$, with a relation, $\sim_A$, that is
                 reflexive, transitive, and antisymmetric. We covered these properties in
                 the Autumn Term.
-        \item Let $A$ and $B$ be sets. A monotone map, $m \colon A \to B$, is an
+        \item Let $A$ and $B$ be posets. A monotone map, $m \colon A \to B$, is an
                 order-preserving function such that
-                \begin{equation*}
-                        ( \forall a, b \in A. \  a \sim_A b )
-                        \implies ( m(a) \sim_B m(b) ).
-                \end{equation*}
+                \[
+                        \forall a, b \in A. \quad a \sim_A b
+                        \implies m(a) \sim_B m(b).
+                \]
 \end{itemize}
 We have a category $\catpos$ whose objects are posets and morphisms are monotone
-maps betwen those posets. The identity morphism exists for all objects due to
-the reflexivity of $\sim_A$, and composition follows similarly due to
-transitivity.
+maps between those posets. Verifying that the category axioms are met is, again, not
+that difficult:
+\begin{itemize}
+        \item Let $A, B, C \in \catobj ( \catpos )$ be distinct. Also, let
+                $f \in \hom (A, B)$ and $g \in \hom (B, C)$. Since monotone maps
+                are functions, we can compose them to get  $g \circ f \colon A
+                \to C$. Is this new function also a monotone map? Well, for
+                all $a_1, a_2 \in A$, we have that
+                \begin{align*}
+                        \quad a_1 \sim_A a_2 &\implies f(a_1) \sim_B f(a_2) \\
+                        &\implies g(f(a_1)) \sim_C g(f(a_2)).
+                \end{align*}
+                Thus, $g \circ f$ is indeed a monotone map, and the composition
+                axiom is satisfied.
+        \item The identity morphism for any object, $A$, is just the monotone
+                map \\ $1_A \colon A \to A ; \, a \mapsto a$.
+        \item The associativity axiom is satisfied since our morphisms are
+                functions, and function composition is associative.
+\end{itemize}
 
 \subsection{The category of vector spaces}
-We can look to linear algebra to provide another simple infinite category. The
+We can look to Linear Algebra to provide another simple infinite category. The
 category of finite-dimensional $\mathbb{R}$\emph{-vector spaces} is denoted
 $\catfinvect$. Let's establish a couple more definitions:
 \begin{itemize}
         \item A finite-dimensional $\mathbb{R}$-vector space is an element of
-$               \{ \mathbb{R} ^n \, | \, n \in \mathbb{N} \}$.
-        \item A linear map is a function, $f$, between two vector spaces, such
+                $\{ \mathbb{R} ^n \, | \, n \in \mathbb{N} \}$.
+        \item A linear map is a function, $f$, between two vector spaces,
                 such that vector addition and scalar multiplication is
                 preserved. That is,
                 \begin{alignat*}{2}
-                        f(\vec{u}+\vec{v}) &= f(\vec{u})+f(\vec{v});
+                        f( \vec{u} + \vec{v} ) &= f( \vec{u} ) + f( \vec{v} );
                         \qquad && \text{[\textbf{Additivity}]} \\
-                        f(\lambda\vec{u}) &= \lambda f(\vec{u}),
-                        \qquad && \text{[\textbf{Homogeinity}]}
+                        f( \lambda \vec{u} ) &= \lambda f( \vec{u} ),
+                        \qquad && \text{[\textbf{Homogeneity}]}
                 \end{alignat*}
-                with $\exists n \in \mathbb{N}. \  \vec{u},\vec{v}\in \mathbb{R} ^n
-                \text{ and } \lambda \in \mathbb{R}$.
+                with $\vec{u},\vec{v} \in \mathbb{R} ^n \; \exists n \in \mathbb{N}$
+                and $\lambda \in \mathbb{R}$.
+\end{itemize}
+The objects of $\catfinvect$ are finite-dimensional $\mathbb{R}$-vector spaces
+and its morphisms are linear maps between them. We will verify that
+$\catfinvect$ satisfies the category axioms: 
+\begin{itemize}
+        \item Let $\mathbb{R} ^a, \mathbb{R} ^b, \mathbb{R} ^c \in
+                \catobj ( \catfinvect )$ be distinct. Additionally, let \\
+                $f \in \hom ( \mathbb{R} ^a, \mathbb{R} ^b)$ and
+                $g \in \hom ( \mathbb{R} ^b, \mathbb{R} ^c)$.
+                We have that $g \circ f \colon \mathbb{R} ^a \to \mathbb{R} ^c$
+                is a function. Now, let $\vec{u} , \vec{v} \in \mathbb{R} ^a$
+                and $\lambda \in \mathbb{R}$. We have that
+                \begin{alignat*}{8}
+                        (g \circ f)( \vec{u} + \vec{v} )
+                        &= g(f( \vec{u} + \vec{v} )) \\
+                        &= g(f( \vec{u} ) + f( \vec{v} )) \\
+                        &= g(f( \vec{u} )) + g(f( \vec{v} )) \\
+                        &= (g \circ f)( \vec{u} ) + (g \circ f)( \vec{v} );
+                        \qquad && \text{[\textbf{Additivity}]} \\
+                        (g \circ f)( \lambda \vec{u} )
+                        &= g(f( \lambda \vec{u} )) \\
+                        &= g( \lambda f( \vec{u} )) \\
+                        &= \lambda g(f( \vec{u} )) \\
+                        &= \lambda (g \circ f)( \vec{u} ),
+                        \qquad && \text{[\textbf{Homogeneity}]}
+                \end{alignat*}
+                so the axiom of composition is met.
+        \item The identity morphism for any object, $\mathbb{R} ^n$, is the linear map
+                $1_{ \mathbb{R} ^n } \colon \mathbb{R} ^n \to \mathbb{R} ^n ; \,
+                \vec{u} \mapsto \vec{u}$.
+        \item As before, the associativity axiom is satisfied due to linear maps
+                being functions.
 \end{itemize}
 
 \subsection{The category of deduction and deducability}
+As mentioned at the start of this section, the final exemplary category that we
+will cover does not have functions for morphisms and sets for objects. It is
+akin to the categories we will see later in this report in that regard.
+Remember, objects and morphisms can be anything such that the category axioms
+are met -- and these are not very restrictive axioms.
+In this case, we are going to explore a category whose objects are theorems and
+morphisms are proofs.
 
 
 \section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
