@@ -57,9 +57,11 @@
 A category is a mathematical structure that links a collection of objects with
 non-symmetric relationships called morphisms.  Each morphism can be said to
 traverse from one object to another.  They are used to create abstract models of
-mathematical concepts and structures based on the role each object plays. The
-objects and morphisms are extremely versatile in what they can represent as
-shown in the commutative diagrams below:
+mathematical theories based on the role each object plays.  Categories have the
+versatility to talk about different areas of mathematics in the same language,
+which is why it is sometimes said to be the mathematics of mathematics.   
+The objects and morphisms have little restriction as to what they can represent
+which can be seen in the commutative diagrams below:
 
 \begin{equation}
         \begin{tikzcd}
@@ -75,18 +77,21 @@ shown in the commutative diagrams below:
 \end{equation}
 These diagrams are usually used to give a sample of a category to demonstrate
 it's properties.  Mathematicians like to generalize with categories and consider
-cases with infinite objects and morphisms.  The most valuable mathematical facts
+infinite objects and morphisms, meaning we want categories to link all of a type 
+of object we can define.   The most valuable mathematical facts
 tend to be those that apply to the most situations possible.  For instance,
 uncovering the quadratic formula being more important than solving a
 particularly difficult quadratic.  It makes all non-trivial quadratics easier to
 solve and uncovers a method to determine whether the solutions are real or
-complex using the ``$b^2-4ac$'' term.
+complex using the ``$b^2-4ac$'' term.   By doing this we have found a relationship
+between all quadratics and their solutions.   From there we could generalize even
+further and think about how this is significant for higher order polynomials.
 
 Morphisms are combined together in a process called composition.  It means to do
 one morphism and then another, given that the target object of the first
 morphism is the same as the source of the second morphism.  Above we can see
 that person $A$ has father person $B$, who has brother person $C$.  We can
-compose these two together to have a morphism from $A$ to $C$ which we can could
+compose these two together to have a morphism from $A$ to $C$ which we could call
 ``uncle''.  These composite morphisms are implied to exist by the diagram and
 such are usually redundant to show.  This can be done as many times as one
 wants, so if there is a path to traverse from any object to another, there is a
@@ -115,25 +120,25 @@ more general.
 We will now formally define a category. The following axioms are necessary for a
 structure to be considered a category.
 \begin{enumerate}
-        \item \textbf{Objects:} In a category $C$ there is $ob(C)$, which is a
+        \item \textbf{Objects:} In a category $\arbcat{C}$ there is $\catobj(\arbcat{C})$, which is a
         collection of all the objects of $C$.
 
         \item \textbf{Morphisms:} For each pair ordered pair of objects $(A,B)$
-        in a category $C$ we have $hom(A,B)$, also written as $C(A,B)$.  This is
+        in a category $\arbcat{C}$ we have $\cathom(A,B)$, also written as $\arbcat{C}(A,B)$.  This is
         the collection of all morphisms from A to B, short for ``homomorphism
         set''.  Homomorphisms are those that preserve the structure of objects
         and for many useful categories they are necessary for the axioms to
         hold.  However, this property does not need to hold to use this
         notation.  A morphism $f$ is notated to map $A$ to $B$ by $f: A\to B$.
 
-        \item \textbf{Composition:} For objects $A,B,C\in ob(C)$ if there exists
-        morphisms $(f: A\to B)\in hom(A,B)$ and $(g: B\to C)\in hom(B,C)$, then
-        there exists $(g\circ f: A\to C)\in hom(A,C)$
+        \item \textbf{Composition:} For objects $A,B,C\in \catobj(\arbcat{C})$ if there exists
+        morphisms $(f: A\to B)\in \cathom(A,B)$ and $(g: B\to C)\in \cathom(B,C)$, then
+        there exists $(g\circ f: A\to C)\in \cathom(A,C)$
 
-        \item \textbf{Identities:} Every object $A$ in a category $C$ has an
+        \item \textbf{Identities:} Every object $A$ in a category $\arbcat{C}$ has an
         identity morphism which maps from $A$ to itself.  It is notated $1_A:
-        A\to A$ for $A\in ob(C), 1_A\in hom(A,A)$.  For $f\in hom(A,B), g\in
-        hom(B,A)$ the identity has the property that $f\circ 1_A = f, 1_A\circ g
+        A\to A$ for $A\in ob(\arbcat{C}C), 1_A\in \cathom(A,A)$.  For $f\in \cathom(A,B), g\in
+        \cathom(B,A)$ the identity has the property that $f\circ 1_A = f, 1_A\circ g
         = g$ Each identity is unique to it's object. If there was 2 identities
         $I_1,I_2\in A$ then $(f\circ I_1 = f = f\circ I_2) \implies I_1=I_2$
 
@@ -144,9 +149,9 @@ structure to be considered a category.
 \end{enumerate}
 
 \subsection{Size of categories}
-The collection $ob(C)$ and the collections $hom(A,B)$ do not have to be finite.
+The collection $\catobj(\arbcat{C})$ and the collections $\cathom(A,B)$ do not have to be finite.
 The idea of category size means to place categories in a hierarchy of
-containment. This is to accommodate how $ob(C)$ and $hom(A,B)$ do not have to be
+containment. This is to accommodate how $\catobj(\arbcat{C})$ and $\cathom(A,B)$ do not have to be
 sets either.
 
 When defining an infinite collection of objects by their properties, it can
@@ -154,7 +159,6 @@ create contradictions. Famously in set theory there is Russel's paradox.  It
 states that if you have a set S that contains every set which doesn't contain
 itself, then suppose that S does not contain S, it would imply that S is in fact
 in S as it does not contain itself and vice versa.
-
 Formally, $S = \{x\;\text{is a set}\:|\:x\notin x\}, (S\in S) \iff (S\notin S)$.
 
 There were many examples of these paradoxes that were uncovered in the early
@@ -168,15 +172,18 @@ Secondly, categories have a hierarchy of containment such that they only contain
 categories ``smaller'' than themselves.  It follows then that categories are not
 defined in a self referential manner like in Russel's paradox.
 
-A small category is where $ob(C)$ and each $hom(A,B)$ can be described as a set.
-A locally small category is where $ob(C)$ does not form a set but each
-$hom(A,B)$ does.
-
-A large category is where nether $ob(C)$ nor $hom(A,B)$ are a set. The hierarchy
+A small category is where $\catobj(\arbcat{C})$ and each $\cathom(A,B)$ can be described as a set.
+A locally small category is where $\catobj(\arbcat{C})$ does not form a set but each
+$\cathom(A,B)$ does.
+A large category is where nether $\catobj(\arbcat{C})$ nor $\cathom(A,B)$ are a set. The hierarchy
 means that if you wanted a category where small categories are objects, it would
 have to be a large category. Then, if you wanted a category of large categories,
 you would need a super-large category and so on. This can be used to formally
 think about multiple layers of generalization and abstraction.
+
+\subsection{Functors}
+
+
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
 \begin{flushright}
