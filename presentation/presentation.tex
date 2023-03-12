@@ -10,9 +10,6 @@
 \numberwithin{figure}{section}
 \beamerdefaultoverlayspecification{<+->}
 
-\tikzset{FUNCTOR/.style = {line width=#1},%
-         FUNCTOR/.default=1pt}
-
 \title[Elementary Category Theory]%
 {An Investigation of Elementary Category Theory}
 
@@ -122,7 +119,7 @@
                 \item \emph{The obset}: The set of objects in $\arbcat{C}$,
                         denoted $\catobj{\arbcat{C}}$.
                 \item \emph{The homset}: The set of (homeo)morphisms in
-                        $\arbcat{C}$, denoted $\cathom{\arbcat{C}}$. Morphisms
+                        $\arbcat{C}$, denoted $\hom{\arbcat{C}}$. Morphisms
                         are sometimes called ``arrows''.
         \end{itemize}
         \onslide<+->{In practice, the morphisms are the defining feature of any
@@ -267,7 +264,7 @@
                         \end{equation*}
                         due to the normal associativity property of function
                         composition. We also have the obvious identity morphism
-                        $i \in \cathom(A,A)$ for some object A, henceforth
+                        $i \in \hom(A,A)$ for some object A, henceforth
                         denoted as $1_A$.
                 \item Hence, the category axioms are satisfied, and there is a
                         category whose objects are sets and morphisms are the
@@ -347,8 +344,8 @@
         Although pervasive throughout Abstract Algebra and Set Theory, the
         ``correct'' definition of a general isomorphism is expressed in purely
         category-theoretic terms, demonstrating the existence of an \emph{undo}
-        morphism, such that we have elements in $\cathom(A,C)$ and
-        $\cathom(C,A)$.
+        morphism, such that we have elements in $\hom(A,C)$ and
+        $\hom(C,A)$.
         \pause
         \begin{figure}
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
@@ -458,9 +455,9 @@
         \begin{itemize}
                 \item Some object $M \in \catobj \arbcat{C}$
                 \item An associated ``multiplication'' bifunctor $\mu \in
-                        \cathom_\arbcat{C} (M \otimes M, M)$
+                        \hom_\arbcat{C} (M \otimes M, M)$
                 \item An associated ``unit'' identity
-                        $\eta \in \cathom_\arbcat{C} (I, M)$.
+                        $\eta \in \hom_\arbcat{C} (I, M)$.
         \end{itemize}
 \end{frame}
 

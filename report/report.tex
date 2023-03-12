@@ -1,8 +1,10 @@
 % OWD 2023
 
 \documentclass[10pt,a4paper,reqno]{amsart}
-\usepackage[foot]{amsaddr}
-\usepackage{xcolor,lmodern,minted,realboxes}
+\usepackage{xcolor}
+\usepackage[foot]{amsaddr} % Move authorship information to the front page
+\usepackage{caption, subcaption, float, etoolbox} % Enhanced float environments
+\usepackage{minted, realboxes, listings} % Source code (Haskell) formatting
 
 \usepackage[%
 	backend = biber,
@@ -11,22 +13,75 @@
 	style = alphabetic
 ]{biblatex}
 
-\input{../catmacros.tex}
-
 \usepackage[%
 	colorlinks = true,
 	allcolors = blue,
         linktoc = page
 ]{hyperref}
 
-\newcommand{\inlinehask}[1]{\mintinline[bgcolor=lightgray]{haskell}{#1}}
-\newcommand{\barehask}[1]{\Colorbox{lightgray}{#1}}
+\input{../catmacros.tex} % Common category-theoretic macros
+
+% -- Begin listing options for Haskell
+
+\newcommand{\inlinehask}[1]{\mintinline{haskell}{#1}}
+\newcommand{\barehask}[1]{\Colorbox{codebg}{\lstinline[style = inlineHask]{#1}}}
+\newcommand{\haskmath}[2]{%
+        \ensuremath\text{\Colorbox{codebg}{%
+                \vphantom{\lstinline[basicstyle = \haskMorphStyle]{fg}}%
+                \lstinline[style = inlineHask, basicstyle = #2]{#1}%
+        }}%
+}
+\AtBeginEnvironment{listing}{\setlength{\abovecaptionskip}{.8em}}
+\newcommand{\listingautorefname}{Listing}
+
+\renewcommand{\ttdefault}{pcr} % Use Courier instead of CM for fixed-width text.
+\newcommand{\haskMorphStyle}{\normalsize\ttfamily\color{haskkeyword}}
+\newcommand{\haskObjStyle}{\normalsize\ttfamily\color{black}}
+\newcommand{\haskFuncStyle}{\normalsize\ttfamily\color{haskkeyword}\bfseries}
+
+\definecolor{codebg}{RGB}{220,220,220}
+\definecolor{haskkeyword}{RGB}{173,46,252}
+
+% I am using the Listings package for printing inline Haskell, and Minted for
+% printing verbatim blocks. In general, Minted is far superior, but Listings is
+% more crudely customisable for pseudo-code inline blocks that require very
+% literal pattern-matching for given tokens.
+
+\setminted{%
+        frame = lines,
+        framesep = 2mm,
+        baselinestretch = 1.2,
+        bgcolor = codebg,
+        fontsize = \footnotesize,
+        linenos
+}
+
+\lstdefinestyle{inlineHask}{%
+        language = Haskell,
+        alsoletter = {->, ::},
+        morekeywords = {->, ::, fmap},
+        keywordstyle = \color{haskkeyword}\bfseries,
+        basicstyle = \footnotesize\ttfamily
+}
+
+% -- End listing options for Haskell
 
 % \yorkemail: takes the username and outputs a clickable mailto link.
 \newcommand{\yorkemail}[1]{\href{mailto:#1@york.ac.uk}{#1@york.ac.uk}}
 
-\setcounter{tocdepth}{1} % Only show major sections in the Table of Contents.
-\addbibresource{report.bib}
+% Make bullet points slightly smaller (they look overwhelming in a 10pt font).
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+% Add appropriately padded frames around numbered figures and sub-figures.
+\numberwithin{figure}{section}
+\AtBeginEnvironment{subfigure}{\vspace{2em}}
+\floatstyle{boxed}
+\restylefloat*{figure}
+
+\setcounter{tocdepth}{1} % Only show major sections in the Table of Contents
+\addbibresource{report.bib} % Use a universal sources file for BibLaTeX
+
+% -- Begin document metadata setup
 
 \title[An Investigation of Elementary Category Theory]{An Investigation of %
         Elementary Category Theory, with applications in Pure Mathematics and %
@@ -41,6 +96,7 @@
         United Kingdom}
 \date{Spring--Summer Term, 2023}
 
+% -- End document metadata setup
 \begin{document}
 \begin{abstract}
         TODO
@@ -50,7 +106,7 @@
 \section{\for{toc}{\texorpdfstring{\textbf{[MD]~}}{}}Theoretical %
         Underpinnings: Axiomatic Constructions}
 \begin{flushright}
-        \textbf{(Written by Matthew Drury.)}
+        \textbf{[Written by Matthew Drury]}
 \end{flushright}
 
 \subsection{The idea of a Category}
@@ -187,7 +243,7 @@ think about multiple layers of generalization and abstraction.
 \section{\for{toc}{\texorpdfstring{\textbf{[BB]~}}{}}Category-Theoretic %
         Interpretations of Familiar Structures}
 \begin{flushright}
-        \textbf{(Written by Ben Brook.)}
+        \textbf{[Written by Ben Brook]}
 \end{flushright}
 
 \noindent BB: TODO.
@@ -195,42 +251,10 @@ think about multiple layers of generalization and abstraction.
 \section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
         Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
 \begin{flushright}
-        \textbf{(Written by Oliver Dixon.)}
+        \textbf{[Written by Oliver Dixon]}
 \end{flushright}
 
-\subsection{Functional Programming and Haskell} In purely functional languages,
-there is no allowance for context, or mutable variables of any kind. Each
-function must accept some data, perform some strict transformation upon the
-data---as defined by the algorithm---and return the result. Whilst this robust
-paradigm does open a wide range of mathematical avenues involving proof, safety,
-and reproducibility, the prohibition of stateful computation renders many common
-tasks, such as system I/O or communication over a network socket, largely
-impossible, as these imperatively defined operations inherently contravene the
-purity principles of functional programming.
-
-Haskell is a commonly used purely functional programming language, and
-suffers, as do all languages in the same class, from this blaring issue.
-Indeed, early versions of Haskell did not support the chaining of stateful
-computation in any sense, due to the obligatory absence of a fixed execution
-order in functional paradigms; programmers were forced to resort to breaking the
-purity of the language through aesthetically unpleasant techniques, ultimately
-obviating the mathematical essence of the Haskell formal type system.
-
-Due to the strength of the Haskell type system and function interface, we may
-define a corresponding category, $\cathask$, within which the objects are
-Haskell types, and the morphisms are functions\footnotemark.
-%
-\footnotetext{Due to the $\lambda$-Calculus concept of \emph{currying}, named
-after Haskell Curry, functions taking multiple arguments may be decomposed into
-a chain of function compositions, in which each function strictly accepts and
-returns a single argument. This is made explicit in Haskell, where the type
-signature of a function \inlinehask{f} may be defined as \inlinehask{f :: a -> b
--> c}, invoked as \inlinehask{f a b}, and expected to return a value of type
-\barehask{c}. This function signature is trivially equivalent to the
-\emph{uncurried} form of \inlinehask{f}, defined as \inlinehask{f :: (a -> b) ->
-c}.}%
-
-\subsection{Functors in Haskell}
+\noindent Temporarily moved to \texttt{owd\_report.tex}.
 
 \addtocontents{toc}{\protect\vspace{5pt}}
 \printbibliography[title=Cited Works]

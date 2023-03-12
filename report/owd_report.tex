@@ -1,0 +1,482 @@
+% OWD 2023
+
+% TODO: MD SECTION ALL
+% TODO: BB SECTION ALL
+% TODO: SYNCHRONISE PREAMBLES
+% TODO: CITE ENTIRE BIBLIOGRAPHY
+%
+% (ITEMS BELOW ARE RELIANT ON MD AND BB)
+%
+% TODO: WORD COUNTS ALL
+% TODO: OD FLOAT PLACEMENT
+% TODO: COMBINE REPORT DOCUMENTS' PROSE
+% TODO: REMOVE ARBITRARY CLEARPAGE CALLS
+%
+% (FINAL STAGES --- DUE MONDAY 12PM)
+%
+% TODO: FINAL REVISION/REVIEW
+% TODO: COMPRESS AND SUBMIT
+
+\documentclass[10pt,a4paper,reqno]{amsart}
+\usepackage{xcolor, fancyhdr, lastpage}
+\usepackage[foot]{amsaddr} % Move authorship information to the front page
+\usepackage{caption, subcaption, float, etoolbox} % Enhanced float environments
+\usepackage{minted, realboxes, listings} % Source code (Haskell) formatting
+
+\usepackage[%
+	backend = biber,
+	sorting = none,
+	bibencoding = utf8,
+	style = alphabetic
+]{biblatex}
+
+\usepackage[%
+	colorlinks = true,
+	allcolors = blue,
+        %
+        % Add interactive hyperlinks to page numbers in the ToC.
+        linktoc = page,
+        %
+        % Build the PDF page index to a greater depth than the ToC.
+        bookmarksdepth = subsection
+]{hyperref}
+
+\input{../catmacros.tex} % Common category-theoretic macros
+\setcounter{tocdepth}{1} % Only show major sections in the ToC
+\addbibresource{report.bib}
+
+\setlength{\headheight}{13pt}
+\setlength{\footskip}{30pt}
+\setlength{\topmargin}{0pt}
+\renewcommand{\footrulewidth}{.3pt}
+\fancypagestyle{fancy}{%
+	\fancyhf{}
+        \renewcommand{\headrulewidth}{\footrulewidth}
+        \fancyhead[C]{\footnotesize\textsc{\plainshorttitle}\vspace{.3em}}
+        \fancyfoot[R]{{\footnotesize Page \thepage{} of~\pageref{LastPage}}}
+}
+\fancypagestyle{firstpage}{%
+        \fancyhead{}
+        \renewcommand{\headrulewidth}{0pt}
+}
+
+% -- Begin listing options for Haskell
+
+\newcommand{\inlinehask}[1]{\mintinline{haskell}{#1}}
+\newcommand{\barehask}[1]{\Colorbox{codebg}{\lstinline[style = inlineHask]{#1}}}
+\newcommand{\haskmath}[2]{%
+        \ensuremath\text{\Colorbox{codebg}{%
+                \vphantom{\lstinline[basicstyle = \haskMorphStyle]{fg}}%
+                \lstinline[style = inlineHask, basicstyle = #2]{#1}%
+        }}%
+}
+\AtBeginEnvironment{listing}{\setlength{\abovecaptionskip}{.8em}}
+\newcommand{\listingautorefname}{Listing}
+
+% Use Courier instead of CM for fixed-width text. This is an aesthetic choice
+% that also affects hyperref, but we need Courier for supporting the boldface
+% fonts in Haskell formatting environments (and related commutative diagrams).
+\renewcommand{\ttdefault}{pcr}
+
+\newcommand{\haskMorphStyle}{\normalsize\ttfamily\color{haskkeyword}}
+\newcommand{\haskObjStyle}{\normalsize\ttfamily\color{black}}
+\newcommand{\haskFuncStyle}{\normalsize\ttfamily\color{haskkeyword}\bfseries}
+
+\definecolor{codebg}{RGB}{230,230,230}
+\definecolor{haskkeyword}{RGB}{173,46,252}
+
+% I am using the Listings package for printing inline Haskell, and Minted for
+% printing verbatim blocks. In general, Minted is far superior, but Listings is
+% more crudely customisable for pseudo-code inline blocks that require very
+% literal pattern-matching for given tokens.
+
+\setminted{%
+        frame = lines,
+        framesep = 2mm,
+        baselinestretch = 1.2,
+        bgcolor = codebg,
+        fontsize = \footnotesize,
+        linenos
+}
+
+\lstdefinestyle{inlineHask}{%
+        language = Haskell,
+        alsoletter = {->, ::},
+        morekeywords = {->, ::, fmap},
+        keywordstyle = \color{haskkeyword}\bfseries,
+        basicstyle = \footnotesize\ttfamily
+}
+
+% -- End listing options for Haskell
+
+% \yorkemail: takes the username and outputs a clickable mailto link.
+\newcommand{\yorkemail}[1]{\href{mailto:#1@york.ac.uk}{#1@york.ac.uk}}
+
+% Make bullet points slightly smaller (they look overwhelming in a 10pt font).
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+% Add appropriately padded frames around numbered figures and sub-figures.
+\numberwithin{figure}{section}
+\AtBeginEnvironment{subfigure}{\vspace{2em}}
+\floatstyle{boxed}
+\restylefloat*{figure}
+
+% \startcontribution: open a new contribution section:
+%
+%       #1: The author's initials;
+%       #2: The author's name;
+%       #3: Section title;
+%       #4: Prose page count;
+%       #5: (Prose) word count.
+%
+\newcommand{\startcontribution}[5]{%
+        \section{\for{toc}{\texorpdfstring{\textbf{[#1]~}}{}}#3}
+        \begin{flushright}
+                \vspace{5pt}
+                \textbf{[Written by #2]}
+
+                \vspace{5pt}
+                \textit{Prose:} #4 pages
+
+                \textit{Word Count:} #5 words
+        \end{flushright}
+}
+
+% -- Begin document metadata setup
+
+\newcommand{\plainshorttitle}{An Investigation of Elementary Category Theory}
+\title[\plainshorttitle]{An Investigation of Elementary Category Theory, with %
+        applications in Pure Mathematics and Theoretical Computer Science}
+
+\author{Matthew Drury} \email{\yorkemail{md1499}}
+\author{Ben Brook}     \email{\yorkemail{bb1170}}
+\author{Oliver Dixon}  \email{\yorkemail{od641}}
+
+\address{Department of Mathematics \\
+        University of York \\
+        United Kingdom}
+\date{Spring--Summer Term, 2023}
+
+% -- End document metadata setup
+
+\begin{document}
+\thispagestyle{firstpage}
+\pagestyle{fancy}
+\begin{abstract}
+        TODO
+\end{abstract}
+\maketitle
+\tableofcontents
+\startcontribution{MD}{Matthew Drury}%
+        {Theoretical Underpinnings: Axiomatic Constructions}%
+        {TODO}{TODO}
+\noindent \textit{Section omitted.}
+
+\startcontribution{BB}{Ben Brook}%
+        {Category-Theoretic Interpretations of Familiar Structures}%
+        {TODO}{TODO}
+\noindent \textit{Section omitted.}
+
+\clearpage % TODO Remove
+\startcontribution{OD}{Oliver Dixon}%
+        {Further Applications: Functional Programming and %
+                \texorpdfstring{$\lambda$}{Lambda}-Calculus}%
+        {TODO}{TODO}
+\subsection{Functional Programming and Haskell}
+
+In purely functional languages, there is no allowance for context, or mutable
+variables of any kind. Each function must accept some data, perform some strict
+transformation upon the data---as defined by the algorithm---and return the
+result. Whilst this robust paradigm does open a wide range of mathematical
+avenues involving proof, safety, and reproducibility, the prohibition of
+stateful computation renders many common tasks, such as system I/O or
+communication over a network socket, largely impossible, as these imperatively
+defined operations inherently contravene the purity principles of functional
+programming.
+
+Haskell is a commonly used purely functional programming language, and suffers,
+as do all languages in the same class, from this blaring issue.  Indeed, early
+versions of Haskell did not support the chaining of stateful computation in any
+sense, due to the obligatory absence of a fixed execution order in functional
+paradigms; programmers were forced to resort to breaking the purity of the
+language through aesthetically unpleasant techniques, ultimately obviating the
+mathematical essence of the Haskell formal type system \autocite{Jones:1998}.
+
+Due to the strength of the Haskell type system and function interface, we may
+define a corresponding category, $\cathask$, within which the objects are
+Haskell types, and the morphisms are functions\footnotemark.
+%
+\footnotetext{Due to the $\lambda$-Calculus concept of \emph{currying}, named
+after Haskell Curry, functions taking multiple arguments may be decomposed into
+a chain of function compositions, in which each function strictly accepts and
+returns a single argument. This is made explicit in Haskell, where the type
+signature of a function \inlinehask{f} may be defined as \inlinehask{f :: a -> b
+-> c}, invoked as \inlinehask{f a b}, and expected to return a value of type
+\barehask{c}. This function signature is trivially equivalent to the
+\emph{uncurried} form of \inlinehask{f}, defined as \inlinehask{f :: (a -> b) ->
+c}.} %
+By analysing the structure of $\cathask$, its endofunctors, and the categories
+formed by taking product, we can draw a swathe of parallels between generic
+purely functional paradigms; these connexions will eventually reveal the
+powerful concept of \emph{monads}, allowing stateful computation, control flow,
+and error-handling.
+
+\subsection{Monoidal Categories and Monoids}
+
+Before fully exploiting the structure of $\cathask$, we must develop the theory
+of \emph{monoidal categories} and their corresponding \emph{monoids}. Monoidal
+categories can be regarded as a six-tuple $(\arbcat{C}_0, \otimes, I, \alpha,
+\lambda, \rho)$, containing various components \autocite{Kelly:1982}:
+\begin{itemize}
+        \item A base category, $\arbcat{C}_0$;
+
+        \item A bifunctor $\otimes \colon \arbcat{C}_0 \times \arbcat{C}_0 \to
+        \arbcat{C}_0$;
+
+        \item An identity object $I \in \catobj \arbcat{C}_0$;
+
+        \item An associativity natural transformation $\alpha_{A,B,C} \colon (A
+        \otimes B) \otimes C \to A \otimes (B \otimes C)$;
+
+        \item A left-identity natural transformation $\lambda_A \colon I \otimes
+        A \to A$;
+
+        \item A right-identity natural transformation $\rho_A \colon A \otimes I
+        \to A$.
+\end{itemize}
+
+To maintain brevity, the natural transformations are often omitted from the
+tuple-descriptions of monoidal categories: $(\arbcat{C}_0, \otimes, I)$. In this
+context, the natural transformations $\alpha$, $\lambda$, and $\rho$ are used to
+induce certain properties on $\otimes$---\emph{up to isomorphism}---which it
+may not possess natively; the effects of these transformations can be
+illustrated as morphisms on a pair of abstracted commutative diagrams (c.f.
+\autoref{fig:monoidal-cat-commute}).
+
+Then, monoids can be considered as three-tuples, consisting of an object in a
+monoidal category $(\arbcat{C}, \otimes, I)$, coupled with two transformations:
+\begin{itemize}
+        \item A base object $M \in \catobj \arbcat{C}$;
+        \item A \emph{multiplication} transformation $\mu \in \hom_\arbcat{C}
+        (M \otimes M, M)$;
+        \item A \emph{unit} transformation $\eta \in \hom_\arbcat{C} (I, M)$.
+\end{itemize}
+Once more, the natural transformations from the parent monoidal category
+$\arbcat{C}$ can be used to induce properties on $\mu$, as in
+\autoref{fig:monoid-commute}.
+
+\begin{figure}[ht]
+        \begin{subfigure}{\textwidth}
+                \centering
+                \begin{tikzcd}[ampersand replacement=\&]
+                        \left[(A \otimes B) \otimes C \right] \otimes D
+                                \arrow[r, "\alpha"]
+                                \arrow[d, "\alpha\,\otimes\,\catid D" swap] \&
+                        (A \otimes B) \otimes (C \otimes D)
+                                \arrow[r, "\alpha"] \&
+                        A \otimes \left[ B \otimes (C \otimes D) \right] \\
+                        \left[ A \otimes (B \otimes C) \right] \otimes D
+                                \arrow[rr, "\alpha" swap] \& \&
+                        A \otimes \left[ (B \otimes C) \otimes D \right]
+                                \arrow[u, "\catid A\,\otimes\,\alpha" swap]
+                \end{tikzcd}%
+                \caption{Associativity on $\otimes$ induced by $\alpha$}
+        \end{subfigure}
+
+        \begin{subfigure}{\textwidth}
+                \centering
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        (B \otimes I) \otimes C
+                                \arrow[rr, "\alpha"]
+                                \arrow[rd, "\rho\,\otimes\,\catid C" swap] \& \&
+                        B \otimes (I \otimes C)
+                                \arrow[ld, "\catid B\,\otimes\,\lambda"] \\
+                        \& B \otimes C \&
+                \end{tikzcd}%
+                \caption{Left- and right-identities of objects $A,B,C,D$ induced
+                        by $\lambda$ and $\rho$}
+        \end{subfigure}%
+        \caption{\textbf{[Monoidal Categories]} The natural transformations
+                invoke commutativity on the bifunctor $\otimes$.}
+        \vspace{1.5em}
+        \label{fig:monoidal-cat-commute}
+\end{figure}
+
+\begin{figure}[ht]
+        \begin{subfigure}{\textwidth}
+                \centering
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        (M \otimes M) \otimes M
+                                \arrow[r, "\alpha"]
+                                \arrow[d, "\mu\,\otimes\,\catid M" swap] \&
+                        M \otimes (M \otimes M)
+                                \arrow[r, "\catid M\,\otimes\,\mu"] \&
+                        M \otimes M
+                                \arrow[d, "\mu"] \\
+                        M \otimes M
+                                \arrow[rr, "\mu" swap] \& \& M
+                \end{tikzcd}%
+                \caption{Associativity on $\mu$ induced by $\alpha$}
+        \end{subfigure}
+
+        \begin{subfigure}{\textwidth}
+                \centering
+                \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                        I \otimes M
+                                \arrow[r, "\eta\,\otimes\,\catid M"]
+                                \arrow[rd, "\lambda" swap] \&
+                        M \otimes M
+                                \arrow[d, "\mu" swap] \&
+                        M \otimes I
+                                \arrow[l, "\catid M\,\otimes\,\eta" swap]
+                                \arrow[ld, "\rho"] \\
+                        \& M \&
+                \end{tikzcd}%
+                \caption{Left- and right-identities of $M$ induced by $\lambda$
+                        and $\rho$}
+        \end{subfigure}%
+        \caption{\textbf{[Monoids]} The natural transformations from the parent
+                monoidal category also apply within the monoid.}
+        \vspace{1.5em}
+        \label{fig:monoid-commute}
+\end{figure}
+
+It is important that the domain of the $\mu$
+transformation is a \emph{product combination} of the monoidal object; this will
+allow the imperative-like threading of state in functional paradigms.
+
+\subsubsection{Examples of Monoidal Categories}
+
+The canonical example of a monoidal category whose bifunctor/tensor product is
+not associative is $\catset$, with the cross product; this is not
+\emph{naturally associative}, but can be made associative up to isomorphism with
+a suitable choice of the natural transformation $\alpha$. The details are
+established in \autocite{Fong:2018}. In Haskell, the simplest practical
+implementation of a monoidal category is outlined in \autoref{lst:hask-tuple},
+where the base category is $\cathask$, the identity is the empty tuple, and the
+bifunctor is the tuple-building native function.
+\begin{listing}[ht]
+        \inputminted{haskell}{haskell/Cross.hs}%
+        \caption{A binary Haskell function \protect\inlinehask{cross} that
+                encodes its arguments into a tuple. In category-theoretic
+                language, the corresponding monoidal category could be expressed
+                as the three-tuple
+                $(\cathask, \text{\;\protect\barehask{cross}},
+                \text{\;\protect\barehask{()}})$.}
+        \label{lst:hask-tuple}
+\end{listing}
+
+\subsection{The Category of Endofunctors}
+
+For the purposes of Functional Programming, and the wider formal treatment of
+functional type systems, a particularly useful monoidal category concerns the
+\emph{category of endofunctors} over some fixed base category $\arbcat{C}_0$.
+Denoted as $\catendo{(\arbcat{C}_0)}$, this forms a monoidal category with the
+associated bifunctor being the standard operation of endofunctor composition;
+the identity element is the obligatory identity endofunctor. Objects in
+$\catendo{(\arbcat{C}_0)}$ are the endofunctors over $\arbcat{C}_0$, and
+morphisms are the natural transformations between these objects.  Monoids in the
+category of endofunctors are sometimes called monads. Thus, endofunctors over
+$\arbcat{C}_0$ with appropriately selected morphisms $\mu$ and $\eta$ are
+henceforth termed as monads \autocite{MacLane:1998}.
+
+\subsection{Functors in Haskell}
+
+This interdisciplinary review of Category Theory and Functional Programming
+becomes useful when considering the category of endofunctors over the $\cathask$
+category, $\catendo{(\cathask)}$, thus forming a monoidal category with monads
+as endofunctors over $\cathask$ \autocite{Milewski:2019}. In Haskell, these are
+simply typed as \inlinehask{Functor}, defined as a typeclass providing
+appropriate mappings from $\cathask$ to $\cathask$ for types and functions, as
+shown in \autoref{lst:hask-functor}. The Haskell function \inlinehask{fmap} is
+used to lift a function \barehask{a -> b}, embedded in $\cathask$ as the domain
+category, to the functorial context \barehask{f a -> f b}, embedded in
+$\cathask$ as the codomain category.
+
+\begin{listing}
+        \inputminted{haskell}{haskell/Functor.hs}%
+        \caption{The Haskell \texttt{Functor} type signature, of which the list
+                type constructor \inlinehask{[]} is an instance.}
+        \label{lst:hask-functor}
+\end{listing}
+
+Haskell Functors can be solidified with the most trivial example: the \emph{list
+constructor}, which takes types $A,B,C \in \catobj \cathask$ and lifts them into
+the list structure with the \inlinehask{fmap} endofunctor\footnotemark. This
+process is illustrated in case of lists in \autoref{fig:functor-list-map}, and
+in the general case in \autoref{fig:functor-general-fmap}.
+%
+\footnotetext{In the Haskell \inlinehask{[]} instantiation of
+\inlinehask{Functor}, the \inlinehask{fmap} field is set to the stricter
+\inlinehask{map} function; this is an unimportant implementation detail in this
+case.}
+
+\begin{figure}
+        \centering
+        \vspace{1.5em}
+        \begin{tikzcd}[outer sep=5pt, ampersand replacement=\&]
+                \haskmath{a}{\haskObjStyle}
+                        \arrow[r, "\haskmath{f}{\haskMorphStyle}" swap]
+                        \arrow[bend left=40, rr, "\haskmath{f.g}%
+                                {\haskMorphStyle}"] \&
+                \haskmath{b}{\haskObjStyle}
+                        \arrow[r, "\haskmath{g}{\haskMorphStyle}" swap] \&
+                \haskmath{c}{\haskObjStyle}
+        \end{tikzcd}
+        \begin{tikzcd}[ampersand replacement=\&]
+                {} \arrow[rr, FUNCTOR, "\haskmath{[]}{\haskFuncStyle}"] \& \& {}
+        \end{tikzcd}
+        \begin{tikzcd}[sep=large, outer sep=5pt, ampersand replacement=\&]
+                \haskmath{[a]}{\haskObjStyle}
+                        \arrow[r, "\haskmath{map f}{\haskMorphStyle}" swap]
+                        \arrow[bend left=40, rr,
+                                "\haskmath{map \$ f.g}{\haskMorphStyle}"] \&
+                \haskmath{[b]}{\haskObjStyle}
+                        \arrow[r, "\haskmath{map g}{\haskMorphStyle}" swap] \&
+                \haskmath{[c]}{\haskObjStyle}
+        \end{tikzcd}%
+        \caption{The action of the \inlinehask{[]} functor on $\cathask$. The
+                list constructor functor \emph{lifts} the Haskell types
+                \protect\barehask{a}, \protect\barehask{b}, and
+                \protect\barehask{c} into the list context.}
+        \vspace{1.5em}
+        \label{fig:functor-list-map}
+\end{figure}
+
+\begin{figure}
+        \centering
+        \vspace{1.5em}
+        \begin{tikzcd}[outer sep=5pt, ampersand replacement=\&]
+                \haskmath{a}{\haskObjStyle}
+                        \arrow[r, "\haskmath{f}{\haskMorphStyle}" swap]
+                        \arrow[bend left=40, rr, "\haskmath{f.g}%
+                                {\haskMorphStyle}"] \&
+                \haskmath{b}{\haskObjStyle}
+                        \arrow[r, "\haskmath{g}{\haskMorphStyle}" swap] \&
+                \haskmath{c}{\haskObjStyle}
+        \end{tikzcd}
+        \begin{tikzcd}[ampersand replacement=\&]
+                {} \arrow[rr, FUNCTOR, "\haskmath{F}{\haskFuncStyle}"] \& \& {}
+        \end{tikzcd}
+        \begin{tikzcd}[sep=large, outer sep=5pt, ampersand replacement=\&]
+                \haskmath{F a}{\haskObjStyle}
+                        \arrow[r, "\haskmath{fmap f}{\haskMorphStyle}" swap]
+                        \arrow[bend left=40, rr,
+                                "\haskmath{fmap \$ f.g}{\haskMorphStyle}"] \&
+                \haskmath{F b}{\haskObjStyle}
+                        \arrow[r, "\haskmath{fmap g}{\haskMorphStyle}" swap] \&
+                \haskmath{F c}{\haskObjStyle}
+        \end{tikzcd}%
+        \caption{The action of the generic functor \inlinehask{F} on some
+                $\cathask$. The mappings of the objects are implicit in the
+                mappings of the morphisms, as domains and codomains must be
+                preserved between isomorphic categories.}
+        \vspace{1.5em}
+        \label{fig:functor-general-fmap}
+\end{figure}
+
+\clearpage
+\addtocontents{toc}{\protect\vspace{5pt}}
+\printbibliography[title=Cited Works]
+\end{document}
+
