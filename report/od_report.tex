@@ -20,7 +20,7 @@ versions of Haskell did not support the chaining of stateful computation in any
 sense, due to the obligatory absence of a fixed execution order in functional
 paradigms; programmers were forced to resort to breaking the purity of the
 language through aesthetically unpleasant techniques, ultimately obviating the
-mathematical essence of the Haskell formal type system \autocite{Jones:1998}.
+mathematical essence of the Haskell formal type system.
 
 Due to the strength of the Haskell type system and function interface, we may
 define a corresponding category, $\cathask$, within which the objects are
@@ -319,15 +319,9 @@ pseudo-imperative function calls? By recalling the domain of the
 \emph{multiplication} transformation on the monoid, as defined in
 \autoref{sec:monoidal-categories}, we have an immensely useful functor
 transformation $\catendo{(\cathask)}$, such that $\mu \colon M \times M \to M$,
-where $M$ is an object in $\cathask$\footnotemark. This can be implemented as a
-Haskell function which allows the merging of two $\cathask$ instances into a
-single \emph{combined instance}.
-%
-\footnotetext{Recall that $\catendo{(\arbcat{C}_0)}$ is a monoidal category for
-some arbitrary base category $\arbcat{C}_0$. By setting $\arbcat{C}_0 \coloneqq
-\cathask$, we consider the monoidal category that is the range of endofunctors
-over the $\cathask$ category. Thus, $\mu$ is scoped correctly as a natural
-transformation over functors in the categorical product of types.}
+where $M$ is an object in $\arbcat{C}_0 \coloneqq \cathask$. This can be
+implemented as a Haskell function which allows the merging of two $\cathask$
+instances into a single \emph{combined instance}.
 %
 By exploiting the lazy evaluation of Haskell, such that functions are only
 executed when directly invoked, programmers can enforce an execution order by

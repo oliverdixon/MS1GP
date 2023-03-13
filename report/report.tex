@@ -1,5 +1,14 @@
 % OWD 2023
+%
 % MASTER REPORT FILE
+% FINAL COPY, READY FOR SUBMISSION
+%
+% DIRECT DEPENDENCIES:
+%  - ../catmacros.tex   [CT macro library ]
+%  - ./report.bib       [Bibliography keys]
+%  - ./md_report.tex    [Major section    ]
+%  - ./bb_report.tex    [Major section    ]
+%  - ./od_report.tex    [Major section    ]
 
 \documentclass[10pt,a4paper,reqno]{amsart}
 \usepackage{xcolor, fancyhdr, lastpage, mathtools, enumitem}
@@ -29,12 +38,14 @@
 \input{../catmacros.tex} % Common category-theoretic macros
 \setcounter{tocdepth}{1} % Only show major sections in the ToC
 \addbibresource{report.bib}
+\setlength{\bibitemsep}{3pt}
 
 % Add some additional padding around items in list environments.
 \setlist{itemsep = 3pt, topsep = 5pt}
 
 % Make bullet points slightly smaller (they look overwhelming in a 10pt font).
 \renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand{\mathbb}[1]{\ensuremath\mathbf{#1}}
 
 \renewcommand{\sectionautorefname}{Section}
 \renewcommand{\subsectionautorefname}{\sectionautorefname}
@@ -193,11 +204,14 @@
         {3--1/2}{1839} % 3.5 pages, ~1839 words
 \input{md_report.tex}  % MAJOR SECTION INCLUDE: MATTHEW DRURY (1/3)
 
+\vspace{\belowcaptionskip}
+\par\noindent\rule{\textwidth}{\headrulewidth}
+\vspace{-.15em}
+
 \startcontribution{BB}{Ben Brook}%
         {Category-Theoretic Interpretations of Familiar Structures}%
-        {TODO}{TODO}
-\noindent \textit{Section omitted.}
-% \input{od_report.tex}  % MAJOR SECTION INCLUDE: BEN BROOK (2/3)
+        {2--1/2}{1294} % 2.5 pages, ~1294 words
+\input{bb_report.tex}  % MAJOR SECTION INCLUDE: BEN BROOK (2/3)
 
 \clearpage
 \startcontribution{OD}{Oliver Dixon}%
@@ -207,11 +221,20 @@
 \label{sec:funcprog}
 \input{od_report.tex}  % MAJOR SECTION INCLUDE: OLIVER DIXON (3/3)
 
-\vspace{1.5em}
+\anonfootnote{\vspace{-.5em}}
+\anonfootnote{%
+        \raggedleft%
+        \color{darkgray}{%
+                [\hypersetup{linkcolor=darkgray}%
+                \autoref{sec:funcprog}~is wholly dedicated to \textit{MQ}.]%
+        }%
+        \vspace{-\baselineskip} % Push past the standard footer baseline
+}
+
 \par\noindent\rule{\textwidth}{\headrulewidth}
 \addtocontents{toc}{\protect\vspace{5pt}}
+\vspace{-.5\baselineskip}
 \printbibliography[title=Cited Works]
-\anonfootnote{\raggedleft[\autoref{sec:funcprog}~is wholly dedicated to %
-        \textit{MQ}]}
+\renewcommand{\footnoterule}{}
 \end{document}
 

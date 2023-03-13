@@ -1,0 +1,189 @@
+% MAJOR REPORT SECTION
+%
+% AUTHOR: BEN BROOK
+% TITLE:  CATEGORY-THEORETIC INTERPRETATIONS OF FAMILIAR STRUCTURES
+%
+\setlength{\jot}{5pt}
+\subsection{Introductory Examples}
+
+Now that we have established an axiomatic definition of the category, the
+natural next step involves the exploration of some simple applications of
+categories in a familiar context.
+
+For the first three of these examples, our objects will be
+nothing but sets and morphisms nothing but functions (both with some additional
+restrictions). Categories of this type are sometimes called
+\emph{concrete} \autocite{Awodey:2010}.
+However, it's important to remember that categories need not
+contain functions nor sets. In fact, we will see this in our final introductory
+example, where we do away with both entirely!
+
+All the exemplary categories that we are going to touch on will be infinite.
+This means that we won't be using any diagrams for this section of the report.
+
+\subsection{Category of Sets}
+
+To begin, an easily digestible example is the category of sets, whose objects
+are sets, and morphisms are total functions between sets. These are the
+set-theoretic functions with which we are familiar and have been using
+throughout the Autumn Term.  We will follow a common denotation for this
+category: $\catset$~\autocite{Leinster:2014}. We can easily verify that this
+category satisfies the category axioms seen in \autoref{sec:cat-axioms}.
+\begin{itemize}
+        \item There are objects, which are sets.
+        \item There are morphisms between those objects, which are functions.
+                Remember, however: morphisms are not necessarily functions! In
+                fact, there are an abundance of examples where this is not the
+                case.
+        \item The composition of two functions is also a function, with its
+                domain and codomain coming from the functions involved in the
+                composition operation. Hence, the axiom of composition is
+                satisfied.
+        \item Let $A \in \catobj{(\catset)}$. We have that the identity
+                morphism for $A$ is $(1_A \colon A \to A) \in \hom (A, A)$,
+                which maps each element of $A$ to itself.
+        \item The morphisms of $\catset$ are associative due to the
+                native associativity of function composition. Let $A, B, C, D
+                \in \catobj{(\catset)}$ be distinct. Also, let $f \in \hom (A,
+                B)$, $g \in \hom (B, C)$, and $h \in \hom (C, D)$. Thus,
+                \begin{equation}
+                        ( f \circ g ) \circ h = f \circ ( g \circ h ).
+                \end{equation}
+\end{itemize}
+
+Hence, all the category axioms are satisfied. Going forwards, we will avoid the
+pedantry of listing that our category contains morphisms and objects.
+
+\subsection{Category of Partially Ordered Sets}
+
+A nice path to advance down is the exploration of a category whose objects are
+sets that satisfy certain properties. In other words, the objects are sets that
+have additional structure imposed upon them. We will also assign functions that
+preserve this structure to be the morphisms of our category. In this case, let's
+think about partially ordered sets, or \emph{posets}. We must first establish
+some definitions:
+\begin{itemize}
+        \item A poset is a set, $A$, with a relation, $\sim_A$, that is
+                reflexive, transitive, and antisymmetric. We covered these
+                properties in the Autumn Term.
+        \item Let $A$ and $B$ be posets. A monotone map $m \colon A \to B$ is
+                an order-preserving function such that
+                \begin{equation}
+                        \forall\, a, b \in A \qquad a \sim_A b
+                        \implies m(a) \sim_B m(b).
+                \end{equation}
+\end{itemize}
+We have a category $\catpos$ whose objects are posets and morphisms are monotone
+maps between those posets. Once more, we can verify the satisfaction of the
+relevant axioms.
+\begin{itemize}
+        \item Let $A, B, C \in \catobj{(\catpos)}$ be distinct. Also, let
+                $f \in \hom (A, B)$ and $g \in \hom (B, C)$. Since monotone maps
+                are functions, we can compose them to get  $g \circ f \colon A
+                \to C$. Is this new function also a monotone map? Well, for
+                all $a_1, a_2 \in A$, we have that
+                \begin{align}
+                        \quad a_1 \sim_A a_2 &\implies f(a_1) \sim_B f(a_2) \\
+                        &\implies g(f(a_1)) \sim_C g(f(a_2)).
+                \end{align}
+                Thus, $g \circ f$ is a monotone map, and the composition axiom
+                is satisfied.
+        \item The identity morphism for any fixed object, $A$, is the
+                monotone map $1_A \colon A \to A$, such that $a \mapsto a$.
+        \item The associativity axiom is satisfied since our morphisms are
+                functions, and function composition is associative.
+\end{itemize}
+
+\subsection{Category of Finite-Dimensional Vector Spaces}
+
+We can look to Linear Algebra to provide another simple infinite category. The
+category of finite-dimensional $\mathbb{R}$\emph{-vector spaces} is often denoted
+$\catrvect$ \autocite{Hasegawa:2008}.
+\begin{itemize}
+        \item A finite-dimensional $\mathbb{R}$-vector space is an element of
+                $\{ \mathbb{R} ^n \, | \, n \in \mathbb{N} \}$.
+        \item A linear map is a function, $f$, between two vector spaces,
+                such that vector addition and scalar multiplication is
+                preserved. That is,
+                \begin{alignat}{2}
+                        f( \vec{u} + \vec{v} ) &= f( \vec{u} ) + f( \vec{v} );
+                        \qquad && \text{[\textbf{Additivity}]}%
+                                \label{eqn:vs-additivity}\\
+                        f( \lambda \vec{u} ) &= \lambda f( \vec{u} ),
+                        \qquad && \text{[\textbf{Homogeneity}]}%
+                                \label{eqn:vs-homo}
+                \end{alignat}
+                with $\lambda \in \mathbb{R}$ and
+                $\vec{u},\vec{v} \in \mathbb{R} ^n$ for some $n \in \mathbb{N}$.
+\end{itemize}
+The objects of $\catrvect$ are finite-dimensional real-valued vector spaces, and
+its morphisms are linear maps between them. We will verify that $\catrvect$
+satisfies the category axioms:
+\begin{itemize}
+        \item Let $\mathbb{R} ^a, \mathbb{R} ^b, \mathbb{R} ^c \in
+                \catobj{(\catrvect)}$ be distinct. Additionally, suppose that
+                $f \in \hom ( \mathbb{R} ^a, \mathbb{R} ^b)$ and
+                $g \in \hom ( \mathbb{R} ^b, \mathbb{R} ^c)$.
+                Trivially, $g \circ f \colon \mathbb{R} ^a \to \mathbb{R} ^c$
+                is a map. Now, let $\vec{u} , \vec{v} \in \mathbb{R} ^a$
+                and $\lambda \in \mathbb{R}$. We have that
+                \begingroup
+                \renewcommand{\equationautorefname}{Eqn.}
+                \begin{alignat}{2}
+                        (g \circ f)( \vec{u} + \vec{v} )
+                        &= g(f( \vec{u} )) + g(f( \vec{v} ))\nonumber \\
+                        &= (g \circ f)( \vec{u} ) + (g \circ f)( \vec{v} )
+                        \qquad&&\text{[By \autoref{eqn:vs-additivity}]} \\[.5em]
+                        %
+                        (g \circ f)( \lambda \vec{u} )
+                        &= \lambda g(f( \vec{u} ))\nonumber \\
+                        &= \lambda (g \circ f)( \vec{u} ),
+                        \qquad&&\text{[By \autoref{eqn:vs-homo}]}
+                \end{alignat}
+                \endgroup
+                so the axiom of composition is met.
+        \item The identity morphism for any object is the linear map such that
+                $\vec{u} \mapsto \vec{u}$.
+        \item The associativity axiom is satisfied due to functional nature of
+                the maps.
+\end{itemize}
+
+\subsection{Category of Propositions}
+As mentioned at the start of this section, the final exemplary category that we
+cover is not concrete. In this regard, it is similar to the categories we will
+see later in this report. Here we leverage how objects and morphisms can be
+anything such that the category axioms are met.
+
+In this case, we are going to explore a category whose objects are propositions
+and morphisms are proofs, which we will denote $\catprop$. We will consider this
+category informally, by employing our well-established intuition of proofs.
+Suppose $P, Q \in \catobj{(\catprop)}$. If there is a proof which, under $P$,
+gives $Q$ -- or a proof leading from $P$ to $Q$ -- then this gives a morphism
+$(f \colon P \to Q) \in \hom (P, Q)$ (which is not a function!) We will use $P
+\vdash Q$ to denote this. We can confirm the categorical nature of this
+structure:
+\begin{itemize}
+        \item Let $P, Q, R \in \catobj{(\catprop)}$ be distinct and let
+                $f \in \hom (P, Q), g \in \hom (Q, R)$. Then $P \vdash Q \land
+                Q \vdash R$ so, intuitively, $P \vdash R$ and $g \circ f$ belongs
+                to the category.
+        \item We can also intuitively reason that there is a proof leading from
+                any proposition to itself, so each object has an identity
+                morphism.
+        \item Finally, we know that morphism composition is associative, again
+                through our intuition. Let $P, Q, R, S \in \catobj{(\catprop)}$
+                be distinct. Let $f \in \hom (P, Q)$, $g \in \hom (Q, R)$, and
+                $h \in \hom (R, S)$. That $(h \circ g) \circ f$ is a morphism
+                asserts both that there is a proof leading from $Q$ to $S$, and
+                that $P$ leads to $Q$. Likewise, that $h \circ (g \circ f)$ is a
+                morphism asserts both the existence of a proof leading from $P$
+                to $R$, and that $R$ leads to $S$. These two assertions are
+                identical, thus morphism composition is associative.
+\end{itemize}
+We covered this category informally in that some facts stated above do not hold
+for \emph{every} conceivable system of logic, but just some particularly
+well-behaved constructions\footnote{In the scope of this report, the
+distinctions between varying systems of logic is unimportant.}. Our intuition
+was hopefully enough to take value from the example. A further, and more
+rigorous, exploration of this concept is detailed by \autocite{Baez:2009}.
+%
