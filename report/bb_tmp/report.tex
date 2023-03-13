@@ -128,33 +128,35 @@ us more comfortable with the fleshed out examples coming later in the report.
 
 For the first three of these examples, our objects will be
 nothing but sets and morphisms nothing but functions (both with some additional
-restrictions). However, it's important to remember that categories need not
+restrictions). Categories of this type are sometimes called
+\emph{concrete} \autocite{Awodey:2010}.
+However, it's important to remember that categories need not
 contain functions nor sets. In fact, we will see this in our final introductory
 example, where we do away with both entirely!
 
 All the exemplary categories that we are going to touch on will be infinite.
 This means that we won't be using any diagrams for this section of the report.
 
-\subsection{The category of sets}
+\subsection{Category of sets}
 An easy to digest example to start with is the category of sets, whose objects are sets and
 morphisms are functions between sets. These are the set-theoretic functions we
 are familiar with and have been using throughout the Autumn Term. We will follow
-the common denotation [REF] for this category: $\catset$.
+a common denotation \autocite{Leinster:2014} for this category: $\catset$.
 
 We can easily verify that this category indeed satisfies the category axioms
-seen in [AXIOMSREF].
+seen in [TODO].
 \begin{itemize}
         \item There are objects, which are sets.
         \item There are morphisms between those objects, which are functions.
                 Remember, however: morphisms are not necessarily functions! In fact,
-                in most applications of category theory, it is rare that we see
-                functions as morphisms. (REF)
+                there are an abundance of examples where this is not the case.
         \item The composition of two functions is also a function, with its
                 domain and codomain coming from the functions involved in the
                 composition operation. Hence, the axiom of composition is
                 satisfied.
         \item Let $A \in \catobj ( \catset )$. We have that the identity
-                morphism for $A$ is $(1_A \colon A \to A) \in \hom (A, A)$.
+                morphism for $A$ is $(1_A \colon A \to A) \in \hom (A, A)$, which
+                maps each element of $A$ to itself.
         \item The morphisms of $\catset$ are associative because functions are
                 associative. Let $A, B, C, D \in \catobj ( \catset )$ be distinct. Also, let
                 $f \in \hom (A, B)$, $g \in \hom (B, C)$, and $h \in
@@ -164,9 +166,9 @@ seen in [AXIOMSREF].
                 \]
 \end{itemize}
 Hence, all the category axioms are satisfied. Going forwards, we will avoid the
-pedantry of stating facts that are trivially true.
+pedantry of listing that our category contains morphisms and objects.
 
-\subsection{The category of partially ordered sets}
+\subsection{Category of partially ordered sets}
 A nice path to advance down is the exploration of a category whose objects are
 sets that satisfy certain properties. In other words, the objects are sets that have
 additional structure imposed upon them. We will also assign functions that
@@ -206,10 +208,10 @@ that difficult:
                 functions, and function composition is associative.
 \end{itemize}
 
-\subsection{The category of vector spaces}
+\subsection{Category of vector spaces}
 We can look to Linear Algebra to provide another simple infinite category. The
-category of finite-dimensional $\mathbb{R}$\emph{-vector spaces} is denoted
-$\catfinvect$. Let's establish a couple more definitions:
+category of finite-dimensional $\mathbb{R}$\emph{-vector spaces} is often denoted
+$\catfinvect$ \autocite{Hasegawa:2008}. Let's establish a couple more definitions:
 \begin{itemize}
         \item A finite-dimensional $\mathbb{R}$-vector space is an element of
                 $\{ \mathbb{R} ^n \, | \, n \in \mathbb{N} \}$.
@@ -222,8 +224,8 @@ $\catfinvect$. Let's establish a couple more definitions:
                         f( \lambda \vec{u} ) &= \lambda f( \vec{u} ),
                         \qquad && \text{[\textbf{Homogeneity}]}
                 \end{alignat*}
-                with $\vec{u},\vec{v} \in \mathbb{R} ^n \; \exists n \in \mathbb{N}$
-                and $\lambda \in \mathbb{R}$.
+                with $\lambda \in \mathbb{R}$ and
+                $\vec{u},\vec{v} \in \mathbb{R} ^n$ for some $n \in \mathbb{N}$.
 \end{itemize}
 The objects of $\catfinvect$ are finite-dimensional $\mathbb{R}$-vector spaces
 and its morphisms are linear maps between them. We will verify that
@@ -238,15 +240,15 @@ $\catfinvect$ satisfies the category axioms:
                 and $\lambda \in \mathbb{R}$. We have that
                 \begin{alignat*}{8}
                         (g \circ f)( \vec{u} + \vec{v} )
-                        &= g(f( \vec{u} + \vec{v} )) \\
-                        &= g(f( \vec{u} ) + f( \vec{v} )) \\
-                        &= g(f( \vec{u} )) + g(f( \vec{v} )) \\
+                        &= g(f( \vec{u} + \vec{v} )) \\[0.3em]
+                        &= g(f( \vec{u} ) + f( \vec{v} )) \\[0.3em]
+                        &= g(f( \vec{u} )) + g(f( \vec{v} )) \\[0.3em]
                         &= (g \circ f)( \vec{u} ) + (g \circ f)( \vec{v} );
-                        \qquad && \text{[\textbf{Additivity}]} \\
+                        \qquad && \text{[\textbf{Additivity}]} \\[0.6em]
                         (g \circ f)( \lambda \vec{u} )
-                        &= g(f( \lambda \vec{u} )) \\
-                        &= g( \lambda f( \vec{u} )) \\
-                        &= \lambda g(f( \vec{u} )) \\
+                        &= g(f( \lambda \vec{u} )) \\[0.3em]
+                        &= g( \lambda f( \vec{u} )) \\[0.3em]
+                        &= \lambda g(f( \vec{u} )) \\[0.3em]
                         &= \lambda (g \circ f)( \vec{u} ),
                         \qquad && \text{[\textbf{Homogeneity}]}
                 \end{alignat*}
@@ -258,15 +260,42 @@ $\catfinvect$ satisfies the category axioms:
                 being functions.
 \end{itemize}
 
-\subsection{The category of deduction and deducability}
+\subsection{Category of propositions}
 As mentioned at the start of this section, the final exemplary category that we
-will cover does not have functions for morphisms and sets for objects. It is
-akin to the categories we will see later in this report in that regard.
-Remember, objects and morphisms can be anything such that the category axioms
-are met -- and these are not very restrictive axioms.
-In this case, we are going to explore a category whose objects are theorems and
-morphisms are proofs.
+cover is not concrete. In this regard, it is similar to the categories we will
+see later in this report. Here we leverage how objects and morphisms can be
+anything such that the category axioms are met, which there are not many of.
 
+In this case, we are going to explore a category whose objects are propositions and
+morphisms are proofs, which we will denote $\catprop$. We will consider this
+category \emph{informally}, using the intuition we already have about what a proof is.
+Suppose $P, Q \in \catobj ( \catprop )$. If there is a proof which, under $P$,
+gives $Q$ -- or a proof leading from $P$ to $Q$ -- then this gives a morphism
+$(f \colon P \to Q) \in \hom (P, Q)$ (which is not a function!) We will use
+$P \vdash Q$ to denote this. Let's verify that this is a category:
+\begin{itemize}
+        \item Let $P, Q, R \in \catobj ( \catprop )$ be distinct and let
+                $f \in \hom (P, Q), g \in \hom (Q, R)$. Then $P \vdash Q$ and
+                $Q \vdash R$ so, intuitively, $P \vdash R$ and $g \circ f$ belongs
+                to the category. In this way, morphisms compose.
+        \item We can also intuitively reason that there is a proof leading from
+                any proposition to itself, so each object has an identity
+                morphism.
+        \item Finally, we know that morphism composition is associative, again
+                through our intuition. Let $P, Q, R, S \in \catobj 
+                ( \catprop )$ be distinct. Let $f \in \hom (P, Q)$, $g \in
+                \hom (Q, R)$, and $h \in \hom (R, S)$. That $(h \circ g) \circ f$
+                is a morphism asserts both that there is a proof leading from $Q$ to $S$,
+                and that $P$ leads to $Q$. Likewise, that $h \circ (g \circ f)$ is a morphism
+                asserts both the existence of a proof leading from $P$ to $R$, and that $R$
+                leads to $S$. These two assertions are identical, thus morphism
+                composition is associative.
+\end{itemize}
+We covered this category informally in that some facts stated above do not hold
+for \emph{every} `system of logic' -- just some of them. However, we need not
+worry about this, nor what a system of logic is. Our intuition was hopefully enough
+to take value from the example. A further, and more rigorous, exploration of
+this concept is found in \autocite{Baez:2009}.
 
 \section{\for{toc}{\texorpdfstring{\textbf{[OD]~}}{}}Further Applications: %
         Functional Programming and \texorpdfstring{$\lambda$}{Lambda}-Calculus}
@@ -276,5 +305,3 @@ morphisms are proofs.
 
 \noindent Temporarily moved to \texttt{owd\_report.tex}.
 \end{document}
-
-
