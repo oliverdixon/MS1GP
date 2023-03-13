@@ -22,10 +22,12 @@
 % below. For arbitrary categories (e.g. C or C_0), use \arbcat. For the homset,
 % use the built-in \hom macro (\cathom is superfluous).
 
+\newcommand{\arbcat}[1]{\ensuremath\mathcal{#1}}
+\newcommand{\arbfunc}[1]{\ensuremath #1} % I might change this to \mathbf{...}
+
 \DeclareMathOperator{\catobj}{ob}
 \DeclareMathOperator{\catid}{id}
-\DeclareMathOperator{\catcat}{\mathbf{cat}}
-\newcommand{\arbcat}[1]{\ensuremath\mathcal{#1}}
+\DeclareMathOperator{\catcat}{\mathbf{Cat}}
 \DeclareMathOperator{\catendo}{\mathbf{Endo}}
 \DeclareMathOperator{\cathask}{\mathbf{Hask}}
 \DeclareMathOperator{\catset}{\mathbf{Set}}
@@ -36,5 +38,4 @@
 \DeclareMathOperator{\catpoint}{\mathbf{Based}}
 \DeclareMathOperator{\catdeduce}{\mathbf{Deduce}}
 \DeclareMathOperator{\catfun}{\mathbf{Fun}}
-\DeclareMathOperator{\catprop}{\mathbf{Prop}}
 

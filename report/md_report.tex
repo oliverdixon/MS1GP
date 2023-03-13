@@ -1,0 +1,316 @@
+% MAJOR REPORT SECTION
+%
+% AUTHOR: MATTHEW DRURY
+% TITLE:  THEORETICAL UNDERPINNINGS: AXIOMATIC CONSTRUCTIONS
+%
+\subsection{The Idea of a Category}
+
+A category is a mathematical structure that links a collection of objects with
+non-symmetric relationships called morphisms. Each morphism can be said to
+traverse from one object to another. They are used to create abstract models of
+mathematical theories based on the role each object plays. Categories have the
+versatility to talk about different areas of mathematics in the same language,
+which is why it is sometimes said to be the mathematics of mathematics. The
+objects and morphisms have little restriction as to what they can represent
+which can be seen in the commutative diagrams illustrated in
+\autoref{fig:initial-cd} (\autoref{fig:factor-cd} is adapted
+from~\autocite{Cheng:2022}).
+\begin{figure}[ht]
+        \vspace{\belowcaptionskip}
+        \begin{subfigure}{.45\textwidth}
+                \centering
+                \begin{tikzcd}
+                        2 \ar[r] \ar[dr] & 6 \ar[dr]\\
+                        3 \ar[ur] \ar[dr] & 10 \ar[r] & 30\\
+                        5 \ar[ur] \ar[r] & 15 \ar[ur]
+                \end{tikzcd}%
+                \vspace{1em}%
+                \caption{Factors}%
+                \label{fig:factor-cd}
+        \end{subfigure}
+        \vspace{-\belowcaptionskip}%
+        \begin{subfigure}{.45\textwidth}
+                \centering
+                \begin{tikzcd}
+                        \text{York} \ar[d] \ar[dr] \\
+                        \text{Leeds} \ar[d] \ar[dr] \ar[r] & \text{Hull} \ar[d] \\
+                        \text{Manchester} \ar[r] & \text{Sheffield}
+                \end{tikzcd}%
+                \vspace{1em}%
+                \caption{Train routes from York to Sheffield}
+        \end{subfigure}%
+        \caption{Real-World Examples of Categories}%
+        \label{fig:initial-cd}
+\end{figure}
+
+These diagrams are usually used to give a sample of a category to demonstrate
+these properties. Mathematicians like to generalise with categories and consider
+infinite objects and morphisms, meaning we want categories to link all types of
+objects that we can define. The most valuable mathematical facts tend to be
+those that apply to the widest range of situations. For instance, uncovering the
+quadratic formula being more important than solving a particularly difficult
+quadratic. It makes all non-trivial quadratics easier to solve and uncovers a
+method to determine whether the solutions are real or complex using the
+discriminant term ``$b^2-4ac$''. By doing this we have found a relationship
+between all quadratics and their solutions. From there we could generalise even
+further and think about how this is significant for higher order polynomials. 
+
+Morphisms are combined together in a process called composition. It means to do
+one morphism and then another, given that the target object of the first
+morphism is the same as the source of the second morphism. Above we can see that
+we can go from York to Leeds to Manchester. This means we have a morphism that
+goes from York to Manchester. There are four different ways to get to Sheffield,
+meaning four morphisms. These may not be the same morphisms, as they only share
+in source and target, not necessarily meaning. When two different composite
+morphisms are equal, we say they commute, hence the name \emph{commutative
+diagram}.
+
+There are also identity morphisms. These go from an object to itself and are
+equivalent to not doing a morphism at all, as when they are composed with
+another morphism $f$, the resulting composite morphism is equal to $f$. The
+morphism has done nothing, like how multiplying a number by 1(The multiplicative
+identity) does not change its value. It is similar to stating that something is
+equal to itself which is a trivial fact but an important feature of the
+structure of categories. It should be noted that it may not be the only morphism
+from one object to itself. These are called endomorphisms and the identity is
+just one of them.
+
+Categories illuminate subtle similarities. By creating categories we abstract
+things to their roles and by comparing categories or spotting patterns and
+structures within them, we can see properties shared by things that would
+initially seem very different. Lines of thought in one context can be more
+easily translated into another by seeing equivalent structural features.
+Mathematicians can then try new methods to solve problems and prove new facts or
+describe multiple problems as one that is more general.
+
+\subsection{Axioms and Notation}
+
+We will now formally define a category. The following axioms are necessary for a
+structure to be considered a category.
+\begin{enumerate}
+        \item \textbf{Objects:} In a category $\arbcat{C}$ there is
+        $\catobj(\arbcat{C})$, which is a collection of all the objects of
+        $\arbcat{C}$.
+
+        \item \textbf{Morphisms:} For each pair ordered pair of objects $(A,B)$
+        in a category $\arbcat{C}$ we have $\hom_\arbcat{C}(A,B)$, also written
+        as $\arbcat{C}(A,B)$.  This is the collection of all morphisms from A to
+        B, short for ``homomorphism set''. Homomorphisms are those that preserve
+        the structure of objects and for many useful categories they are
+        necessary for the axioms to hold. However, this property does not need
+        to hold to use this notation. A morphism $f$ is notated to map $A$ to
+        $B$ by $f\colon A\to B$.
+
+        \item \textbf{Composition:} For objects $A,B,C\in \catobj(\arbcat{C})$
+        if there exists morphisms $(f\colon A\to B)\in \hom_\arbcat{C}(A,B)$ and
+        $(g \colon B\to C)\in \hom_\arbcat{C}(B,C)$, then there exists $(g\circ
+        f\colon A\to C)\in \hom_\arbcat{C}(A,C)$
+
+        \item \textbf{Identities:} Every object $A$ in a category $\arbcat{C}$
+        has an identity morphism which maps from $A$ to itself.  It is notated
+        $1_A\colon A\to A$ for $A\in ob(\arbcat{C}), 1_A\in
+        \hom_\arbcat{C}(A,A)$.  For $f\in \hom_\arbcat{C}(A,B), g\in
+        \hom_\arbcat{C}(B,A)$, the identity has the property that $f\circ 1_A =
+        f, 1_A\circ g = g$. Each identity is unique to its object. If there were
+        two identities $I_1,I_2\in A$ then $(f\circ I_1 = f = f\circ I_2)
+        \implies I_1=I_2$
+
+        \item \textbf{Associativity:} A morphism $h\circ(g\circ f) = (h\circ
+        g)\circ f$. This means that two morphisms are equal if they are composed
+        from the same morphisms in the same order regardless of the order in
+        which we compute the individual composite pairs.
+\end{enumerate}
+\begin{figure}
+        \vspace{\belowcaptionskip}
+        \begin{subfigure}{.3\textwidth}
+                \centering
+                \vspace{1em}
+                \begin{tikzcd}
+                        A
+                                \ar[dr, "g\circ f", bend left=20,
+                                        dashrightarrow]
+                                \ar[d, "f"] \\
+                        B
+                                \ar[r, "g"]
+                                \ar[dr, "h\circ g", bend right=20,
+                                        dashrightarrow, swap] &
+                        C
+                                \ar[d, "h"] \\ &
+                        D
+                \end{tikzcd}%
+                \vspace{1em}
+                \caption{Composition}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{.15\textwidth}
+                \centering
+                \vspace{1em}
+                \begin{tikzcd}
+                        A
+                                \ar[loop right,"1_A"]
+                                \ar[d , "f" swap] \\
+                        B
+                                \ar[loop right,"1_B"]
+                                \ar[d , "g" swap] \\
+                        C
+                                \ar[loop right,"1_C"]
+                \end{tikzcd}%
+                \vspace{1em}
+                \caption{Identities}
+        \end{subfigure}
+        \hfill
+        \begin{subfigure}{.4\textwidth}
+                \centering
+                \begin{tikzcd}
+                        A
+                                \ar[r,"f"]
+                                \ar[rr, "g\circ f", bend right=40]
+                                \ar[rrr, "h\circ(g\circ f)",%
+                                        bend right=60]
+                                \ar[rrr, "(h\circ g)\circ f",%
+                                        bend left=60,] &
+                        B
+                                \ar[r, "g"]
+                                \ar[rr, "h\circ g", bend left=40] &
+                        C
+                                \ar[r,"h"]  &
+                        D
+                \end{tikzcd}%
+                \caption{Associativity}
+        \end{subfigure}%
+        \vspace{-\belowcaptionskip}
+        \caption{Essential Properties of Categorical Structures}
+\end{figure}
+
+\subsection{Size of Categories}
+
+The collection $\catobj(\arbcat{C})$ and the collections $\hom_\arbcat{C}(A,B)$
+do not have to be finite. The idea of category size means to place categories in
+a hierarchy of containment. This is to accommodate how $\catobj(\arbcat{C})$ and
+$\hom_\arbcat{C}(A,B)$ do not have to be sets either.
+
+When defining an infinite collection of objects by their properties, it can
+create contradictions. Famously in set theory there is Russell's
+paradox~\autocite{Russell:1903}. It states that if you have a set S that
+contains every set which doesn't contain itself, then suppose that S does not
+contain S, it would imply that S is in fact in S as it does not contain itself
+and vice versa. Formally, 
+\begin{equation}
+S = \{x\;\text{is a set}\:|\:x\notin x\}, (S\in S) \iff (S\notin S)
+\end{equation}
+There were many examples of these paradoxes that were uncovered in the early
+20th century. Mathematicians are too rigorous to allow such a thing, so to solve
+the issue they devised axiomatic systems to limit the properties that members of
+sets can be said to follow. This makes some sets very convoluted to define and
+means there are well defined collections of objects that cannot be put into a
+set. Categories address this issue in a more elegant way. Firstly, categories do
+not claim to contain elements; the core concept is instead relationships.
+Secondly, categories have a hierarchy of containment such that they only contain
+categories ``smaller'' than themselves. It follows then that categories are not
+defined in a self referential manner like in Russell's paradox.
+
+A small category is where $\catobj(\arbcat{C})$ and each $\hom_\arbcat{C}(A,B)$
+can be described as a set. A locally small category is where
+$\catobj(\arbcat{C})$ does not form a set but each $\hom_\arbcat{C}(A,B)$ does.
+A large category is where nether $\catobj(\arbcat{C})$ nor
+$\hom_\arbcat{C}(A,B)$ are a set. The hierarchy means that if one wanted a
+category where small categories are objects, it would have to be a large
+category. Then, if you wanted a category of large categories, you would need a
+super-large category and so on. This can be used to formally think about
+multiple layers of generalization and abstraction.
+
+We can easily avoid Russell's paradox and create categories of categories. This
+is a sign that categories are a robust idea, as we can think about a collection
+of categories using the same language as within individual categories.
+
+\subsection{Functors}
+
+A functor maps between the objects of two categories, similarly to how a
+function maps between two sets.  Functors preserve the structure of the
+category, so we want equivalent morphisms between the equivalent objects that
+have been chosen. This relationship is illustrated in
+\autoref{fig:functor-intro}.
+\begin{figure}[ht]
+        \vspace{\belowcaptionskip}
+        $\underbrace{\begin{tikzcd}[sep=large, ampersand replacement=\&]
+                A \arrow[r, "f"] \arrow[rd, "g \circ f" swap]
+                \& B \arrow[d, "g"] \\
+                \& C
+        \end{tikzcd}}_{\substack{\\[.2em]\text{\small Domain Category
+                $\arbcat{C}$}}}$%
+        \begin{tikzcd}[sep=large, ampersand replacement=\&]
+                {} \arrow[rr, FUNCTOR, %
+                        "\substack{\text{\large\textit{F}}\\[.2em]}", %
+                        yshift=-.8em]
+                \& \& {}
+        \end{tikzcd}
+        $\underbrace{\begin{tikzcd}[sep=large, ampersand replacement=\&]
+                \arbfunc{F}(B) \arrow[d, "\arbfunc{F}(g)" swap] \&
+                \arbfunc{F}(A) \arrow[l, "\arbfunc{F}(f)" swap]
+                        \arrow[dl, "\arbfunc{F}(g \circ f)"]
+                \\ \arbfunc{F}(C) \&
+        \end{tikzcd}}_{\substack{\\[.2em]\text{\small Codomain Category
+                $\arbcat{D}$}}}$%
+        \caption{A functor $\arbfunc{F}$ between simple categories
+                $\arbcat{C}$ and $\arbcat{D}$}
+        \label{fig:functor-intro}
+\end{figure}
+
+For categories $\arbcat{C}$, $\arbcat{D}$, if we have a functor $\arbfunc{F}
+\colon \arbcat{C}\to\arbcat{D}$ between them:
+\begin{enumerate}
+        \item \textbf{Objects:} For every $A\in\catobj(\arbcat{C})$, 
+        $F_A\in\catobj(\arbcat{D})$. Thus, $A$ is mapped to $F(A)$.
+
+        \item \textbf{Morphisms:} For every $f\in\hom_{\arbcat{C}}(A,B)$, we
+        have $F(f)\in\hom_{\arbcat{D}}(F_A,F_B)$. Thus, $f$ is mapped to $F(f)$.
+
+        \item \textbf{Identities:} For every $A\in\catobj{\arbcat{C}}$, we have
+        $1_A$. For every $1_A$, there is corresponding morphism
+        $F(1_A)\in\hom_{\arbcat{D}}(F(A),F(A))$. Thus, the identity of $A$ is
+        mapped to the identity of $F(A)$.
+
+        \item \textbf{Composites:} For every $f\in\hom_{\arbcat{C}}(A,B)$,
+        $g\in\hom_{\arbcat{C}}(B,C)$, we have that $F{(g\circ f)} = F_g\circ
+        F_f$. This means that the order in which compositions and functors are
+        applied is unimportant. This implies that composition in each category
+        has an equivalent effect on its morphisms.
+\end{enumerate}
+The commutative diagram above shows how from $A$ we can traverse $g\circ f
+\colon A\to C$ and then apply $F$, or we can apply $F$, then traverse $F(g \circ
+f) \colon F(A)\to F(C)$.
+
+In general, a functor is a way of finding the structure of one category in
+another.  For instance, a category with two objects and one morphism between
+them $f \colon A\to B$ can have a functor to any category by selecting any
+morphism in it, which could even be the identity of an object.  This principle
+extends to categories of infinite objects.
+
+\subsection{Non-Small Categories}
+
+The large category $\catcat$ has objects which are all small categories and
+homomorphisms which are all functors between them.  Each functor $F \colon
+\arbcat{C}\to\arbcat{D}$ can be seen as a function between sets
+$\catobj(\arbcat{C})$ and $\catobj({\arbcat{D}})$.  It could be injective,
+meaning that each object of $\arbcat{C}$ maps to a different object of
+$\arbcat{D}$. Otherwise, the functor is showing that one object in $\arbcat{D}$
+has the same categorical properties as a structure of objects in $\arbcat{C}$.
+
+If it is bijective, then the functor is an isomorphism, a morphism that has an
+inverse which composes to form the identity. This implies that $\arbcat{C}$ and
+$\arbcat{D}$ can reach the same categories with functors and be reached by the
+same categories with functors. In general, isomorphisms are a way of saying that
+objects indistinguishable from the perspective of the category they are in.
+However, it is not a suitable notion of equivalence between categories.
+
+The identities in $\catcat$ are identity functors which map a category to a copy
+of itself with the exact same objects, morphisms, compositions. More generally
+it is one of the endofunctors which map categories to themselves.
+
+Composition is simply doing one functor after another. For functors
+$F\colon\arbcat{C}\to\arbcat{D}$, $G \colon \arbcat{D}\to\arbcat{E}$, we can
+describe a single functor $G\circ F\colon\arbcat{C}\to\arbcat{E}$.  When a lot
+of functors have been composed together we can get an increasingly subtle
+structural similarity between categories that we would not be able to notice by
+laying out diagrams next to each other and seeing a pattern.
+%

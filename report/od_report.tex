@@ -1,188 +1,8 @@
-% OWD 2023
-
-% TODO: MD SECTION ALL
-% TODO: BB SECTION ALL
-% TODO: SYNCHRONISE PREAMBLES
-% TODO: CITE ENTIRE BIBLIOGRAPHY
+% MAJOR REPORT SECTION
 %
-% (ITEMS BELOW ARE RELIANT ON MD AND BB)
+% AUTHOR: OLIVER DIXON
+% TITLE:  FURTHER APPLICATIONS: FUNCTIONAL PROGRAMMING AND LAMBDA-CALCULUS
 %
-% TODO: COMBINE REPORT DOCUMENTS' PROSE
-%
-% (FINAL STAGES --- DUE MONDAY 12PM)
-%
-% TODO: FINAL REVISION/REVIEW
-% TODO: COMPRESS AND SUBMIT
-
-\documentclass[10pt,a4paper,reqno]{amsart}
-\usepackage{xcolor, fancyhdr, lastpage, mathtools}
-\usepackage[en-GB]{datetime2}
-\usepackage[foot]{amsaddr} % Move authorship information to the front page
-\usepackage{caption, subcaption, float, etoolbox} % Enhanced float environments
-\usepackage{minted, realboxes, listings} % Source code (Haskell) formatting
-
-\usepackage[%
-	backend = biber,
-	sorting = none,
-	bibencoding = utf8,
-	style = alphabetic
-]{biblatex}
-
-\usepackage[%
-	colorlinks = true,
-	allcolors = blue,
-        %
-        % Add interactive hyperlinks to page numbers in the ToC.
-        linktoc = page,
-        %
-        % Build the PDF page index across the entire section hierarchy.
-        bookmarksdepth = subsubsection
-]{hyperref}
-
-\input{../catmacros.tex} % Common category-theoretic macros
-\setcounter{tocdepth}{1} % Only show major sections in the ToC
-\addbibresource{report.bib}
-
-\setlength{\headheight}{13pt}
-\setlength{\footskip}{30pt}
-\setlength{\topmargin}{0pt}
-\renewcommand{\footrulewidth}{.3pt}
-\fancypagestyle{fancy}{%
-	\fancyhf{}
-        \renewcommand{\headrulewidth}{\footrulewidth}
-        \fancyhead[C]{\footnotesize\textsc{\plainshorttitle}\vspace{.3em}}
-        \fancyfoot[R]{\footnotesize Page \thepage{} of~\pageref{LastPage}}
-        \fancyfoot[L]{\footnotesize Compilation Date: \today}
-}
-\fancypagestyle{firstpage}{%
-        \fancyhead{}
-        \renewcommand{\headrulewidth}{0pt}
-}
-
-% -- Begin listing options for Haskell
-
-\newcommand{\inlinehask}[1]{\mintinline{haskell}{#1}}
-\newcommand{\barehask}[1]{\Colorbox{codebg}{\lstinline[style = inlineHask]{#1}}}
-\newcommand{\haskmath}[2]{%
-        \ensuremath\text{\Colorbox{codebg}{%
-                \vphantom{\lstinline[basicstyle = \haskMorphStyle]{fg}}%
-                \lstinline[style = inlineHask, basicstyle = #2]{#1}%
-        }}%
-}
-\AtBeginEnvironment{listing}{\setlength{\abovecaptionskip}{.8em}}
-\newcommand{\listingautorefname}{Listing}
-\renewcommand{\subsectionautorefname}{Section}
-
-% Use Courier instead of CM for fixed-width text. This is an aesthetic choice
-% that also affects hyperref, but we need Courier for supporting the boldface
-% fonts in Haskell formatting environments (and related commutative diagrams).
-\renewcommand{\ttdefault}{pcr}
-
-\newcommand{\haskMorphStyle}{\normalsize\ttfamily\color{haskkeyword}}
-\newcommand{\haskObjStyle}{\normalsize\ttfamily\color{black}}
-\newcommand{\haskFuncStyle}{\normalsize\ttfamily\color{haskkeyword}\bfseries}
-
-\definecolor{codebg}{RGB}{230,230,230}
-\definecolor{haskkeyword}{RGB}{173,46,252}
-
-% I am using the Listings package for printing inline Haskell, and Minted for
-% printing verbatim blocks. In general, Minted is far superior, but Listings is
-% more crudely customisable for pseudo-code inline blocks that require very
-% literal pattern-matching for given tokens.
-
-\setminted{%
-        frame = lines,
-        framesep = 2mm,
-        baselinestretch = 1.2,
-        bgcolor = codebg,
-        fontsize = \footnotesize,
-        linenos
-}
-
-\lstdefinestyle{inlineHask}{%
-        language = Haskell,
-        alsoletter = {->, ::},
-        morekeywords = {->, ::, fmap},
-        keywordstyle = \color{haskkeyword}\bfseries,
-        basicstyle = \footnotesize\ttfamily
-}
-
-% -- End listing options for Haskell
-
-% \yorkemail: takes the username and outputs a clickable mailto link.
-\newcommand{\yorkemail}[1]{\href{mailto:#1@york.ac.uk}{#1@york.ac.uk}}
-
-% Make bullet points slightly smaller (they look overwhelming in a 10pt font).
-\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
-\numberwithin{equation}{section}
-
-% Add appropriately padded frames around numbered figures and sub-figures.
-\numberwithin{figure}{section}
-\AtBeginEnvironment{subfigure}{\vspace{2em}}
-\floatstyle{boxed}
-\restylefloat*{figure}
-
-% \startcontribution: open a new contribution section:
-%
-%       #1: The author's initials;
-%       #2: The author's name;
-%       #3: Section title;
-%       #4: Prose page count;
-%       #5: (Prose) word count.
-%
-\newcommand{\startcontribution}[5]{%
-        \section{\for{toc}{\texorpdfstring{\textbf{[#1]~}}{}}#3}
-        \begin{flushright}
-                \vspace{5pt}
-                \textbf{[Written by #2]}
-
-                \vspace{5pt}
-                \textit{Prose, Excluding Floats:} #4 pages
-
-                \textit{Word Count of Prose:} Approx. #5 words
-        \end{flushright}
-}
-
-% -- Begin document metadata setup
-
-\newcommand{\plainshorttitle}{An Investigation of Elementary Category Theory}
-\title[\plainshorttitle]{An Investigation of Elementary Category Theory, with %
-        applications in Pure Mathematics and Theoretical Computer Science}
-
-\author{Matthew Drury} \email{\yorkemail{md1499}}
-\author{Ben Brook}     \email{\yorkemail{bb1170}}
-\author{Oliver Dixon}  \email{\yorkemail{od641}}
-
-\address{Department of Mathematics \\
-        University of York \\
-        United Kingdom}
-\date{Spring--Summer Term, 2023}
-
-% -- End document metadata setup
-
-\begin{document}
-\thispagestyle{firstpage}
-\pagestyle{fancy}
-\begin{abstract}
-        TODO
-\end{abstract}
-\maketitle
-\tableofcontents
-\startcontribution{MD}{Matthew Drury}%
-        {Theoretical Underpinnings: Axiomatic Constructions}%
-        {TODO}{TODO}
-\noindent \textit{Section omitted.}
-
-\startcontribution{BB}{Ben Brook}%
-        {Category-Theoretic Interpretations of Familiar Structures}%
-        {TODO}{TODO}
-\noindent \textit{Section omitted.}
-
-\clearpage
-\startcontribution{OD}{Oliver Dixon}%
-        {Further Applications: Functional Programming and %
-                \texorpdfstring{$\lambda$}{Lambda}-Calculus}%
-        {3--1/2}{1072} % 3.5 pages, ~1072 words
 \subsection{Functional Programming and Haskell}
 
 In purely functional languages, there is no allowance for context, or mutable
@@ -190,10 +10,9 @@ variables of any kind. Each function must accept some data, perform some strict
 transformation upon the data---as defined by the algorithm---and return the
 result. Whilst this robust paradigm does open a wide range of mathematical
 avenues involving proof, safety, and reproducibility, the prohibition of
-stateful computation renders many common tasks, such as system I/O or
-communication over a network socket, largely impossible, as these imperatively
-defined operations inherently contravene the purity principles of functional
-programming.
+stateful computation renders many common tasks, such as I/O or socket
+communication, largely impossible, as these imperatively defined operations
+inherently contravene the purity principles of functional programming.
 
 Haskell is a commonly used purely functional programming language, and suffers,
 as do all languages in the same class, from this blaring issue.  Indeed, early
@@ -268,6 +87,7 @@ $\arbcat{C}$ can be used to induce properties on $\mu$, as in
 \autoref{fig:monoid-commute}.
 
 \begin{figure}[ht]
+        \vspace{\belowcaptionskip}
         \begin{subfigure}{\textwidth}
                 \centering
                 \begin{tikzcd}[ampersand replacement=\&]
@@ -284,7 +104,7 @@ $\arbcat{C}$ can be used to induce properties on $\mu$, as in
                 \end{tikzcd}%
                 \caption{Associativity on $\otimes$ induced by $\alpha$}
         \end{subfigure}
-
+        \vspace{-\belowcaptionskip}
         \begin{subfigure}{\textwidth}
                 \centering
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
@@ -298,14 +118,13 @@ $\arbcat{C}$ can be used to induce properties on $\mu$, as in
                 \caption{Left- and right-identities of objects $A,B,C,D$ induced
                         by $\lambda$ and $\rho$}
         \end{subfigure}%
+        \vspace{-.5em}
         \caption{\textbf{(Monoidal Categories)} The natural transformations
                 invoke commutativity on the bifunctor $\otimes$.}
-        \vspace{1.5em}
         \label{fig:monoidal-cat-commute}
 \end{figure}
-
-\vspace{-2em}
 \begin{figure}[ht]
+        \vspace{\belowcaptionskip}
         \begin{subfigure}{\textwidth}
                 \centering
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
@@ -321,7 +140,7 @@ $\arbcat{C}$ can be used to induce properties on $\mu$, as in
                 \end{tikzcd}%
                 \caption{Associativity on $\mu$ induced by $\alpha$}
         \end{subfigure}
-
+        \vspace{-1.5em}
         \begin{subfigure}{\textwidth}
                 \centering
                 \begin{tikzcd}[sep=large, ampersand replacement=\&]
@@ -335,18 +154,18 @@ $\arbcat{C}$ can be used to induce properties on $\mu$, as in
                                 \arrow[ld, "\rho"] \\
                         \& M \&
                 \end{tikzcd}%
+                \vspace{-.5em}
                 \caption{Left- and right-identities of $M$ induced by $\lambda$
                         and $\rho$}
         \end{subfigure}%
         \caption{\textbf{(Monoids)} The natural transformations from the parent
                 monoidal category also apply within the monoid.}
-        \vspace{1.5em}
         \label{fig:monoid-commute}
 \end{figure}
 
-It is important that the domain of the $\mu$
-transformation is a \emph{product combination} of the monoidal object; this will
-allow the imperative-like threading of state in functional paradigms.
+It is important that the domain of the $\mu$ transformation is a \emph{product
+combination} of the monoidal object; this will allow the imperative-like
+threading of state in functional paradigms.
 
 \subsubsection{Examples of Monoidal Categories: Set Theory}
 
@@ -409,8 +228,7 @@ see the semi-curried form of the \emph{bind operator}. The importance of
 \end{listing}
 
 \begin{figure}[ht]
-        \centering
-        \vspace{1.5em}
+        \vspace{\belowcaptionskip}
         \begin{tikzcd}[outer sep=5pt, ampersand replacement=\&]
                 \haskmath{a}{\haskObjStyle}
                         \arrow[r, "\haskmath{f}{\haskMorphStyle}" swap]
@@ -436,13 +254,11 @@ see the semi-curried form of the \emph{bind operator}. The importance of
                 list constructor functor \emph{lifts} the Haskell types
                 \protect\barehask{a}, \protect\barehask{b}, and
                 \protect\barehask{c} into the list context.}
-        \vspace{1.5em}
         \label{fig:functor-list-map}
 \end{figure}
 
 \begin{figure}[ht]
-        \centering
-        \vspace{1.5em}
+        \vspace{\belowcaptionskip}
         \begin{tikzcd}[outer sep=5pt, ampersand replacement=\&]
                 \haskmath{a}{\haskObjStyle}
                         \arrow[r, "\haskmath{f}{\haskMorphStyle}" swap]
@@ -468,7 +284,6 @@ see the semi-curried form of the \emph{bind operator}. The importance of
                 $\cathask$. The mappings of the objects are implicit in the
                 mappings of the morphisms, as domains and codomains must be
                 preserved between isomorphic categories.}
-        \vspace{1.5em}
         \label{fig:functor-general-fmap}
 \end{figure}
 
@@ -484,12 +299,6 @@ shown in \autoref{lst:hask-functor}. The Haskell function \inlinehask{fmap} is
 used to lift a function \barehask{a -> b}, embedded in $\cathask$ as the domain
 category, to the functorial context \barehask{f a -> f b}, embedded in
 $\cathask$ as the codomain category.
-\begin{listing}[ht]
-        \inputminted{haskell}{haskell/Functor.hs}%
-        \caption{The Haskell \texttt{Functor} type signature, of which the list
-                type constructor \inlinehask{[]} is an instance.}
-        \label{lst:hask-functor}
-\end{listing}
 
 Haskell Functors can be solidified with the most trivial example: the \emph{list
 constructor}, which takes types $A,B,C \in \catobj \cathask$ and lifts them into
@@ -527,9 +336,12 @@ chaining evaluations of some transformation $\mu$. Context is achieved by
 context; the function must then return the transformed context according to the
 prescribed algorithm or process.
 
-\vspace{1.5em}
-\par\noindent\rule{\textwidth}{\headrulewidth}
-\addtocontents{toc}{\protect\vspace{5pt}}
-\printbibliography[title=Cited Works]
-\end{document}
-
+\begin{listing}
+        \inputminted{haskell}{haskell/Functor.hs}%
+        \caption{The Haskell \texttt{Functor} type signature, of which the list
+                type constructor \inlinehask{[]} is an instance.}
+        \label{lst:hask-functor}
+\end{listing}
+%
+% OWD 2023 :)
+%
