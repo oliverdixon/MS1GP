@@ -12,6 +12,7 @@ SSH_URL="od641@maxwell.york.ac.uk:~/web/ms1_export"
 EXPORT_FILES=(
         ${GIT_ROOT}presentation/presentation.pdf
         ${GIT_ROOT}presentation/speaker_notes/notes.pdf
+        ${GIT_ROOT}presentation/handout.pdf
         ${GIT_ROOT}report/report.pdf
         ${GIT_ROOT}proposal/proposal.pdf
 )

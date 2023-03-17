@@ -4,11 +4,11 @@
 % FINAL COPY, READY FOR SUBMISSION
 %
 % DIRECT DEPENDENCIES:
-%  - ../catmacros.tex   [CT macro library ]
-%  - ./report.bib       [Bibliography keys]
-%  - ./md_report.tex    [Major section    ]
-%  - ./bb_report.tex    [Major section    ]
-%  - ./od_report.tex    [Major section    ]
+%  - ../catmacros.sty [CT macro library ]
+%  - ./report.bib     [Bibliography keys]
+%  - ./md_report.tex  [Major section    ]
+%  - ./bb_report.tex  [Major section    ]
+%  - ./od_report.tex  [Major section    ]
 
 \documentclass[10pt,a4paper,reqno]{amsart}
 \usepackage{xcolor, fancyhdr, lastpage, mathtools, enumitem}
@@ -16,6 +16,7 @@
 \usepackage[foot]{amsaddr} % Move authorship information to the front page
 \usepackage{caption, subcaption, float, etoolbox} % Enhanced float environments
 \usepackage{minted, realboxes, listings} % Source code (Haskell) formatting
+\usepackage{../catmacros} % Common category-theoretic macros
 
 \usepackage[%
 	backend = biber,
@@ -35,8 +36,7 @@
         bookmarksdepth = subsubsection
 ]{hyperref}
 
-\input{../catmacros.tex} % Common category-theoretic macros
-\setcounter{tocdepth}{1} % Only show major sections in the ToC
+\setcounter{tocdepth}{1}  % Only show major sections in the ToC
 \addbibresource{report.bib}
 \setlength{\bibitemsep}{3pt}
 

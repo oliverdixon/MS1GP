@@ -1,16 +1,16 @@
 % OWD 2023
 
-% DO NOT COMPILE THIS FILE IN ISOLATION! It is designed to be included by other
-% TeX files, and will not produce anything on its own (other than a swathe of
-% meaningless temporary files and an incomprehensible error message).
-%
 % Whenever you need a macro involving categories, or load a package for the
 % typesetting thereof, add it here, since it's likely that most macros will be
 % mutually required between the report and presentation.
 
-\usepackage{amsmath}
-\usepackage{tikz-cd} % Drawing commutative diagrams with TikZ.
-\usepackage{adjustbox} % Scaling tikz-cd commutative diagrams.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{catmacros}
+        [2023/03/17 A collection of useful category-theoretic math operators.]
+
+\RequirePackage{amsmath}
+\RequirePackage{tikz-cd}   % Drawing commutative diagrams with TikZ.
+\RequirePackage{adjustbox} % Scaling tikz-cd commutative diagrams.
 
 \tikzcdset{outer sep=2pt} % Apply some padding to arrows in comm. diagrams.
 
@@ -39,4 +39,6 @@
 \DeclareMathOperator{\catdeduce}{\mathbf{Deduce}}
 \DeclareMathOperator{\catfun}{\mathbf{Fun}}
 \DeclareMathOperator{\catprop}{\mathbf{Prop}}
+
+\endinput
 

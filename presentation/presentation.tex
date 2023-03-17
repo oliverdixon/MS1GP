@@ -1,9 +1,31 @@
 % OWD 2023
+%
+% MASTER PRESENTATION FILE
+% FINAL COPY, READY FOR USE
+%
+% DIRECT DEPENDENCIES:
+%  - ../catmacros.sty [CT macro library]
 
+% \documentclass[handout]{beamer}
 \documentclass{beamer}
-\usepackage{caption,mathtools}
 
-\input{../catmacros.tex}
+\usepackage{caption,mathtools}
+\usepackage{../catmacros}
+
+\mode<handout>{
+        \usepackage{pgf4on1boxed}
+        \hypersetup{draft}
+        \pgfpagesuselayout{4 on 1 boxed}[a4paper, border shrink=5mm, landscape]
+}
+
+\mode<beamer>{
+        \AtBeginSection{%
+                \begin{frame}
+                        \frametitle{Presentation Overview}
+                        \tableofcontents[currentsection]
+                \end{frame}
+        }
+}
 
 \usetheme{CambridgeUS}
 \setbeamertemplate{caption}[numbered]
@@ -11,23 +33,16 @@
 \beamerdefaultoverlayspecification{<+->}
 
 \title[Elementary Category Theory]%
-{An Investigation of Elementary Category Theory}
+        {An Investigation of Elementary Category Theory}
 
 \subtitle{\ldots\ \fontfamily{lmr}%
         \textsc{with Selected Applications in PM and TCS.}}
 
 \author[Dixon, Drury \& Brook]%
-{Oliver~Dixon \and Matthew~Drury \and Ben~Brook}
+        {Oliver~Dixon \and Matthew~Drury \and Ben~Brook}
 
 \institute[]{Department of Mathematics, University of York}
 \date{Spring Term, 2023}
-
-\AtBeginSection{%
-        \begin{frame}
-                \frametitle{Presentation Overview}
-                \tableofcontents[currentsection]
-        \end{frame}
-}
 
 \newcommand{\infinitesnake}[1]{%
         \adjustbox{scale=0.7}{%
@@ -60,8 +75,12 @@
 \titlegraphic{\infinitesnake{gray}}
 
 \begin{document}
-
 \frame{\titlepage}
+
+\begin{frame}<handout>
+        \frametitle{Presentation Overview}
+        \tableofcontents
+\end{frame}
 
 \section{Theoretical Underpinnings: Axiomatic Constructions [MD]}
 
@@ -579,7 +598,7 @@
         \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]
+\begin{frame}
         \frametitle{Any Questions?}
         \begin{figure}
                 \infinitesnake{black}

@@ -1,0 +1,54 @@
+% OWD 2023
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pgf4on1boxed}
+        [2023/03/17 A pgfpages style for 4-on-1 indiviudally boxed slides.]
+
+\RequirePackage{pgfpages}
+
+\pgfpagesdeclarelayout{4 on 1 boxed}{
+        \edef\pgfpageoptionheight{\the\paperheight} 
+        \edef\pgfpageoptionwidth{\the\paperwidth}
+        \edef\pgfpageoptionborder{0pt}
+}{
+        \pgfpagesphysicalpageoptions{%
+                logical pages=4,%
+                physical height=\pgfpageoptionheight,%
+                physical width=\pgfpageoptionwidth%
+        }
+        \pgfpageslogicalpageoptions{1}{%
+                border code=\pgfsetlinewidth{2pt}\pgfstroke,%
+                border shrink=\pgfpageoptionborder,%
+                resized width=.5\pgfphysicalwidth,%
+                resized height=.5\pgfphysicalheight,%
+                center=\pgfpoint{.27\pgfphysicalwidth}%
+                        {.74\pgfphysicalheight}%
+        }%
+        \pgfpageslogicalpageoptions{2}{%
+                border code=\pgfsetlinewidth{2pt}\pgfstroke,%
+                border shrink=\pgfpageoptionborder,%
+                resized width=.5\pgfphysicalwidth,%
+                resized height=.5\pgfphysicalheight,%
+                center=\pgfpoint{.73\pgfphysicalwidth}%
+                        {.74\pgfphysicalheight}%
+        }%
+        \pgfpageslogicalpageoptions{3}{%
+                border code=\pgfsetlinewidth{2pt}\pgfstroke,%
+                border shrink=\pgfpageoptionborder,%
+                resized width=.5\pgfphysicalwidth,%
+                resized height=.5\pgfphysicalheight,%
+                center=\pgfpoint{.27\pgfphysicalwidth}%
+                        {.26\pgfphysicalheight}%
+        }%
+        \pgfpageslogicalpageoptions{4}{%
+                border code=\pgfsetlinewidth{2pt}\pgfstroke,%
+                border shrink=\pgfpageoptionborder,%
+                resized width=.5\pgfphysicalwidth,%
+                resized height=.5\pgfphysicalheight,%
+                center=\pgfpoint{.73\pgfphysicalwidth}%
+                        {.26\pgfphysicalheight}%
+        }%
+}
+
+\endinput
+
