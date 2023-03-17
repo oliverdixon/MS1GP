@@ -6,19 +6,28 @@
 % DIRECT DEPENDENCIES:
 %  - ../catmacros.sty [CT macro library]
 
-% \documentclass[handout]{beamer}
 \documentclass{beamer}
+% Pass the 'handout' option to Beamer when generating a file for printing.
 
 \usepackage{caption,mathtools}
 \usepackage{../catmacros}
 
 \mode<handout>{
+        % If Beamer is invoked in hand-out mode, we load and set the appropriate
+        % pgfpages style (4-on-1, with borders), having effectively disabled
+        % hyperref - it (a) is not useful for printed mediums, and (b) places
+        % hypertext at the incorrect locations when pgfpages is activated.
+        %
         \usepackage{pgf4on1boxed}
         \hypersetup{draft}
         \pgfpagesuselayout{4 on 1 boxed}[a4paper, border shrink=5mm, landscape]
 }
 
 \mode<beamer>{
+        % If Beamer is invoked in 'normal' mode, we want to display a modified
+        % table-of-contents at the start of every section. This is not necessary
+        % for printed handouts.
+        %
         \AtBeginSection{%
                 \begin{frame}
                         \frametitle{Presentation Overview}
@@ -32,6 +41,8 @@
 \numberwithin{figure}{section}
 \beamerdefaultoverlayspecification{<+->}
 
+% -- Begin document metadata set-up
+
 \title[Elementary Category Theory]%
         {An Investigation of Elementary Category Theory}
 
@@ -43,6 +54,8 @@
 
 \institute[]{Department of Mathematics, University of York}
 \date{Spring Term, 2023}
+
+% -- End document metadata set-up
 
 \newcommand{\infinitesnake}[1]{%
         \adjustbox{scale=0.7}{%
@@ -78,10 +91,13 @@
 \frame{\titlepage}
 
 \begin{frame}<handout>
+        % If we are in 'handout' mode, just print the TOC once here.
         \frametitle{Presentation Overview}
         \tableofcontents
 \end{frame}
 
+% MAJOR SECTION: THEORETICAL UNDERPINNINGS (MATTHEW DRURY)
+%
 \section{Theoretical Underpinnings: Axiomatic Constructions [MD]}
 
 \begin{frame}
@@ -269,6 +285,8 @@
         \end{itemize}
 \end{frame}
 
+% MAJOR SECTION: FAMILIAR STRUCTURES (BEN BROOK)
+%
 \section{Category-Theoretic Interpretations of Familiar Structures [BB]}
 \begin{frame}
         \frametitle{Category of Sets}
@@ -405,6 +423,8 @@
         \end{equation*}
 \end{frame}
 
+% MAJOR SECTION: FUNCTIONAL PROGRAMMING (OLIVER DIXON)
+%
 \section[Further Applications: Functional Programming {[OD]}]%
         {Further Applications: Functional Programming and
         \texorpdfstring{$\lambda$}{Lambda}-Calculus [OD]}
