@@ -80,9 +80,10 @@
         \renewcommand{\headrulewidth}{0pt}
 }
 
-\newcommand\anonfootnote[1]{%
+\newcommand{\anonfootnote}[1]{%
         \begingroup
-        \renewcommand\thefootnote{}\footnote{#1}%
+        \renewcommand{\thefootnote}{}%
+        \footnote{#1}%
         \addtocounter{footnote}{-1}%
         \endgroup
 }
