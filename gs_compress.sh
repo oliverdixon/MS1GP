@@ -20,6 +20,10 @@ for arg in "$@"; do
                 -dPrinted=false \
                 -sOutputFile="$TMP_NAME" "$arg"
 
-        [ $? -eq 0 ] && mv "$TMP_NAME" "$arg"
+        if [[ $? -eq 0 ]]; then
+                echo -e "$arg\t$(du -h "$arg" | cut -f1) ->" \
+                        "$(du -h "$TMP_NAME" | cut -f1)"
+                mv "$TMP_NAME" "$arg"
+        fi
 done
 
